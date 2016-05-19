@@ -1,0 +1,36 @@
+{
+  "name": "codepair",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tripodly/codepair.git"
+  },
+  "author": "Colin Zarnegar[c.zarnegar@gmail.com], Joey Cursoli[joeycursoli2@gmail.com], Andrew Patipaksiri[apax04@gmail.com]",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tripodly/codepair/issues"
+  },
+  "homepage": "https://github.com/tripodly/codepair#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0"
+  }
+}
