@@ -26,3 +26,23 @@ export function signinUser({ email, password }) {
 			});
 	}
 }
+
+export function signupUser({ email, name, language, skillLevel, password }) {
+	return function(dispatch) {
+		axios.post(`${API_URL}/signup`, { email, name, language, skillLevel, password })
+			.then( (response) => {
+				// if signup is successful, dispatch an action
+				// of type AUTHORIZE_USER
+				dispatch({ type: AUTHORIZE_USER });
+
+				// if signup is successful push user
+				// to our cards page
+				// browserHistory.push('/cards');
+			})
+			.catch((error) => {
+				// if there is an error from the post to the server,
+				// log it
+				console.log('error in signupUser action creator: ',error);
+			});
+	}
+}

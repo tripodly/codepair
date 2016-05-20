@@ -12,7 +12,7 @@ export default class Header extends Component {
 						<Link to={"/signin"}>Sign In</Link>
 					</li>
 					<li className="nav-item">
-						<Link to={"/"}>Sign Up</Link>
+						<Link to={"/signup"}>Sign Up</Link>
 					</li>
 					<li className="nav-item">
 						<Link to={"/"}>Sign Out</Link>
