@@ -6,6 +6,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './components/app';
 import Landing from './components/landing';
+import Signin from './components/auth/signin';
 
 import reducers from './reducers';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
     	<Route path="/" component={App}>
         <IndexRoute component={Landing} />
+        <Route path="signin" component={Signin} />
     	</Route>
     </Router>
   </Provider>
