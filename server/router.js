@@ -7,6 +7,9 @@ module.exports = (app) => {
 	app.get('/', function(req, res, next){
 		res.sendFile(path.join(__dirname, '../client/index.html'));
 	});
-	app.post('/signin',function(req, res){})
+	app.post('/signin',function(req, res){
+		let email = req.body.email;
+		let password = req.body.password;
+	})
 	
 }
