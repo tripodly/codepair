@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/tripodly/codepair#readme",
   "dependencies": {
+    "axios": "^0.11.1",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
@@ -35,6 +37,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "redux": "^3.5.2",
+    "redux-form": "^5.2.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
