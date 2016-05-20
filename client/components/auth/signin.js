@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { reduxForm } from 'redux-form'; 
 
 export default class Signin extends Component {
 
