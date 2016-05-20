@@ -2,7 +2,7 @@
 const jwt = require('jwt-simple');
 const User = require('./models/user');
 // import JWT secret from here
-const EnvConfig = require('./envConfig');
+const EnvConfig = require('../config/envConfig');
 
 // Signin function
 exports.signin = function(req, res, next) {

@@ -1,11 +1,12 @@
 const path = require('path');
+const EnvConfig = require('../config/envConfig');
 const db = require('knex')({
 	client: 'mysql',
 	connection: {
-		host			: '127.0.0.1',
-		user			: 'tripodly',
-		password  : 'acj123',
-		database 	: 'codepair',
+		host			: EnvConfig.host,
+		user			: EnvConfig.user,
+		password  : EnvConfig.password,
+		database 	: EnvConfig.database,
 		charset		: 'utf8',
 		filename  : path.join(__dirname,'../db/codepair.sql')
 	}
@@ -20,7 +21,9 @@ db.schema.hasTable('users').then(function(exists){
 			user.varchar('password',255);
 			user.varchar('language',255);
 			user.string('skill',255);
-		})
+		}).then(function (table) {
+      console.log('Created users Table', table);
+    });
 	}
 });
 
