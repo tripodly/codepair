@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "start": "node server/server.js"
   },
   "repository": {
@@ -19,7 +20,8 @@
   "homepage": "https://github.com/tripodly/codepair#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
@@ -30,7 +32,11 @@
     "css-loader": "^0.23.1",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.1",
+    "redux": "^3.5.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
   }
 }
