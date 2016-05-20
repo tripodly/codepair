@@ -1,5 +1,7 @@
 const path = require('path');
-const Bookshelf = require('bookshelf')(knex);
+const db = require('./config');
+const Users = require('./collections/users');
+const User = require('./models/user');
 
 module.exports = (app) => {
 	app.get('/', function(req, res, next){

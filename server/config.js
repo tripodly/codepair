@@ -22,4 +22,7 @@ db.schema.hasTable('users').then(function(exists){
 			user.string('skill',255);
 		})
 	}
-})
+});
+
+var Bookshelf = require('bookshelf')(db);
+module.exports = Bookshelf;
