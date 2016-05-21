@@ -6,7 +6,7 @@ module.exports = {
     './client/index.js'
   ],
   output: {
-    path: __dirname,
+    path: __dirname + '/client/build/',
     publicPath: '/',
     filename: 'bundle.js'
   },
