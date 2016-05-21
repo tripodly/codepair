@@ -14,7 +14,8 @@ export function signinUser({ email, password }) {
 				// if signin is successful, dispatch an action
 				// of type AUTHORIZE_USER
 				dispatch({ type: AUTHORIZE_USER });
-
+				// -Save the JWT token
+				localStorage.setItem('token', response.data.token);
 				// if signin is successful push user
 				// to our cards page
 				// browserHistory.push('/cards');

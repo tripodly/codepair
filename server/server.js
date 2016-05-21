@@ -9,6 +9,8 @@ const path = require('path');
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
 app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '/')));
+
 
 router(app);
 
