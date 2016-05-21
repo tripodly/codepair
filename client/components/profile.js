@@ -2,30 +2,36 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-class Profile extends Component {
+export default class Profile extends Component {
 
 	render() {
 		return (
-			<nav className="navbar navbar-light">
-				<span className="navbar-brand">CodePair</span>
-				<ul className="nav navbar-nav">
-					<li className="nav-item">
-						<Link to={"/signin"}>Sign In</Link>
-					</li>
-					<li className="nav-item">
-						<Link to={"/signup"}>Sign Up</Link>
-					</li>
-					<li className="nav-item">
-						<Link to={"/"}>Sign Out</Link>
-					</li>
-				</ul>
-			</nav>
+			<div className="container">
+				<div className="row">
+					<div class="col-sm-4">
+			      <div className="media">
+			      	<img className="media-object" src="https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png
+" />
+			      </div>
+			    </div>
+			    <div class="col-sm-4">
+			      <div>
+			      	Info
+			      </div>
+			    </div>
+			    <div class="col-sm-4">
+			      <div>
+			      	Matches
+			      </div>
+			    </div>
+				</div>
+			</div>
 		);
 	}
 }
 
-function mapStateToProps(state){
-	return { message: state.auth.message };
-}
+// function mapStateToProps(state){
+// 	return { message: state.auth.message };
+// }
 
-export default connect(null)(Profile);
+// export default connect(null)(Profile);

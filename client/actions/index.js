@@ -17,8 +17,8 @@ export function signinUser({ email, password }) {
 				// -Save the JWT token
 				localStorage.setItem('token', response.data.token);
 				// if signin is successful push user
-				// to our cards page
-				// browserHistory.push('/cards');
+				// to their profile page
+				browserHistory.push('/profile');
 			})
 			.catch((error) => {
 				// if there is an error from the post to the server,
@@ -40,8 +40,8 @@ export function signupUser({ email, name, language, skillLevel, password }) {
 				// -Save the JWT token
 				localStorage.setItem('token', response.data.token);
 				// if signup is successful push user
-				// to our cards page
-				// browserHistory.push('/cards');
+				// to their profile page
+				browserHistory.push('/profile');
 			})
 			.catch((error) => {
 				// if there is an error from the post to the server,
