@@ -2,7 +2,8 @@
 node_modules/
 
 # Compiled Files
-client/build/bundle.js
+build/**
+**/bundle.js
 
 # ENV Config
 server/config/envConfig.js
