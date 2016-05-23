@@ -1,14 +1,14 @@
-const passport = require('passport');
-const User = require('../models/user');
-const EnvConfig = require('../config/envConfig');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const LocalStrategy = require('passport-local');
+var passport = require('passport');
+var User = require('../models/user');
+var EnvConfig = require('../config/envConfig');
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
+var LocalStrategy = require('passport-local');
 
 
 // Create local strategy
-const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+var localOptions = { usernameField: 'email' };
+var localLogin = new LocalStrategy(localOptions, function(email, password, done) {
 	console.log('localLogin strategy used');
 	// Verify this username and password, call done with the user
 	// if it is the correct email and password
@@ -41,13 +41,13 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 });
 
 // Setup options for JWT Strategy
-const jwtOptions = {
+var jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 	secretOrKey: EnvConfig.secret
 };
 
 // Create JWT strategy
-const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
+var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 	// See if the user ID in the payload exists in our database
 	// If it does, call 'done' with that other
 	// otherwise, call 'done' without a user object

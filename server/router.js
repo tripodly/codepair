@@ -1,11 +1,11 @@
-const path = require('path');
+var path = require('path');
 
-const Auth = require('./auth/authentication');
-const passportService = require('./auth/passport');
-const passport = require('passport');
+var Auth = require('./auth/authentication');
+var passportService = require('./auth/passport');
+var passport = require('passport');
 
-const requireAuth = passport.authenticate('jwt', {session: false});
-const requireSignin = passport.authenticate('local', {session: false});
+var requireAuth = passport.authenticate('jwt', {session: false});
+var requireSignin = passport.authenticate('local', {session: false});
 
 module.exports = (app) => {
 	app.get('/', function(req, res, next){

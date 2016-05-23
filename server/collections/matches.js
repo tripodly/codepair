@@ -1,7 +1,7 @@
-const db = require('../config');
-const Match = require('../models/match');
+var db = require('../db/config');
+var Match = require('../models/match');
 
-const Matches = new db.Collection();
+var Matches = new db.Collection();
 
 Matches.model = Match;
 

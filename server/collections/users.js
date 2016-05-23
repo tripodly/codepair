@@ -1,7 +1,7 @@
-const db = require('../config');
-const User = require('../models/user');
+var db = require('../db/config');
+var User = require('../models/user');
 
-const Users = new db.Collection();
+var Users = new db.Collection();
 
 Users.model = User;
 

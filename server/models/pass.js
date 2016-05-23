@@ -2,12 +2,12 @@ var db = require('../db/config');
 var Promise = require('bluebird');
 
 // use bcrypt to encrypt user password to store in db
-var Match = db.Model.extend({
-	tableName : 'matches',
+var Pass = db.Model.extend({
+	tableName : 'passes',
 	hashTimestamps : true,
 	initialize : function(){
-		console.log('Match created!');
+		console.log('Pass created!');
 	}
 });
 
-module.exports = Match;
+module.exports = Pass;
