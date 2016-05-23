@@ -29,6 +29,18 @@ db.schema.hasTable('users').then(function(exists){
 	}
 });
 
+db.schema.hasTable('matches').then(function(exists){
+	if(!exists){
+		db.schema.createTable('matches',function(match){
+			match.increments('id').primary();
+
+			match.timestamps();
+		}).then(function (table) {
+      console.log('Created matches Table', table);
+    });
+	}
+});
+
 
 
 var Bookshelf = require('bookshelf')(db);
