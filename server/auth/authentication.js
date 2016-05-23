@@ -15,7 +15,7 @@ function tokenForUser(user) {
 // Signin function
 exports.signin = function(req, res, next) {
 	console.log('signin in authentication fired!');
-	res.send({ token: tokenForUser(req.user) });
+	res.send({ token: tokenForUser(req.user), name: req.user.attributes.name, email: req.user.attributes.email, language: req.user.attributes.language, skillLevel: req.user.attributes.skillLevel });
 }
 
 // Signup function

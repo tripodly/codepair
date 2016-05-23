@@ -34,6 +34,7 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 				console.log('localLogin, comparePassword not a match!');
 				return done(null, false); 
 			}
+			console.log('inside localLogin comparePassword user info is : ', user);
 			return done(null, user);
 		});
 	});

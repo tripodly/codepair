@@ -16,6 +16,10 @@ export function signinUser({ email, password }) {
 				dispatch({ type: AUTHORIZE_USER });
 				// -Save the JWT token
 				localStorage.setItem('token', response.data.token);
+				// dispatch action to set current users info
+				dispatch({ type: UPDATE_USER, payload: { 
+					email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel
+				}});
 				// if signin is successful push user
 				// to their profile page
 				browserHistory.push('/profile');
@@ -70,7 +74,6 @@ export function updateUserInfo({ email, name, language, skillLevel }) {
 				// to their profile page
 				// browserHistory.push('/profile');
 				// dispatch action to set current users info
-				console.log('updateUserInfo successful post, response is : ',response);
 				dispatch({ type: UPDATE_USER, payload: { 
 					email: email, name: name, language: language, skillLevel: skillLevel
 				}});
