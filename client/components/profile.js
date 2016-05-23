@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'; 
 import * as actions from '../actions';
+import { Link } from 'react-router';
 
 class Profile extends Component {
 	handleFormSubmit(formProps) {

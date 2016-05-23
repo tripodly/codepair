@@ -12,6 +12,7 @@ import Landing from './components/landing';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import Profile from './components/profile';
+import Cards from './components/cards';
 
 import reducers from './reducers';
 
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Route path="signin" component={Signin} />
         <Route path="signup" component={Signup} />
         <Route path="profile" component={Profile} />
+        <Route path="cards" component={Cards} />
     	</Route>
     </Router>
 	 </MuiThemeProvider>
