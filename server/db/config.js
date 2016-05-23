@@ -30,7 +30,7 @@ db.schema.hasTable('users').then(function(exists){
 	}
 });
 
-db.schema.hasTable('passs').then(function(exists){
+db.schema.hasTable('pendings').then(function(exists){
 	if(!exists){
 		db.schema.createTable('pendings',function(pending){
 			pending.increments('id').primary();
