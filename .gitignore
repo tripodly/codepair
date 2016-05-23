@@ -1,0 +1,13 @@
+# Dependency Directories
+node_modules/
+
+# Compiled Files
+build/**
+**/bundle.js
+
+# ENV Config
+server/config/envConfig.js
+
+# For WebStorm
+**/.idea/**
+.idea/
