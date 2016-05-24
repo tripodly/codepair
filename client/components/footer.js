@@ -4,17 +4,23 @@ import { Link } from 'react-router';
 import Header from './header';
 
 const style = {
-  footer:{
-    backgroundColor: "black",
-  }
+  footer: {
+    position: 'relative',
+    marginTop: 400,
+    height: 150,
+    verticalAlign: 'bottom',
+    backgroundColor: '#000',
+    color: '#FFF',
+  },
+
 }
 export default class Footer extends Component {
 
   render(){
     return (
       <footer style={style.footer} >
-        <div>
-          <h1>blahblahblah</h1>
+        <div style={style.footerBar}>
+          <h5>blahblahblah</h5>
         </div>
       </footer>
     );
