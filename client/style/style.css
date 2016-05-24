@@ -1,5 +1,6 @@
-html {
+html,body, #app{
   font-family: 'Roboto', sans-serif;
+  height: 100%;
 }
 
 .error {

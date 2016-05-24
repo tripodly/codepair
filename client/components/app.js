@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
 import Paper from 'material-ui/Paper';
-
+import Footer from './footer';
 const style = {
 		paper: {
 				textAlign: 'center',
@@ -22,7 +22,9 @@ export default class App extends Component {
 					<Paper style={style.paper} zDepth={2}>
 							<Header />
 							{this.props.children}
+              <Footer />
 					</Paper>
+          
       </div>
     );
   }
