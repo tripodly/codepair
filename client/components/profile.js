@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'; 
 import * as actions from '../actions';
+import { Link } from 'react-router';
 
 class Profile extends Component {
 	handleFormSubmit(formProps) {
@@ -59,6 +60,7 @@ class Profile extends Component {
 				    <div className="col-md-4">
 				      <div>
 				      	<h3 className="text-xs-center">Matches</h3>
+				      	<Link to="/cards"><button>Match me!</button></Link>
 				      </div>
 				    </div>
 					</div>
