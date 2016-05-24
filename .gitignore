@@ -7,3 +7,7 @@ build/**
 
 # ENV Config
 server/config/envConfig.js
+
+# For WebStorm
+**/.idea/**
+.idea/
