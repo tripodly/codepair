@@ -7,6 +7,9 @@ var Match = db.Model.extend({
 	hashTimestamps : true,
 	initialize : function(){
 		console.log('Match created!');
+	},
+	pending : function(){
+		return this.belongsTo(user,'fromUser');
 	}
 });
 

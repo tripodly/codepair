@@ -7,6 +7,9 @@ var Pass = db.Model.extend({
 	hashTimestamps : true,
 	initialize : function(){
 		console.log('Pass created!');
+	},
+	pending : function(){
+		return this.belongsTo(user,'fromUser');
 	}
 });
 
