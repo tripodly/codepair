@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form'; 
+import { reduxForm, Field } from 'redux-form'; 
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import * as actions from '../../actions';
+
 
 class Signup extends Component {
 	handleFormSubmit(formProps) {
@@ -13,42 +19,31 @@ class Signup extends Component {
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<fieldset className="form-group">
-					<label>Email:</label>
-					<input {...email} className="form-control"/>
-					{email.touched && email.error && <div className="error">{email.error}</div>}
+					<TextField {...email} floatingLabelText="Email" errorText={email.touched && email.error && <div className="error">{email.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Name:</label>
-					<input {...name} className="form-control"/>
-					{name.touched && name.error && <div className="error">{name.error}</div>}
+					<TextField {...name} floatingLabelText="Name" errorText={name.touched && name.error && <div className="error">{name.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Language:</label>
-					<input {...language} className="form-control"/>
-					{language.touched && language.error && <div className="error">{language.error}</div>}
+					<TextField {...language} floatingLabelText="Language" errorText={language.touched && language.error && <div className="error">{language.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Skill level:</label>
-					<input {...skillLevel} className="form-control"/>
-					{skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>}
+					<TextField {...skillLevel} floatingLabelText="Skill Level" errorText={skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Password:</label>
-					<input {...password} type="password" className="form-control"/>
-					{password.touched && password.error && <div className="error">{password.error}</div>}
+					<TextField {...password} floatingLabelText="Password" errorText={password.touched && password.error && <div className="error">{password.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Confirm your password:</label>
-					<input {...passwordConfirm} type="password" className="form-control"/>
-					{passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>}
+					<TextField {...passwordConfirm} floatingLabelText="Confirm your password:" errorText={passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>} />
 				</fieldset>
-				<button action="submit" className="btn btn-primary">Sign up</button>
+				<RaisedButton type="submit" label="Sign up!" primary={true}></RaisedButton>
 			</form>
 		);
 	}
 }
 
 function mapStateToProps(state){
+	console.log('mapStateToProps inside signup form , state.form is : ',state.form);
 	return { errorMessage: state.auth.error };
 }
 
