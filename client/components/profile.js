@@ -60,7 +60,7 @@ class Profile extends Component {
 				    <div className="col-md-4">
 				      <div>
 				      	<h3 className="text-xs-center">Matches</h3>
-				      	<Link to={"/cards"}><button>Match me!</button></Link>
+				      	<Link to="/cards"><button>Match me!</button></Link>
 				      </div>
 				    </div>
 					</div>

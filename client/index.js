@@ -11,6 +11,7 @@ import App from './components/app';
 import Landing from './components/landing';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
+import Signout from './components/auth/signout';
 import Profile from './components/profile';
 import Cards from './components/cards';
 
@@ -36,6 +37,7 @@ ReactDOM.render(
         <IndexRoute component={Landing} />
         <Route path="signin" component={Signin} />
         <Route path="signup" component={Signup} />
+        <Route path="signout" component={Signout} />
         <Route path="profile" component={Profile} />
         <Route path="cards" component={Cards} />
     	</Route>
