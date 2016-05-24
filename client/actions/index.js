@@ -116,8 +116,8 @@ export function getCard({ email }) {
 	}
 }
 
-export function likeCard({ }) {
-	return funciton(dispatch) {
+export function likeCard() {
+	return function(dispatch) {
 		axios.post(`${API_URL}/cards/like`, {})
 			.then(response => {
 				dispatch({ type: LIKE_CARD, payload: response.data })
@@ -128,8 +128,8 @@ export function likeCard({ }) {
 	}
 }
 
-export function dislikeCard({ }) {
-	return funciton(dispatch) {
+export function dislikeCard() {
+	return function(dispatch) {
 		axios.post(`${API_URL}/cards/dislike`, {})
 			.then(response => {
 				dispatch({ type: DISLIKE_CARD, payload: response.data })

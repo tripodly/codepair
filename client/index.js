@@ -15,12 +15,22 @@ import Profile from './components/profile';
 import Cards from './components/cards';
 
 import reducers from './reducers';
+import { AUTHORIZE_USER } from './actions/actionTypes';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
+const store = createStoreWithMiddleware(reducers);
+
+const token = localStorage.getItem('token');
+// If we have a token, consider the user to be signed in
+if(token) {
+  // We need to update application state
+  store.dispatch({ type: AUTHORIZE_USER });
+}
+
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-   <MuiThemeProvider muiTheme={getMuiTheme()}>
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Router history={browserHistory}>
     	<Route path="/" component={App}>
         <IndexRoute component={Landing} />
