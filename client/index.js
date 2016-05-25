@@ -20,7 +20,7 @@ import { AUTHORIZE_USER } from './actions/actionTypes';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
-const store = createStoreWithMiddleware(reducers);
+const store = createStoreWithMiddleware(reducers,window.devToolsExtension ? window.devToolsExtension() : f => f);
 
 const token = localStorage.getItem('token');
 // If we have a token, consider the user to be signed in

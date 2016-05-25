@@ -9,8 +9,8 @@ const style = {
     marginTop: 400,
     height: 150,
     verticalAlign: 'bottom',
-    backgroundColor: '#000',
-    color: '#FFF',
+    backgroundColor: '#212121',
+    color: '#585858',
   },
 
 }

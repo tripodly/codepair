@@ -16,7 +16,8 @@ module.exports = (app) => {
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
-		res.redirect('/');
+		res.sendFile(path.join(__dirname, '../client/index.html'));
+		// res.redirect('/');
 	});
 
 	// route when user signs in
