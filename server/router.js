@@ -3,7 +3,7 @@ var path = require('path');
 var Auth = require('./auth/authentication');
 var passportService = require('./auth/passport');
 var passport = require('passport');
-var controler = require('./controlers/swipeController');
+var controler = require('./controllers/swipeController');
 
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});

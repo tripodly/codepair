@@ -8,7 +8,7 @@ var match = require('../models/match');
 var matches = require('../collections/matches');
 
 var pass = require('../models/pass');
-var passes = require('../collections/pases');
+var passes = require('../collections/passes');
 
 module.exports = {
 
