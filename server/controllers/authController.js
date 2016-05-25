@@ -28,6 +28,8 @@ exports.signup = function(req, res, next) {
 	var language = req.body.language;
 	var skillLevel = req.body.skillLevel;
 	var password = req.body.password;
+	var github = req.body.github_handle;
+	var profilePic = req.body.profile_url;
 
 	if(!email || !password) {
 		return res.status(422).send({ error: 'You must provide email and password' });
@@ -47,7 +49,9 @@ exports.signup = function(req, res, next) {
 			name: name,
 			language: language,
 			skillLevel: skillLevel,
-			password: password
+			password: password,
+			github_handle: github,
+			profile_url: profilePic
 		});
 
 		user.save().then(function(newUser) {

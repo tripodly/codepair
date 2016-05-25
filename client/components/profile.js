@@ -3,9 +3,21 @@ import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 import { Link } from 'react-router';
 
+const style = {
+	profilePic: {
+		width: 200,
+		height: 200,
+	},
+}
+
 class Profile extends Component {
 	handleFormSubmit(formProps) {
 		this.props.updateUserInfo(formProps);
+	}
+
+	componentWillMount() {
+		console.log('inside componentWillRender in Profile');
+		this.props.getUserInfo();
 	}
 
 	render() {
@@ -21,7 +33,7 @@ class Profile extends Component {
 							</div>
 				      <div>
 				      	<div className="text-xs-center">
-				      		<img className="img-rounded center-block" src="https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" />
+				      		<img style={style.profilePic} className="img-rounded center-block" src={this.props.profilePicture} />
 				      		<h4>{this.props.profileName}</h4>
 				      		<h5>{this.props.profileEmail}</h5>
 				      	</div>
@@ -71,7 +83,7 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state){
-	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel };
+	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url };
 }
 
 function validate(formProps) {

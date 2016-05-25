@@ -14,7 +14,7 @@ class Signup extends Component {
 	}
 
 	render() {
-		const { handleSubmit, fields: { email, name, language, skillLevel, password, passwordConfirm }} = this.props;
+		const { handleSubmit, fields: { email, name, language, skillLevel, github_handle, profile_url, password, passwordConfirm }} = this.props;
 
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -31,10 +31,16 @@ class Signup extends Component {
 					<TextField {...skillLevel} floatingLabelText="Skill Level" errorText={skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<TextField {...password} floatingLabelText="Password" errorText={password.touched && password.error && <div className="error">{password.error}</div>} />
+					<TextField {...github_handle} floatingLabelText="Enter a GitHub handle" errorText={github_handle.touched && github_handle.error && <div className="error">{github_handle.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<TextField {...passwordConfirm} floatingLabelText="Confirm your password:" errorText={passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>} />
+					<TextField {...profile_url} floatingLabelText="Enter a link to your profile picture" errorText={profile_url.touched && profile_url.error && <div className="error">{profile_url.error}</div>} />
+				</fieldset>
+				<fieldset className="form-group">
+					<TextField {...password} type="password" floatingLabelText="Password" errorText={password.touched && password.error && <div className="error">{password.error}</div>} />
+				</fieldset>
+				<fieldset className="form-group">
+					<TextField {...passwordConfirm} type="password" floatingLabelText="Confirm your password:" errorText={passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>} />
 				</fieldset>
 				<RaisedButton type="submit" label="Sign up!" primary={true}></RaisedButton>
 			</form>
@@ -70,6 +76,10 @@ function validate(formProps) {
 		errors.skillLevel = 'Please enter your skill level!';
 	}
 
+	if (!formProps.github_handle) {
+		errors.github_handle = 'Please enter your GitHub handle!';
+	}
+
 	if (formProps.password !== formProps.passwordConfirm){
 		errors.password = 'Passwords must match';
 	}
@@ -87,6 +97,6 @@ function validate(formProps) {
 
 export default reduxForm({
 	form: 'signup',
-	fields: ['email', 'name', 'language', 'skillLevel','password', 'passwordConfirm'],
+	fields: ['email', 'name', 'language', 'skillLevel', 'github_handle', 'profile_url', 'password', 'passwordConfirm'],
 	validate
 }, mapStateToProps, actions)(Signup);
