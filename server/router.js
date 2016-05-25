@@ -20,14 +20,23 @@ module.exports = (app) => {
 	app.get('/user/profile', requireAuth, function(req,res,next){
 		console.log('inside get request for user profile');
 		var user = req.user.attributes;
-		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url });
+		var userObject = { 
+			id: user.id, 
+			name: user.name, 
+			email: user.email, 
+			language: user.language, 
+			skillLevel: user.skillLevel, 
+			github_handle: user.github_handle, 
+			profile_url: user.profile_url 
+		};
+		res.send(userObject);
 	});
 
 	app.get('/user/cards', requireAuth, userController.getCards, function(req,res,next){
 		// console.log('inside get request for user cards, request object is : ',req);
 		var user = req.user.attributes;
 		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
-						
+
 		});
 	});
 

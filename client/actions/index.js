@@ -87,25 +87,14 @@ export function updateUserInfo({ email, name, language, skillLevel, github_handl
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/update`, { email, name, language, skillLevel })
 			.then(response => {
-				// if signup is successful, dispatch an action
-				// of type AUTHORIZE_USER
-				// dispatch({ type: AUTHORIZE_USER });
-				// -Save the JWT token
-				// localStorage.setItem('token', response.data.token);
-				// if signup is successful push user
-				// to their profile page
-				// browserHistory.push('/profile');
-				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
 					email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profile_url
 				}});
 			})
 			.catch(response => {
-				// if there is an error from the post to the server,
-				// log it
 				console.log('error in signupUser action creator: ',response);
 				// -Show an error to the user
-				// dispatch(authError(response));
+				dispatch(authError(response));
 			});
 	}
 }
