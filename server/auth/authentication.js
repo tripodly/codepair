@@ -1,14 +1,14 @@
 // All authentication functionality in here
-const jwt = require('jwt-simple');
-const User = require('../models/user');
-const Users = require('../collections/users');
+var jwt = require('jwt-simple');
+var User = require('../models/user');
+var Users = require('../collections/users');
 // import JWT secret from here
-const EnvConfig = require('../config/envConfig');
+var EnvConfig = require('../config/envConfig');
 
 function tokenForUser(user) {
 	console.log('tokenForUser fired');
 	console.log('user id is : ',user.id);
-	const timestamp = new Date().getTime();
+	var timestamp = new Date().getTime();
 	return jwt.encode({ sub: user.id, iat: timestamp }, EnvConfig.secret);
 }
 
@@ -20,11 +20,11 @@ exports.signin = function(req, res, next) {
 
 // Signup function
 exports.signup = function(req, res, next) {
-	const email = req.body.email;
-	const name = req.body.name;
-	const language = req.body.language;
-	const skillLevel = req.body.skillLevel;
-	const password = req.body.password;
+	var email = req.body.email;
+	var name = req.body.name;
+	var language = req.body.language;
+	var skillLevel = req.body.skillLevel;
+	var password = req.body.password;
 
 	if(!email || !password) {
 		return res.status(422).send({ error: 'You must provide email and password' });
@@ -39,7 +39,7 @@ exports.signup = function(req, res, next) {
 		}
 
 		// If a use with email does NOT exist, create and save user record
-		const user = new User({
+		var user = new User({
 			email: email,
 			name: name,
 			language: language,

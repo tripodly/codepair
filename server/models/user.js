@@ -1,6 +1,6 @@
-const db = require('../config');
-const bcrypt = require('bcrypt-nodejs');
-const Promise = require('bluebird');
+var db = require('../db/config');
+var bcrypt = require('bcrypt-nodejs');
+var Promise = require('bluebird');
 
 // use bcrypt to encrypt user password to store in db
 var User = db.Model.extend({
@@ -23,7 +23,16 @@ var User = db.Model.extend({
 			console.log('isMatch inside comparePassword ? ',isMatch);
 			callback(null, isMatch);
 		});
-	}
+	},
+	passes: function() {
+    return this.hasMany(pass);
+  },
+  pendings: function() {
+    return this.hasMany(pending);
+  },
+  matches: function() {
+    return this.hasMany(match);
+  }
 });
 
 module.exports = User;
