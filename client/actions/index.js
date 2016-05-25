@@ -34,7 +34,7 @@ export function signinUser({ email, password }) {
 	}
 }
 
-export function signupUser({ email, name, language, skillLevel, password }) {
+export function signupUser({ email, name, language, skillLevel, password,  }) {
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/signup`, { email, name, language, skillLevel, password })
 			.then(response => {
@@ -48,7 +48,7 @@ export function signupUser({ email, name, language, skillLevel, password }) {
 				browserHistory.push('/profile');
 				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
-					email: email, name: name, language: language, skillLevel: skillLevel
+					id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profile_url
 				}});
 			})
 			.catch(response => {
@@ -61,7 +61,7 @@ export function signupUser({ email, name, language, skillLevel, password }) {
 	}
 }
 
-export function updateUserInfo({ email, name, language, skillLevel }) {
+export function updateUserInfo({ email, name, language, skillLevel, github_handle, profile_url }) {
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/update`, { email, name, language, skillLevel })
 			.then(response => {
@@ -75,7 +75,7 @@ export function updateUserInfo({ email, name, language, skillLevel }) {
 				// browserHistory.push('/profile');
 				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
-					email: email, name: name, language: language, skillLevel: skillLevel
+					email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profile_url
 				}});
 			})
 			.catch(response => {
@@ -102,11 +102,11 @@ export function signoutUser() {
 
 // action creator to get new card from database, passes email to identify user and get 
 // a card from their pending list
-export function getCard({ email }) {
+export function getCards({ email }) {
 	return function(dispatch) {
 		axios.post(`${API_URL}/cards/fetch`, { email })
 			.then(response => {
-				dispatch({ type: GET_CARD, payload: response.data })
+				dispatch({ type: GET_CARDS, payload: response.data })
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
@@ -116,9 +116,9 @@ export function getCard({ email }) {
 	}
 }
 
-export function likeCard() {
+export function likeCard({ id }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/like`, {})
+		axios.post(`${API_URL}/cards/like`, { id })
 			.then(response => {
 				dispatch({ type: LIKE_CARD, payload: response.data })
 			})
@@ -128,9 +128,9 @@ export function likeCard() {
 	}
 }
 
-export function dislikeCard() {
+export function dislikeCard({ id }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/dislike`, {})
+		axios.post(`${API_URL}/cards/dislike`, { id })
 			.then(response => {
 				dispatch({ type: DISLIKE_CARD, payload: response.data })
 			})
