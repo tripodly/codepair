@@ -7,10 +7,16 @@ const style = {
 	profilePic: {
 		width: 200,
 		height: 200,
-	},
+	}
 }
+let flag = true;
+let prompt = 'Edit info:'
 
 class Profile extends Component {
+	constructor(props){
+		super(props);
+		this.state = {}
+	}
 	handleFormSubmit(formProps) {
 		this.props.updateUserInfo(formProps);
 	}
@@ -19,6 +25,13 @@ class Profile extends Component {
 		console.log('inside componentWillRender in Profile');
 		this.props.getUserInfo();
 	}
+	handleEditInfo() {
+		console.log('in here now');
+		flag = !flag;
+		prompt = flag ? ' Edit info:':'Cancel';
+		this.setState({
+		});
+	}
 
 	componentDidMount() {
 		console.log('inside componentDidMount in Profile');
@@ -26,6 +39,7 @@ class Profile extends Component {
 	}
 
 	render() {
+		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
 
 		return (
@@ -46,30 +60,30 @@ class Profile extends Component {
 				    </div>
 				    <div className="col-md-4">
 				      <div>
-				      	<h3 className="text-xs-center">Edit info:</h3>
+				      	<div onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
 				      	<div>
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
 				      				<label>Email:</label>
-				      				<input {...email} className="form-control"/>
+				      				<input {...email} placeholder={this.props.profileEmail} disabled={flag} className="form-control"/>
 				      				{email.touched && email.error && <div className="error">{email.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Name:</label>
-				      				<input {...name} className="form-control"/>
+				      				<input {...name} className="form-control" placeholder={this.props.profileName} disabled={flag}/>
 				      				{name.touched && name.error && <div className="error">{name.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Language:</label>
-				      				<input {...language} className="form-control"/>
+				      				<input {...language} className="form-control" placeholder={this.props.profileLanguage} disabled={flag}/>
 				      				{language.touched && language.error && <div className="error">{language.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Skill level:</label>
-				      				<input {...skillLevel} className="form-control"/>
+				      				<input {...skillLevel} className="form-control" placeholder={this.props.profileSkillLevel} disabled={flag} />
 				      				{skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>}
 				      			</fieldset>
-				      			<button action="submit" className="btn btn-primary">Confirm</button>
+				      			<button action="submit" className="btn btn-primary" hidden={flag} onClick={()=> this.handleEditInfo()}>Confirm</button>
 				      		</form>
 				      	</div>
 				      </div>
