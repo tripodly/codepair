@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'; 
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../../actions';
 
 class Signin extends Component {
 	handleFormSubmit({ email, password }) {
 		this.props.signinUser({ email, password });
+	}
+
+	renderAlert() {
+		if (this.props.errorMessage) {
+			return (
+				<div>
+					<strong>Oops!</strong> {this.props.errorMessage}
+				</div>
+			);
+		}
 	}
 
 	render() {
@@ -13,16 +25,13 @@ class Signin extends Component {
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<fieldset className="form-group">
-					<label>Email:</label>
-					<input {...email} className="form-control"/>
-					{email.touched && email.error && <div className="error">{email.error}</div>}
+					<TextField {...email} floatingLabelText="Email" errorText={email.touched && email.error && <div className="error">{email.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<label>Password:</label>
-					<input {...password} type="password" className="form-control"/>
-					{password.touched && password.error && <div className="error">{password.error}</div>}
+					<TextField {...password} type="password" floatingLabelText="Password" errorText={password.touched && password.error && <div className="error">{password.error}</div>} />
 				</fieldset>
-				<button action="submit" className="btn btn-primary">Sign in</button>
+				{ this.renderAlert() }
+				<RaisedButton type="submit" label="Sign in" primary={true}></RaisedButton>
 			</form>
 		);
 	}
