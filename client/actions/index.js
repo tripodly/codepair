@@ -1,7 +1,7 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, UPDATE_USER, GET_CARD, LIKE_CARD, DISLIKE_CARD } from './actionTypes';
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARD, LIKE_CARD, DISLIKE_CARD } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
 
@@ -119,14 +119,19 @@ export function authError(error) {
 
 export function signoutUser() {
 	localStorage.removeItem('token');
-	return { type: DEAUTHORIZE_USER };
+	return function(dispatch) {
+		dispatch({ type: DEAUTHORIZE_USER });
+		dispatch({ type: CLEAR_USER });
+	}
 }
 
 // action creator to get new card from database, passes email to identify user and get 
 // a card from their pending list
-export function getCards({ email }) {
+export function getCards() {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/fetch`, { email })
+		axios.get(`${API_URL}/user/cards`, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
 			.then(response => {
 				dispatch({ type: GET_CARDS, payload: response.data })
 			})

@@ -2,7 +2,6 @@
 import { GET_CARDS, LIKE_CARD, DISLIKE_CARD } from '../actions/actionTypes';
 
 
-
 const INITIAL_STATE = { 
 	current: null,
 	initiated: [],

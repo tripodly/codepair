@@ -14,6 +14,12 @@ var userHelpers = {
 
 	},
 
+	getCards: function(req, res, next) {
+		console.log('getCards fired inside userController');
+		console.log('req user attributes are : ',req.user.attributes);
+		next();
+	},
+
 	// Helper function to check authorization status of a user
 	// request object will have header with token on it
 	checkAuth: function(req, res, next) {
