@@ -9,7 +9,7 @@ const API_URL = 'http://localhost:3090';
 // takes object with email and password properties
 export function signinUser({ email, password }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/signin`, { email, password })
+		axios.post(`${API_URL}/user/signin`, { email, password })
 			.then(response => {
 				// if signin is successful, dispatch an action
 				// of type AUTHORIZE_USER
@@ -36,7 +36,7 @@ export function signinUser({ email, password }) {
 
 export function signupUser({ email, name, language, skillLevel, password }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/signup`, { email, name, language, skillLevel, password })
+		axios.post(`${API_URL}/user/signup`, { email, name, language, skillLevel, password })
 			.then(response => {
 				// if signup is successful, dispatch an action
 				// of type AUTHORIZE_USER
@@ -63,7 +63,7 @@ export function signupUser({ email, name, language, skillLevel, password }) {
 
 export function updateUserInfo({ email, name, language, skillLevel }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/updateInfo`, { email, name, language, skillLevel })
+		axios.post(`${API_URL}/user/update`, { email, name, language, skillLevel })
 			.then(response => {
 				// if signup is successful, dispatch an action
 				// of type AUTHORIZE_USER

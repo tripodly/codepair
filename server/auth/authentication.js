@@ -7,7 +7,7 @@ var EnvConfig = require('../config/envConfig');
 
 function tokenForUser(user) {
 	console.log('tokenForUser fired');
-	console.log('user id is : ',user.id);
+	console.log('user id in tokenForUser is : ',user.id);
 	var timestamp = new Date().getTime();
 	return jwt.encode({ sub: user.id, iat: timestamp }, EnvConfig.secret);
 }

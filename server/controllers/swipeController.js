@@ -21,8 +21,9 @@ module.exports = {
 	  });
 	},
 
-//call this function on new user signup
-	addTopending : function(req, res){
+	//call this function on new user signup
+	addToPending : function(req, res){
+		console.log('addToPending in swipeController called, req is : ',req);
 		//adds a pending maatch up from every user to this user and this user to every user
 			new User().fetchAll().then(function(resData){
 				resData.models.forEach(function(user){

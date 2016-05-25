@@ -52,8 +52,8 @@ class Header extends Component {
 			];
 		} else {
 			return [
-				<div style={style.link}><Link to="/signin" key={1}><FlatButton style={style.button} label="Sign In" /></Link></div>,
-				<div style={style.link}><Link to="/signup" key={2}><FlatButton style={style.button} label="Sign Up" /></Link></div>
+				<div style={style.link}><Link to="/signin" key={3}><FlatButton style={style.button} label="Sign In" /></Link></div>,
+				<div style={style.link}><Link to="/signup" key={4}><FlatButton style={style.button} label="Sign Up" /></Link></div>
 			];
 		}
 	}
