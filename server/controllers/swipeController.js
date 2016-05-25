@@ -62,7 +62,7 @@ module.exports = {
 		var flag = false;
 		//check if the user is in the persons accepted yet if not then...
 		var matchedUser = new match({fromUser:user, toUser:deniedUser});
-//check if the user said yes to this current user if so match them together
+	//check if the user said yes to this current user if so match them together
 	new match({toUser:user,fromUser:acceptedUser}).fetch().then(function(fetchedModel){
 				    if(fetchedModel){flag = true;}
 				}).catch(function(err){console.log('error occured in accepted controller with match model',err)});
