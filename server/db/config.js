@@ -1,5 +1,5 @@
 var path = require('path');
-var EnvConfig = require('./config/envConfig');
+var EnvConfig = require('../config/envConfig');
 console.log('inside config : ',EnvConfig.host);
 var db = require('knex')({
 	client: 'mysql',
@@ -22,7 +22,7 @@ db.schema.hasTable('users').then(function(exists){
 			user.varchar('password',255);
 			user.varchar('language',255);
 			user.string('skillLevel',255);
-			user.varchar('github_handle'255);
+			user.varchar('github_handle',255);
 			user.string('profile_url',1000).defaultTo('https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png');
 			user.timestamps();
 		}).then(function (table) {
@@ -35,8 +35,10 @@ db.schema.hasTable('pendings').then(function(exists){
 	if(!exists){
 		db.schema.createTable('pendings',function(pending){
 			pending.increments('id').primary();
-			pending.integer('fromUser',11).unsigned().inTable('users').references('id');
-			pending.integer('toUser',11).unsigned().inTable('users').references('id');
+			pending.integer('fromUser',11).unsigned();
+			pending.foreign('fromUser').references('id').inTable('users');
+			pending.integer('toUser',11).unsigned();
+			pending.foreign('toUser').references('id').inTable('users');
 			pending.timestamps();
 		}).then(function (table) {
       console.log('Created pendings Table', table);
@@ -48,8 +50,10 @@ db.schema.hasTable('matches').then(function(exists){
 	if(!exists){
 		db.schema.createTable('matches',function(match){
 			match.increments('id').primary();
-			match.integer('fromUser',11).unsigned().inTable('users').references('id');
-			match.integer('toUser',11).unsigned().inTable('users').references('id');
+			match.integer('fromUser',11).unsigned();
+			match.foreign('fromUser').references('id').inTable('users');
+			match.integer('toUser',11).unsigned();
+			match.foreign('toUser').references('id').inTable('users');
 			match.timestamps();
 		}).then(function (table) {
       console.log('Created matches Table', table);
@@ -61,8 +65,10 @@ db.schema.hasTable('passes').then(function(exists){
 	if(!exists){
 		db.schema.createTable('passes',function(pass){
 			pass.increments('id').primary();
-			pass.integer('fromUser',11).unsigned().inTable('users').references('id');
-			pass.integer('toUser',11).unsigned().inTable('users').references('id');
+			pass.integer('fromUser',11).unsigned();
+			pass.foreign('fromUser').references('id').inTable('users');
+			pass.integer('toUser',11).unsigned();
+			pass.foreign('toUser').references('id').inTable('users');
 			pass.timestamps();
 		}).then(function (table) {
       console.log('Created passes Table', table);

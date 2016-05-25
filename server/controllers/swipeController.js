@@ -8,7 +8,7 @@ var match = require('../models/match');
 var matches = require('../collections/matches');
 
 var pass = require('../models/pass');
-var passes = require('../collections/pases');
+var passes = require('../collections/passes');
 
 module.exports = {
 
@@ -21,8 +21,9 @@ module.exports = {
 	  });
 	},
 
-//call this function on new user signup
-	addTopending : function(req, res){
+	//call this function on new user signup
+	addToPending : function(req, res){
+		console.log('addToPending in swipeController called, req is : ',req);
 		//adds a pending maatch up from every user to this user and this user to every user
 			new User().fetchAll().then(function(resData){
 				resData.models.forEach(function(user){
@@ -61,7 +62,7 @@ module.exports = {
 		var flag = false;
 		//check if the user is in the persons accepted yet if not then...
 		var matchedUser = new match({fromUser:user, toUser:deniedUser});
-//check if the user said yes to this current user if so match them together
+	//check if the user said yes to this current user if so match them together
 	new match({toUser:user,fromUser:acceptedUser}).fetch().then(function(fetchedModel){
 				    if(fetchedModel){flag = true;}
 				}).catch(function(err){console.log('error occured in accepted controller with match model',err)});

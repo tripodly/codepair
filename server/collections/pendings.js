@@ -1,5 +1,5 @@
 var db = require('../db/config');
-var Match = require('../models/pending');
+var Pending = require('../models/pending');
 
 var Pendings = new db.Collection();
 

@@ -7,12 +7,15 @@ var EnvConfig = require('../config/envConfig');
 
 function tokenForUser(user) {
 	console.log('tokenForUser fired');
-	console.log('user id is : ',user.id);
+	console.log('user id in tokenForUser is : ',user.id);
 	var timestamp = new Date().getTime();
 	return jwt.encode({ sub: user.id, iat: timestamp }, EnvConfig.secret);
 }
 
-// Signin function
+// Signin function:
+// req passed in has user attribute set to false if 
+// signin info was wrong or user does not exist,
+// or a user object with all its attributes
 exports.signin = function(req, res, next) {
 	console.log('signin in authentication fired!');
 	res.send({ token: tokenForUser(req.user), name: req.user.attributes.name, email: req.user.attributes.email, language: req.user.attributes.language, skillLevel: req.user.attributes.skillLevel });
