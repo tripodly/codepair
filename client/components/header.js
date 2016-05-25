@@ -64,7 +64,7 @@ class Header extends Component {
 				style={style.appbar}
 				zDepth={1}
 				showMenuIconButton={false}
-				title={<Link style={style.titleLink} to="/"><span>CodePair</span></Link>}
+				title={<Link style={style.titleLink} to="/"><span className="headerTitle">CodePair</span></Link>}
 				children={
 						<div style={style.links}>
 							{this.renderLinks()}

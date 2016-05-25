@@ -21,7 +21,7 @@ export default class Landing extends Component  {
 	 return (
     <div style={style}>
       <div style={style.child}>
-        <h2>Welcome to CodePair!</h2>
+        <h2 className="landingTitle">Welcome to CodePair!</h2>
         <ReactPlayer url ='https://www.youtube.com/watch?v=Q8TXgCzxEnw' playing={false} />
         <RaisedButton label={"Sign Up"} fullWidth={true} secondary={true}/>
       </div>
