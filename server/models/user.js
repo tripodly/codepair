@@ -23,7 +23,16 @@ var User = db.Model.extend({
 			console.log('isMatch inside comparePassword ? ',isMatch);
 			callback(null, isMatch);
 		});
-	}
+	},
+	passes: function() {
+    return this.hasMany(pass);
+  },
+  pendings: function() {
+    return this.hasMany(pending);
+  },
+  matches: function() {
+    return this.hasMany(match);
+  }
 });
 
 module.exports = User;
