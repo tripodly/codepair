@@ -3,6 +3,13 @@ import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 import { Link } from 'react-router';
 
+const style = {
+	profilePic: {
+		width: 200,
+		height: 200,
+	},
+}
+
 class Profile extends Component {
 	handleFormSubmit(formProps) {
 		this.props.updateUserInfo(formProps);
@@ -26,7 +33,7 @@ class Profile extends Component {
 							</div>
 				      <div>
 				      	<div className="text-xs-center">
-				      		<img className="img-rounded center-block" src={this.props.profilePicture} />
+				      		<img style={style.profilePic} className="img-rounded center-block" src={this.props.profilePicture} />
 				      		<h4>{this.props.profileName}</h4>
 				      		<h5>{this.props.profileEmail}</h5>
 				      	</div>

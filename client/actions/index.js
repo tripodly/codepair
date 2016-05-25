@@ -34,9 +34,9 @@ export function signinUser({ email, password }) {
 	}
 }
 
-export function signupUser({ email, name, language, skillLevel, password,  }) {
+export function signupUser({ email, name, language, skillLevel, password, github_handle, profile_url }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/signup`, { email, name, language, skillLevel, password })
+		axios.post(`${API_URL}/user/signup`, { email, name, language, skillLevel, password, github_handle, profile_url })
 			.then(response => {
 				// if signup is successful, dispatch an action
 				// of type AUTHORIZE_USER
