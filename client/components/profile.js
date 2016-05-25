@@ -8,6 +8,11 @@ class Profile extends Component {
 		this.props.updateUserInfo(formProps);
 	}
 
+	componentWillMount() {
+		console.log('inside componentWillRender in Profile');
+		this.props.getUserInfo();
+	}
+
 	render() {
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
 
@@ -21,7 +26,7 @@ class Profile extends Component {
 							</div>
 				      <div>
 				      	<div className="text-xs-center">
-				      		<img className="img-rounded center-block" src="https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png" />
+				      		<img className="img-rounded center-block" src={this.props.profilePicture} />
 				      		<h4>{this.props.profileName}</h4>
 				      		<h5>{this.props.profileEmail}</h5>
 				      	</div>
@@ -71,7 +76,7 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state){
-	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel };
+	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url };
 }
 
 function validate(formProps) {

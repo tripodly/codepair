@@ -14,6 +14,14 @@ module.exports = (app) => {
 		res.sendFile(path.join(__dirname, '../client/index.html'));
 	});
 
+	app.get('/user/profile', requireAuth, function(req,res,next){
+		console.log('inside get request for user profile');
+		console.log('request is : ',req);
+		var user = req.user.attributes;
+		// if 
+		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url });
+	});
+
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
 		res.sendFile(path.join(__dirname, '../client/index.html'));

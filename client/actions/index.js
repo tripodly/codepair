@@ -61,6 +61,28 @@ export function signupUser({ email, name, language, skillLevel, password,  }) {
 	}
 }
 
+export function getUserInfo() {
+	console.log('inside getUserInfo action creator');
+	return function(dispatch) {
+		axios.get(`${API_URL}/user/profile`, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log(response);
+				// dispatch action to set current users info
+				dispatch({ type: UPDATE_USER, payload: { 
+					id: response.data.id, email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel, github_handle: response.data.github_handle, profile_url: response.data.profile_url
+				}});
+			})
+			.catch(response => {
+				console.log('error in getUserInfo action creator: ',response);
+				dispatch(authError(response.data));
+				dispatch(signoutUser());
+				browserHistory.push('/');
+			})
+	}
+}
+
 export function updateUserInfo({ email, name, language, skillLevel, github_handle, profile_url }) {
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/update`, { email, name, language, skillLevel })
