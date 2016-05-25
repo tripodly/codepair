@@ -45,9 +45,9 @@ class Cards extends Component {
 				<div style={style.pageComponents}>
 					<Card style={style.card}>
 						<CardMedia mediaStyle={style.card.mediaStyle}>
-				    	<img src="http://67.media.tumblr.com/1dffbd34d33fdd60474dbe42e6884dfa/tumblr_o790wre8tn1sr8zk0o1_1280.jpg" />
+				    	<img src="https://avatars0.githubusercontent.com/u/150330?v=3&s=460" />
 		        </CardMedia>
-		        <CardTitle title="Tatyana" subtitle="Butt slut" />
+		        <CardTitle title="Kyle Simpson" subtitle="Javascript Wizard" />
 		        <CardText>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </CardText>
