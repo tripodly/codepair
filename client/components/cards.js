@@ -34,11 +34,27 @@ const style = {
 
 class Cards extends Component {
 
+  handleNoClick() {
+    console.log('No clicked on cards page!');
+    console.log('from_id: ',this.props.userID);
+    console.log('to_id: ',this.props.cardID);
+    this.props.dislikeCard({ from_id: this.props.userID, to_id: this.props.cardID });
+
+  }
+
+  handleYesClick() {
+    console.log('Yes clicked on cards page!');
+    console.log('from_id: ',this.props.userID);
+    console.log('to_id: ',this.props.cardID);
+    this.props.likeCard({ from_id: this.props.userID, to_id: this.props.cardID });
+
+  }
+
 	render() {
 		return (
 			<div style={style}>
 				<div style={style.pageComponents}>
-					<FloatingActionButton style={style.button} backgroundColor={'red'}>
+					<FloatingActionButton onClick={() => this.handleNoClick() } style={style.button} backgroundColor={'red'}>
 			      <No />
 			    </FloatingActionButton>
 				</div>
@@ -64,7 +80,7 @@ class Cards extends Component {
 					</Card>
 				</div>
 				<div style={style.pageComponents}>
-					<FloatingActionButton style={style.button} backgroundColor={'green'}>
+					<FloatingActionButton onClick={() => this.handleYesClick() } style={style.button} backgroundColor={'green'}>
 			      <Yes />
 			    </FloatingActionButton>
 			  </div>
@@ -76,7 +92,7 @@ class Cards extends Component {
 }
 
 function mapStateToProps(state) {
-	return { current: state.cards.current, initiated: state.cards.initiated, uninitiated: state.cards.uninitiated };
+	return { current: state.cards.current, cardID: state.cards.current.id, initiated: state.cards.initiated, uninitiated: state.cards.uninitiated, userID: state.profile.id };
 }
 
 

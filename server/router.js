@@ -61,12 +61,8 @@ module.exports = (app) => {
 	});
 
 	// route if user swipes left on a card
-	app.post('/cards/dislike', requireAuth, function(req,res,next){
-
-	});
+	app.post('/cards/dislike', requireAuth, swipeController.dislike);
 
 	// route if user swipes right on a card
-	app.post('/cards/like', requireAuth, function(req,res,next){
-		
-	});
+	app.post('/cards/like', requireAuth, swipeController.like);
 }
