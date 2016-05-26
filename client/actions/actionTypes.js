@@ -8,3 +8,6 @@ export const GET_CARDS = "GET_CARDS";
 export const CLEAR_CARDS = "CLEAR_CARDS";
 export const LIKE_CARD = "LIKE_CARD";
 export const DISLIKE_CARD = "DISLIKE_CARD";
+export const NEW_MATCH = "NEW_MATCH";
+export const NEW_PENDING = "NEW_PENDING";
+export const NEW_PASS = "NEW_PASS";
