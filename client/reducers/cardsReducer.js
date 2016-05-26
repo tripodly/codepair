@@ -12,11 +12,15 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
 		case GET_CARDS:
-			var initiatedCards = action.payload.cards.initiated;
-			var uninitiatedCards = action.payload.cards.uninitiated;
+			var initiatedCards = action.payload.cards.initiated.slice();
+			console.log('initiatedCards are : ',initiatedCards);
+			var uninitiatedCards = action.payload.cards.uninitiated.slice();
+			console.log('uninitiatedCards are : ',uninitiatedCards);
+			var matched = action.payload.cards.matched.slice();
+
 			var current = initiatedCards.length !== 0 ? initiatedCards.shift() : uninitiatedCards.shift();
 			console.log('current is set to : ',current);
-			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: action.payload.cards.matches };
+			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched };
 		
 		case CLEAR_CARDS:
 			return {...state, current: null, initiated: [], uninitiated: [], matches: [] };

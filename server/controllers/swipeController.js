@@ -80,15 +80,21 @@ module.exports = {
 	dislike: function(req, res) {
 		console.log('dislike in swipeController fired!');
 		console.log('request body is : ',req.body);
-		var from_id = req.body.from_id;
-		var to_id = req.body.to_id;
-		var pending = new Pending({ 'fromUser': to_id, 'toUser': from_id }).fetch().then(function(pendingMatch){
+		var fromID = req.body.from_id;
+		var toID = req.body.to_id;
+		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
 			if(!pendingMatch){
-				console.log('pending match does not exist, create it a new Pass in Passes table');
-
+				console.log('pending match does not exist, create a new Pass in Passes table');
+				new Pass({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
+					res.send({ "match": false, "message": 'New pass created!', "model": pendingModel });
+				})
 			} else {
 				console.log('pending match does exist, delete it and create a new Pass in Passes table');
-				
+				pendingMatch.destroy().then(function(pendingModel){
+					new Pass({ 'fromUser': fromID, 'toUser': toID }).save().then(function(model){
+						res.send({ "match": false, "message": 'New pass created!', "model": model });
+					});
+				})
 			}
 		})
 	},
