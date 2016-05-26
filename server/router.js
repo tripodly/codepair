@@ -40,6 +40,14 @@ module.exports = (app) => {
 
 		});
 	});
+		app.get('/user/edit', requireAuth, userController.editProfile , function(req,res,next){
+		// console.log('inside get request for user cards, request object is : ',req);
+		console.log('inside get request for edit users profile, response object is : ',res);
+		var user = req.user.attributes;
+		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
+
+		});
+	});
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
