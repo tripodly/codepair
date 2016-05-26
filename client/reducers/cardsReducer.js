@@ -23,10 +23,10 @@ export default function(state = INITIAL_STATE, action) {
 		
 		case NEW_MATCH:
 			console.log('NEW_MATCH action received in cardsReducer');
-			var newMatches = matches.slice();
+			var newMatches = state.matches.slice();
 			newMatches.push(state.current);
-			var newInitiatedCards = initiatedCards.slice();
-			var newUninitiatedCards = uninitiatedCards.slice();
+			var newInitiatedCards = state.initiated.slice();
+			var newUninitiatedCards = state.uninitiated.slice();
 			var newCurrent = newInitiatedCards.length !== 0 ? newInitiatedCards.shift() : newUninitiatedCards.length !== 0 ? newUninitiatedCards.shift() : null;
 			if(!newCurrent){
 				return {...state, current: null, initiated: [], uninitiated: [], matches: [] };
@@ -36,8 +36,8 @@ export default function(state = INITIAL_STATE, action) {
 		
 		case NEW_PENDING:
 			console.log('NEW_PENDING action received in cardsReducer');
-			var newInitiatedCards = initiatedCards.slice();
-			var newUninitiatedCards = uninitiatedCards.slice();
+			var newInitiatedCards = state.initiated.slice();
+			var newUninitiatedCards = state.uninitiated.slice();
 			var newCurrent = newInitiatedCards.length !== 0 ? newInitiatedCards.shift() : newUninitiatedCards.length !== 0 ? newUninitiatedCards.shift() : null;
 			if(!newCurrent){
 				return {...state, current: null, initiated: [], uninitiated: [], matches: [] };
@@ -46,8 +46,8 @@ export default function(state = INITIAL_STATE, action) {
 		
 		case NEW_PASS:
 			console.log('NEW_PASS action received in cardsReducer');
-			var newInitiatedCards = initiatedCards.slice();
-			var newUninitiatedCards = uninitiatedCards.slice();
+			var newInitiatedCards = state.initiated.slice();
+			var newUninitiatedCards = state.uninitiated.slice();
 			var newCurrent = newInitiatedCards.length !== 0 ? newInitiatedCards.shift() : newUninitiatedCards.length !== 0 ? newUninitiatedCards.shift() : null;
 			if(!newCurrent){
 				return {...state, current: null, initiated: [], uninitiated: [], matches: [] };
