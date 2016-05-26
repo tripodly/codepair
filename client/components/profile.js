@@ -93,7 +93,7 @@ class Profile extends Component {
 
 		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
-		if(!this.state.matches){
+		if(this.props.waiting){
 			return(
 				<div>
 				 <CircularProgress size={2} />
