@@ -6,8 +6,7 @@ import Header from './header';
 const style = {
   footer: {
     position: 'relative',
-    marginTop: 400,
-    height: 150,
+    height: 136,
     verticalAlign: 'bottom',
     backgroundColor: '#212121',
     color: '#585858',
