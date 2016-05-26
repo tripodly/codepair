@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './header';
 import Paper from 'material-ui/Paper';
 import Footer from './footer';
+
 const style = {
 		paper: {
 				textAlign: 'center',

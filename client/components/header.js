@@ -24,7 +24,7 @@ const style = {
 		display: 'inline-block',
 		verticalAlign: 'middle',
 		textDecoration: 'none',
-		color: 'white',
+		color: '#FFF',
 		float: 'left',
 	},
 	bar: {
