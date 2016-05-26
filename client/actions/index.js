@@ -46,9 +46,11 @@ export function signupUser({ email, name, language, skillLevel, password, github
 				// if signup is successful push user
 				// to their profile page
 				browserHistory.push('/profile');
+
+				var profileUrl = profile_url.length > 0 ? profile_url : 'https://avatars3.githubusercontent.com/u/9919?v=3&s=280';
 				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
-					id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: `https://github.com/${github_handle}.png`
+					id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profileUrl
 				}});
 			})
 			.catch(response => {

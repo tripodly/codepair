@@ -1,6 +1,6 @@
-var db = require('../db/config');
+var Bookshelf = require('../db/config').Bookshelf;
 
-var Pending = db.Model.extend({
+var Pending = Bookshelf.Model.extend({
 	tableName : 'pendings',
 	hashTimestamps : true,
 	initialize : function(){	

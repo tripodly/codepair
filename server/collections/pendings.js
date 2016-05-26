@@ -1,7 +1,7 @@
-var db = require('../db/config');
+var Bookshelf = require('../db/config').Bookshelf;
 var Pending = require('../models/pending');
 
-var Pendings = new db.Collection();
+var Pendings = new Bookshelf.Collection();
 
 Pendings.model = Pending;
 
