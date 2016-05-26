@@ -5,6 +5,8 @@ import Avatar from 'material-ui/Avatar';
 import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import * as actions from '../actions';
 import { Link } from 'react-router';
+import CircularProgress from 'material-ui/CircularProgress';
+
 
 const style = {
 	profilePic: {
@@ -34,14 +36,20 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
-		console.log('inside componentWillRender in Profile');
+		console.log('inside componentWillMount in Profile');
+		console.log('inside componentWillMount this.props.waiting = ',this.props.waiting)
 		this.props.getUserInfo();
+		console.log('inside componentWillMount, after getUserInfo call,  this.props.waiting = ',this.props.waiting)
 		console.log('inside componentWillMount, state.matches is : ', this.state.matches);
 	}
 
-	componentDidUpdate() {
-		console.log('inside componentDidUpdate, state.matches is : ', this.state.matches);
-	}
+	// componentDidUpdate() {
+	// 	console.log('inside componentDidUpdate, state.matches is : ', this.props.matches);
+	// 	 if(!this.props.matches) {
+ //    } else {
+ //    	console.log(this)
+ //    }
+	// }
 
 	handleEditInfo() {
 		flag = !flag;
@@ -58,6 +66,7 @@ class Profile extends Component {
 
 	componentDidMount() {
 		console.log('inside componentDidMount in Profile');
+		console.log('inside componentDidMount this.props.waiting = ',this.props.waiting)
 		this.props.getCards();
 	}
 
@@ -84,7 +93,13 @@ class Profile extends Component {
 
 		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
-
+		if(!this.state.matches){
+			return(
+				<div>
+				 <CircularProgress size={2} />
+				</div>
+			)
+		} else{
 		return (
 			<div className="container-fluid">
 				<div className="row">
@@ -146,11 +161,21 @@ class Profile extends Component {
 				</div>
 			</div>
 		);
+		}
 	}
 }
 
 function mapStateToProps(state){
-	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url, matches: state.cards.matches };
+	return { 
+		profileEmail: state.profile.email, 
+		profileName: state.profile.name, 
+		profileLanguage: state.profile.language, 
+		profileSkillLevel: state.profile.skillLevel, 
+		profileGithub: state.profile.github_handle, 
+		profilePicture: state.profile.profile_url, 
+		matches: state.cards.matches,
+		waiting: state.response.waiting 
+	};
 }
 
 function validate(formProps) {

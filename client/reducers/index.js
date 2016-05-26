@@ -4,12 +4,14 @@ import { reducer as form } from 'redux-form';
 import authReducer from './authReducer';
 import profileReducer from './profileReducer';
 import cardsReducer from './cardsReducer';
+import responseReducer from './responseReducer';
 
 const rootReducer = combineReducers({
 	form,
 	auth: authReducer,
 	profile: profileReducer,
-	cards: cardsReducer
+	cards: cardsReducer,
+	response: responseReducer
 });
 
 export default rootReducer;
