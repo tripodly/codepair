@@ -1,7 +1,7 @@
 var path = require('path');
 var EnvConfig = require('../config/envConfig');
 console.log('inside config : ',EnvConfig.host);
-var db = require('knex')({
+var knex = require('knex')({
 	client: 'mysql',
 	connection: {
 		host			: EnvConfig.host,
@@ -13,9 +13,9 @@ var db = require('knex')({
 	}
 });
 
-db.schema.hasTable('users').then(function(exists){
+knex.schema.hasTable('users').then(function(exists){
 	if(!exists){
-		db.schema.createTable('users',function(user){
+		knex.schema.createTable('users',function(user){
 			user.increments('id').primary();
 			user.string('name',255);
 			user.varchar('email',255);
@@ -31,9 +31,9 @@ db.schema.hasTable('users').then(function(exists){
 	}
 });
 
-db.schema.hasTable('pendings').then(function(exists){
+knex.schema.hasTable('pendings').then(function(exists){
 	if(!exists){
-		db.schema.createTable('pendings',function(pending){
+		knex.schema.createTable('pendings',function(pending){
 			pending.increments('id').primary();
 			pending.integer('fromUser',11).unsigned();
 			pending.foreign('fromUser').references('id').inTable('users');
@@ -46,9 +46,9 @@ db.schema.hasTable('pendings').then(function(exists){
 	}
 });
 
-db.schema.hasTable('matches').then(function(exists){
+knex.schema.hasTable('matches').then(function(exists){
 	if(!exists){
-		db.schema.createTable('matches',function(match){
+		knex.schema.createTable('matches',function(match){
 			match.increments('id').primary();
 			match.integer('fromUser',11).unsigned();
 			match.foreign('fromUser').references('id').inTable('users');
@@ -61,9 +61,9 @@ db.schema.hasTable('matches').then(function(exists){
 	}
 });
 
-db.schema.hasTable('passes').then(function(exists){
+knex.schema.hasTable('passes').then(function(exists){
 	if(!exists){
-		db.schema.createTable('passes',function(pass){
+		knex.schema.createTable('passes',function(pass){
 			pass.increments('id').primary();
 			pass.integer('fromUser',11).unsigned();
 			pass.foreign('fromUser').references('id').inTable('users');
@@ -76,7 +76,8 @@ db.schema.hasTable('passes').then(function(exists){
 	}
 });
 
-var Bookshelf = require('bookshelf')(db);
+
+var Bookshelf = require('bookshelf')(knex);
 
 module.exports = { 
 	Bookshelf: Bookshelf,
