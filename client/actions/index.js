@@ -1,7 +1,7 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, EDIT_PROFILE } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
 
@@ -181,3 +181,20 @@ export function dislikeCard({ from_id, to_id }) {
 			})
 	}
 }
+
+export function updateUserInfo({ user_id, email, name, language, skillLevel }) {
+	console.log('inse the updateuserinfo action, user id = ',user_id)
+	return function(dispatch) {
+		axios.post(`${API_URL}/user/edit`, { user_id, email, name, language, skillLevel })
+			.then(response => {
+				console.log('edit profile info response received');
+				console.log('edit profile info response is : ',response);
+				dispatch({ type: EDIT_PROFILE, payload: response.data.model })
+			})
+			.catch(response => {
+				console.log('error in dislikeCard action creator: ',response);
+			})
+	}
+}
+
+
