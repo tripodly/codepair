@@ -183,6 +183,7 @@ export function dislikeCard({ from_id, to_id }) {
 }
 
 export function updateUserInfo({ user_id, email, name, language, skillLevel }) {
+	console.log('inse the updateuserinfo action, user id = ',user_id)
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/edit`, { user_id, email, name, language, skillLevel })
 			.then(response => {

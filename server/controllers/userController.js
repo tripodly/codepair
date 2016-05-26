@@ -95,8 +95,9 @@ var userHelpers = {
 	},
 
 	editProfileInfo(req, res){
-		var currentUserId = req.user.attributes.id;
-		var newUserObj = { 
+		console.log('inside editprofileinfo in usercontroller, req is = ',req.user)
+		var currentUser = req.user.attributes;
+		var userObj = { 
 			id: currentUserId.id, 
 			name: currentUserId.name, 
 			email: currentUserId.email, 
@@ -107,25 +108,29 @@ var userHelpers = {
 		};
 		var updateProfile = new Promise(function(resolve, reject){
 			knex('users')
-			  .where('id', '=', currentUserId.id)
+			  .where('id', '=', userObj.id)
 			  .update({
-			    email: currentUserId.email || undefined,
-			    name: currentUserId.name || undefined ,
-			    language: currentUserId.language || undefined ,
-			    skillLevel: currentUserId.skillLevel || undefined
+			    email: userObj.email || undefined,
+			    name: userObj.name || undefined ,
+			    language: userObj.language || undefined ,
+			    skillLevel: userObj.skillLevel || undefined
 				})
 			  .then(function(response){
 				console.log('inside update profile knex update statement');
 				console.log('response from profile update query is : ',response);
 				resolve(response);
-				res.send({	
-					id: userObject.id, 
-					name: userObject.name, 
-					email: userObject.email, 
-					language: userObject.language, 
-					skillLevel: userObject.skillLevel
-				})
 			});
+		});
+
+		updateProfile.then(function(response){
+			console.log('response from updateProfile is : ',response);
+			res.send({	
+				id: userObject.id, 
+				name: userObject.name, 
+				email: userObject.email, 
+				language: userObject.language, 
+				skillLevel: userObject.skillLevel
+			})
 		});
 	},
 	getMatchedUsers: function(currentUserId) {
