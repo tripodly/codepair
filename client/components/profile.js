@@ -8,7 +8,7 @@ const style = {
 		width: 200,
 		height: 200,
 	},
-	editButotn:{
+	editButton:{
 		margin: 5
 	}
 }
@@ -33,7 +33,13 @@ class Profile extends Component {
 	componentWillMount() {
 		console.log('inside componentWillRender in Profile');
 		this.props.getUserInfo();
+		console.log('inside componentWillMount, state.matches is : ', this.state.matches);
 	}
+
+	componentDidUpdate() {
+		console.log('inside componentDidUpdate, state.matches is : ', this.state.matches);
+	}
+
 	handleEditInfo() {
 		flag = !flag;
 		prompt = flag ? ' Edit info:':'Cancel';
@@ -44,9 +50,7 @@ class Profile extends Component {
 			language:this.props.profileLanguage,
 			skill:this.props.profileSkillLevel
 			});
-
 		console.log('in here now',this.state.name);
-
 	}
 
 	componentDidMount() {
@@ -54,7 +58,7 @@ class Profile extends Component {
 		this.props.getCards();
 	}
 
-	
+
 	handleOnChangeInput(event,field){
 		console.log(event.target.value)
 		switch(field) {
@@ -96,7 +100,7 @@ class Profile extends Component {
 				    </div>
 				    <div className="col-md-4">
 				      <div>
-				      	<div style={style.editButotn} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
+				      	<div style={style.editButton} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
 				      	<div>
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
@@ -138,7 +142,7 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state){
-	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url };
+	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url, matches: state.cards.matches };
 }
 
 function validate(formProps) {
