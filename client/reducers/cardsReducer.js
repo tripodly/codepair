@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
 		case GET_CARDS:
+			console.log('inside GET_CARDS in cardsReducer:');
 			var initiatedCards = action.payload.cards.initiated.slice();
 			console.log('initiatedCards are : ',initiatedCards);
 			var uninitiatedCards = action.payload.cards.uninitiated.slice();
@@ -20,6 +21,8 @@ export default function(state = INITIAL_STATE, action) {
 
 			var current = initiatedCards.length !== 0 ? initiatedCards.shift() : uninitiatedCards.shift();
 			console.log('current is set to : ',current);
+			console.log('after setting current - initiatedCards are : ',initiatedCards);
+			console.log('after setting current - uninitiatedCards are : ',uninitiatedCards);
 			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched };
 		
 		case CLEAR_CARDS:

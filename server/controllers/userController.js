@@ -168,7 +168,17 @@ var userHelpers = {
 				// res.cards.initiated = initiated;
 				// res.cards.matched = matched;
 				var user = req.user.attributes;
-				res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
+				var userObject = { 
+					id: user.id, 
+					name: user.name, 
+					email: user.email, 
+					language: user.language, 
+					skillLevel: user.skillLevel, 
+					github_handle: user.github_handle, 
+					profile_url: user.profile_url 
+				};
+				console.log('Inside setTimeout in userController.getCards, userObject is : ',userObject);
+				res.send({ id: userObject.id, name: userObject.name, email: userObject.email, language: userObject.language, skillLevel: userObject.skillLevel, github_handle: userObject.github_handle, profile_url: userObject.profile_url,
 					cards: {
 						uninitiated: collection.models,
 						initiated: pendingUsers,
