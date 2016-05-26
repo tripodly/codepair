@@ -15,10 +15,6 @@ export const NEW_PENDING = "NEW_PENDING";
 export const NEW_PASS = "NEW_PASS";
 export const EDIT_PROFILE = "EDIT_PROFILE";
 
-// chat action types
-export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
-export const TYPING = 'TYPING';
-export const STOP_TYPING = 'STOP_TYPING';
-export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';
->>>>>>> [setup] action types for chat
+
+
+
