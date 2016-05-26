@@ -117,11 +117,14 @@ export function signoutUser() {
 // action creator to get new card from database, passes email to identify user and get 
 // a card from their pending list
 export function getCards() {
+	console.log('getCards action creator called');
 	return function(dispatch) {
 		axios.get(`${API_URL}/user/cards`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
+				console.log('getCards response received');
+				console.log('getCards response is : ',response);
 				dispatch({ type: GET_CARDS, payload: response.data })
 			})
 			.catch(response => {

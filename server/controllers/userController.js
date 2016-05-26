@@ -154,13 +154,24 @@ var userHelpers = {
 			// 	return (_.includes(matchIDs, user.id)) && (_.includes(passIDs, user.id)) && (_.includes(pendingIDs, user.id))
 			// }).map(function(user){
 			// 	return user.attributes;
-			// });
+			// });i
 
 			setTimeout(function(){
 				console.log('inside getCards uninitiated array is : ',collection.models);
 				console.log('inside getCards initiated array is : ',initiated);
 				console.log('inside getCards matched array is : ',matched);
-				next();
+				// res.cards.uninitiated = collection.models;
+				// res.cards.initiated = initiated;
+				// res.cards.matched = matched;
+				var user = req.user.attributes;
+				res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
+					cards: {
+						uninitiated: collection.models,
+						initiated: initiated,
+						matched: matched
+					}
+				});
+				// next();
 			},1000);
 		});
 		
