@@ -28,7 +28,7 @@ var userHelpers = {
 
 		var initiateModel = new Pending({ toUser: req.user.attributes.id });
 		var initiated = Pendings.where(initiateModel);
-
+		// console.log('userController - initated at line 31 is : ', initiated);
 		var uninitiated = [];
 		var matched = [];
 
@@ -54,7 +54,7 @@ var userHelpers = {
 						// Removes pending user from collection
 						// pendingUser = new User({ id: pending.attributes.toUser });
 
-						pendingUsers.push(collection.get(pending.attributes.toUser));
+						// pendingUsers.push(collection.get(pending.attributes.toUser));
 						collection.remove(collection.get(pending.attributes.toUser));
 
 						pendingIDs.push(pending.attributes.toUser)
@@ -69,7 +69,7 @@ var userHelpers = {
 						pendingIDs.push(pending.attributes.fromUser)
 					}
 				})
-				console.log('pendingIDs after for each are : ',pendingIDs)
+				// console.log('pendingIDs after for each are : ',pendingIDs)
 				// console.log('pendingUsers after for each are : ',pendingUsers)
 				pendingsDone = true;
 			})
@@ -105,7 +105,7 @@ var userHelpers = {
 					}
 				})
 
-				console.log('matchIDs after for each are : ',matchIDs)
+				// console.log('matchIDs after for each are : ',matchIDs)
 				// console.log('matchUsers after for each are : ',matchUsers)
 				matchesDone = true;
 			})
@@ -139,7 +139,7 @@ var userHelpers = {
 					}
 				})
 
-				console.log('passIDs after for each are : ',passIDs)
+				// console.log('passIDs after for each are : ',passIDs)
 				// console.log('passUsers after for each are : ',passUsers)
 				passesDone = true;
 			})
@@ -157,9 +157,9 @@ var userHelpers = {
 			// });i
 
 			setTimeout(function(){
-				console.log('inside getCards uninitiated array is : ',collection.models);
-				console.log('inside getCards initiated array is : ',initiated);
-				console.log('inside getCards matched array is : ',matched);
+				// console.log('inside getCards uninitiated array is : ',collection.models);
+				// console.log('inside getCards initiated array is : ',initiated);
+				// console.log('inside getCards matched array is : ',matched);
 				// res.cards.uninitiated = collection.models;
 				// res.cards.initiated = initiated;
 				// res.cards.matched = matched;
@@ -167,7 +167,7 @@ var userHelpers = {
 				res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
 					cards: {
 						uninitiated: collection.models,
-						initiated: initiated,
+						initiated: pendingUsers,
 						matched: matched
 					}
 				});
