@@ -15,7 +15,13 @@ let prompt = 'Edit info:'
 class Profile extends Component {
 	constructor(props){
 		super(props);
-		this.state = {}
+
+		this.state = {
+			email: this.props.profileEmail,
+			name:this.props.profileName,
+			language:this.props.profileLanguage,
+			skill:this.props.profileSkillLevel
+		}
 	}
 	handleFormSubmit(formProps) {
 		this.props.updateUserInfo(formProps);
@@ -26,11 +32,18 @@ class Profile extends Component {
 		this.props.getUserInfo();
 	}
 	handleEditInfo() {
-		console.log('in here now');
 		flag = !flag;
 		prompt = flag ? ' Edit info:':'Cancel';
-		this.setState({
-		});
+		//this.setState({name:this.state.name,email:this.state.email,language:this.state.language,skill:this.state.skill})
+			this.setState({
+			email: this.props.profileEmail,
+			name:this.props.profileName,
+			language:this.props.profileLanguage,
+			skill:this.props.profileSkillLevel
+			});
+
+		console.log('in here now',this.state.name);
+
 	}
 
 	componentDidMount() {
@@ -38,7 +51,9 @@ class Profile extends Component {
 		this.props.getCards();
 	}
 
+
 	render() {
+
 		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
 
@@ -65,22 +80,22 @@ class Profile extends Component {
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
 				      				<label>Email:</label>
-				      				<input {...email} placeholder={this.props.profileEmail} disabled={flag} className="form-control"/>
-				      				{email.touched && email.error && <div className="error">{email.error}</div>}
+				      				<input {...email} onChange={(event)=> this.handleOnChangeInput(event,'email')}  value={this.state.email} disabled={flag} className="form-control" placeholder={this.props.profileEmail}/>
+				      				{email.touched && email.value && <div className="error">{email.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Name:</label>
-				      				<input {...name} className="form-control" placeholder={this.props.profileName} disabled={flag}/>
+				      				<input {...name} value={this.state.name} onChange={(event)=> this.handleOnChangeInput(event,'name')} className="form-control" disabled={flag} placeholder={this.props.profileName}/>
 				      				{name.touched && name.error && <div className="error">{name.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Language:</label>
-				      				<input {...language} className="form-control" placeholder={this.props.profileLanguage} disabled={flag}/>
+				      				<input {...language} onChange={(event)=> this.handleOnChangeInput(event,'language')} className="form-control"  value={this.state.language} disabled={flag} placeholder={this.props.profileLanguage}/>
 				      				{language.touched && language.error && <div className="error">{language.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Skill level:</label>
-				      				<input {...skillLevel} className="form-control" placeholder={this.props.profileSkillLevel} disabled={flag} />
+				      				<input {...skillLevel} onChange={(event)=> this.handleOnChangeInput(event,'skill')} className="form-control"  value={this.state.skill} disabled={flag} placeholder={this.props.profileSkillLevel}/>
 				      				{skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>}
 				      			</fieldset>
 				      			<button action="submit" className="btn btn-primary" hidden={flag} onClick={()=> this.handleEditInfo()}>Confirm</button>
