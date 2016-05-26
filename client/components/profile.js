@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'; 
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import * as actions from '../actions';
 import { Link } from 'react-router';
 
@@ -131,6 +134,11 @@ class Profile extends Component {
 				    <div className="col-md-4">
 				      <div>
 				      	<h3 className="text-xs-center">Matches</h3>
+				      	<List>
+				      		{ this.props.matches.map(match => 
+				      			<ListItem leftAvatar={<Avatar src={match.profile_url} />} primaryText={match.name} secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}/>
+				      		)}
+				      	</List>
 				      	<Link to="/cards"><button>Match me!</button></Link>
 				      </div>
 				    </div>
