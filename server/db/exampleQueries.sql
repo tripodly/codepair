@@ -29,5 +29,14 @@ SELECT U.* FROM `users` AS U WHERE U.id IN (
 
 # TO GET OTHERS (placed into uninitiated array):
 ## Selects records of all users who have not liked nor disliked the current user and who the current user has not liked or disliked:
-SELECT U.* FROM `users` AS U WHERE U.id IN (
-	);
+SELECT U.* FROM `users` AS U WHERE U.id NOT IN (
+  SELECT P.`fromUser` FROM `pendings` AS P WHERE `toUser` = 20
+    UNION 
+  SELECT M.`fromUser` FROM `matches` AS M WHERE `toUser` = 20 
+    UNION
+	SELECT M.`toUser` FROM `matches` AS M WHERE `fromUser` = 20
+    UNION
+  SELECT P.`fromUser` from `passes` AS P WHERE `toUser` = 20
+    UNION
+  SELECT P.`toUser` from `passes` AS P WHERE `fromUser` = 20
+) AND u.id != 20;
