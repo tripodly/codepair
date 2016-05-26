@@ -20,6 +20,11 @@ class Profile extends Component {
 		this.props.getUserInfo();
 	}
 
+	componentDidMount() {
+		console.log('inside componentDidMount in Profile');
+		this.props.getCards();
+	}
+
 	render() {
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
 

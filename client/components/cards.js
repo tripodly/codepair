@@ -45,9 +45,9 @@ class Cards extends Component {
 				<div style={style.pageComponents}>
 					<Card style={style.card}>
 						<CardMedia mediaStyle={style.card.mediaStyle}>
-				    	<img src="https://avatars0.githubusercontent.com/u/150330?v=3&s=460" />
+				    	<img src={this.props.current.profile_url} />
 		        </CardMedia>
-		        <CardTitle title="Kyle Simpson" subtitle="Javascript Wizard" />
+		        <CardTitle title={this.props.current.name} subtitle={`${this.props.current.language} - ${this.props.current.skillLevel}`} />
 		        <CardText>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </CardText>
@@ -55,7 +55,7 @@ class Cards extends Component {
               <RaisedButton
                     label="Github Link"
                     linkButton={true}
-                    href="https://github.com/callemall/material-ui"
+                    href={`https://github.com/${this.props.current.github_handle}`}
                     secondary={true}
                     style={style.button}
                     icon={<FontIcon className="muidocs-icon-custom-github" />}
@@ -76,7 +76,7 @@ class Cards extends Component {
 }
 
 function mapStateToProps(state) {
-	return { state };
+	return { current: state.cards.current, initiated: state.cards.initiated, uninitiated: state.cards.uninitiated };
 }
 
 

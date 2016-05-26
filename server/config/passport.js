@@ -13,10 +13,9 @@ var localLogin = new LocalStrategy(localOptions, function(email, password, done)
 	// Verify this username and password, call done with the user
 	// if it is the correct email and password
 	// otherwise, call done with false
-	console.log('email passed in is : ',email);
 	new User({ email: email }).fetch().then(function(user,error) {
 		if (error) { 
-			console.log('error in localLogin, err is : ',err);
+			console.log('error in localLogin');
 			return done(err); 
 		}
 		if (!user) { 
@@ -48,14 +47,10 @@ var jwtOptions = {
 
 // Create JWT strategy
 var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-	console.log('inside jwtLogin in passport.js');
 	// See if the user ID in the payload exists in our database
 	// If it does, call 'done' with that other
 	// otherwise, call 'done' without a user object
 	new User({ id: payload.sub }).fetch().then( function(user, error) {
-		console.log('inside jwtLogin');
-		console.log('error is : ',error);
-		console.log('user is : ',user);
 		// If there is an error in fetching the user
 		if (error) { 
 			// Return the error in done

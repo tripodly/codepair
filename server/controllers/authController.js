@@ -55,7 +55,7 @@ exports.signup = function(req, res, next) {
 		});
 
 		user.save().then(function(newUser) {
-			console.log('user saved in auth signup');
+			console.log('New user created in authController.signup!');
 			Users.add(newUser);
 
 			// Respond to request indicating the user was created

@@ -3,10 +3,13 @@ var path = require('path');
 var Auth = require('./controllers/authController');
 var passportService = require('./config/passport');
 var passport = require('passport');
+
+var userController = require('./controllers/userController');
 var swipeController = require('./controllers/swipeController');
 
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
+
 
 module.exports = (app) => {
 	// route to get index route
@@ -16,16 +19,33 @@ module.exports = (app) => {
 
 	app.get('/user/profile', requireAuth, function(req,res,next){
 		console.log('inside get request for user profile');
-		console.log('request is : ',req);
 		var user = req.user.attributes;
-		// if 
-		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url });
+		var userObject = { 
+			id: user.id, 
+			name: user.name, 
+			email: user.email, 
+			language: user.language, 
+			skillLevel: user.skillLevel, 
+			github_handle: user.github_handle, 
+			profile_url: user.profile_url 
+		};
+		res.send(userObject);
+	});
+
+	app.get('/user/cards', requireAuth, userController.getCards, function(req,res,next){
+		// console.log('inside get request for user cards, request object is : ',req);
+		console.log('inside get request for user cards, response object is : ',res);
+		var user = req.user.attributes;
+		res.send({ id: user.id, name: user.name, email: user.email, language: user.language, skillLevel: user.skillLevel, github_handle: user.github_handle, profile_url: user.profile_url,
+
+		});
 	});
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
-		res.sendFile(path.join(__dirname, '../client/index.html'));
-		// res.redirect('/');
+		// TODO: change to send back index.html
+		// res.sendFile(path.join(__dirname, '../client/index.html'));
+		res.redirect('/');
 	});
 
 	// route when user signs in

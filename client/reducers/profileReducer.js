@@ -1,4 +1,4 @@
-import { UPDATE_USER } from '../actions/actionTypes';
+import { CLEAR_USER, UPDATE_USER } from '../actions/actionTypes';
 
 const INITIAL_STATE = { 
 	id: "",
@@ -12,6 +12,9 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
+		case CLEAR_USER:
+			console.log('CLEAR_USER action received in profileReducer');
+			return {...state, id: "", email: "", name: "", language: "", skillLevel: "", github_handle: "", profile_url: "" }; 
 		// if actionType is UPDATE_USER
 		case UPDATE_USER:
 			console.log('UPDATE_USER action received in profileReducer');
