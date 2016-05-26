@@ -10,8 +10,8 @@ html,body, #app{
 @font-face {
  font-family: "True_Lies";
  src: local("True Lies"),
- url("fonts/True_Lies.woff") format('woff'),
- url("fonts/True_Lies.eot") format('eot');
+ url("type/True_Lies.woff") format('woff'),
+ url("type/True_Lies.eot") format('eot');
 }
 
 .headerTitle {

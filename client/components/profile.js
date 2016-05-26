@@ -8,9 +8,24 @@ const style = {
 		width: 200,
 		height: 200,
 	},
+	editButotn:{
+		margin: 5
+	}
 }
+let flag = true;
+let prompt = 'Edit info:'
 
 class Profile extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			email: this.props.profileEmail,
+			name:this.props.profileName,
+			language:this.props.profileLanguage,
+			skill:this.props.profileSkillLevel
+		}
+	}
 	handleFormSubmit(formProps) {
 		this.props.updateUserInfo(formProps);
 	}
@@ -19,13 +34,48 @@ class Profile extends Component {
 		console.log('inside componentWillRender in Profile');
 		this.props.getUserInfo();
 	}
+	handleEditInfo() {
+		flag = !flag;
+		prompt = flag ? ' Edit info:':'Cancel';
+		//this.setState({name:this.state.name,email:this.state.email,language:this.state.language,skill:this.state.skill})
+			this.setState({
+			email: this.props.profileEmail,
+			name:this.props.profileName,
+			language:this.props.profileLanguage,
+			skill:this.props.profileSkillLevel
+			});
+
+		console.log('in here now',this.state.name);
+
+	}
 
 	componentDidMount() {
 		console.log('inside componentDidMount in Profile');
 		this.props.getCards();
 	}
 
+	
+	handleOnChangeInput(event,field){
+		console.log(event.target.value)
+		switch(field) {
+	    case 'name':
+	        this.setState({name:event.target.value});
+	        break;
+	    case 'email':
+	         this.setState({email:event.target.value});
+	        break;
+	    case 'language':
+	    		 this.setState({language:event.target.value});
+	    		 break;
+	    case 'skill':
+	    			this.setState({skill:event.target.value});
+	    			break;
+			}
+	}
+
 	render() {
+
+		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
 
 		return (
@@ -46,30 +96,30 @@ class Profile extends Component {
 				    </div>
 				    <div className="col-md-4">
 				      <div>
-				      	<h3 className="text-xs-center">Edit info:</h3>
+				      	<div style={style.editButotn} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
 				      	<div>
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
 				      				<label>Email:</label>
-				      				<input {...email} className="form-control"/>
-				      				{email.touched && email.error && <div className="error">{email.error}</div>}
+				      				<input {...email} onChange={(event)=> this.handleOnChangeInput(event,'email')}  value={this.state.email} disabled={flag} className="form-control" placeholder={this.props.profileEmail}/>
+				      				{email.touched && email.value && <div className="error">{email.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Name:</label>
-				      				<input {...name} className="form-control"/>
+				      				<input {...name} value={this.state.name} onChange={(event)=> this.handleOnChangeInput(event,'name')} className="form-control" disabled={flag} placeholder={this.props.profileName}/>
 				      				{name.touched && name.error && <div className="error">{name.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Language:</label>
-				      				<input {...language} className="form-control"/>
+				      				<input {...language} onChange={(event)=> this.handleOnChangeInput(event,'language')} className="form-control"  value={this.state.language} disabled={flag} placeholder={this.props.profileLanguage}/>
 				      				{language.touched && language.error && <div className="error">{language.error}</div>}
 				      			</fieldset>
 				      			<fieldset className="form-group">
 				      				<label>Skill level:</label>
-				      				<input {...skillLevel} className="form-control"/>
+				      				<input {...skillLevel} onChange={(event)=> this.handleOnChangeInput(event,'skill')} className="form-control"  value={this.state.skill} disabled={flag} placeholder={this.props.profileSkillLevel}/>
 				      				{skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>}
 				      			</fieldset>
-				      			<button action="submit" className="btn btn-primary">Confirm</button>
+				      			<button action="submit" className="btn btn-primary" hidden={flag} onClick={()=> this.handleEditInfo()}>Confirm</button>
 				      		</form>
 				      	</div>
 				      </div>

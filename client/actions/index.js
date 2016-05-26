@@ -48,7 +48,7 @@ export function signupUser({ email, name, language, skillLevel, password, github
 				browserHistory.push('/profile');
 				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
-					id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profile_url
+					id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: `https://github.com/${github_handle}.png`
 				}});
 			})
 			.catch(response => {
