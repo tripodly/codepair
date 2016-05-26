@@ -94,6 +94,40 @@ var userHelpers = {
 		
 	},
 
+	editProfileInfo(req, res){
+		var currentUserId = req.user.attributes.id;
+		var newUserObj = { 
+			id: currentUserId.id, 
+			name: currentUserId.name, 
+			email: currentUserId.email, 
+			language: currentUserId.language, 
+			skillLevel: currentUserId.skillLevel, 
+			github_handle: currentUserId.github_handle, 
+			profile_url: currentUserId.profile_url 
+		};
+		var updateProfile = new Promise(function(resolve, reject){
+			knex('users')
+			  .where('id', '=', currentUserId.id)
+			  .update({
+			    email: currentUserId.email || undefined,
+			    name: currentUserId.name || undefined ,
+			    language: currentUserId.language || undefined ,
+			    skillLevel: currentUserId.skillLevel || undefined
+				})
+			  .then(function(response){
+				console.log('inside update profile knex update statement');
+				console.log('response from profile update query is : ',response);
+				resolve(response);
+				res.send({	
+					id: userObject.id, 
+					name: userObject.name, 
+					email: userObject.email, 
+					language: userObject.language, 
+					skillLevel: userObject.skillLevel
+				})
+			});
+		});
+	},
 	getMatchedUsers: function(currentUserId) {
 		var matches = [];
 		return new Promise(function(resolve, reject) {

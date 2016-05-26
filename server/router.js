@@ -40,7 +40,8 @@ module.exports = (app) => {
 
 		});
 	});
-		app.get('/user/edit', requireAuth, userController.editProfile , function(req,res,next){
+	
+	app.get('/user/edit', requireAuth, userController.editProfileInfo , function(req,res,next){
 		// console.log('inside get request for user cards, request object is : ',req);
 		console.log('inside get request for edit users profile, response object is : ',res);
 		var user = req.user.attributes;
