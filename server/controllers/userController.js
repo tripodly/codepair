@@ -29,15 +29,16 @@ var userHelpers = {
 	},
 
 	getCards: function(req, res, next) {
+		var currentUser = req.user.attributes;
 		var currentUserId = req.user.attributes.id;
 		var userObject = { 
-			id: currentUserId.id, 
-			name: currentUserId.name, 
-			email: currentUserId.email, 
-			language: currentUserId.language, 
-			skillLevel: currentUserId.skillLevel, 
-			github_handle: currentUserId.github_handle, 
-			profile_url: currentUserId.profile_url 
+			id: currentUser.id, 
+			name: currentUser.name, 
+			email: currentUser.email, 
+			language: currentUser.language, 
+			skillLevel: currentUser.skillLevel, 
+			github_handle: currentUser.github_handle, 
+			profile_url: currentUser.profile_url 
 		};
 
 		// Query to select matches array
@@ -95,8 +96,9 @@ var userHelpers = {
 	},
 
 	editProfileInfo(req, res){
-		console.log('inside editprofileinfo in usercontroller, req is = ',req.user)
+		console.log('inside editprofileinfo in usercontroller, req is = ',req)
 		var currentUser = req.user.attributes;
+		var currentUserId = req.user.attributes.id;
 		var userObj = { 
 			id: currentUserId.id, 
 			name: currentUserId.name, 

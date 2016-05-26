@@ -34,7 +34,7 @@ module.exports = (app) => {
 
 	app.get('/user/cards', requireAuth, userController.getCards);
 
-	app.get('/user/edit', requireAuth, userController.editProfileInfo);
+	app.post('/user/edit', requireAuth, userController.editProfileInfo);
 
 
 	// catch all route which redirects to index

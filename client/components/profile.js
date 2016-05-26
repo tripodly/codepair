@@ -32,6 +32,8 @@ class Profile extends Component {
 		}
 	}
 	handleFormSubmit(formProps) {
+		console.log('handleFormSubmit called');
+		console.log('this is the formprops in profile.js',formProps);
 		this.props.updateUserInfo(formProps);
 	}
 
@@ -61,7 +63,7 @@ class Profile extends Component {
 			language:this.props.profileLanguage,
 			skill:this.props.profileSkillLevel
 			});
-		console.log('in here now',this.state.name);
+		console.log('inside handleEditInfo this.state.name is : ',this.state.name);
 	}
 
 	componentDidMount() {

@@ -182,17 +182,16 @@ export function dislikeCard({ from_id, to_id }) {
 	}
 }
 
-export function updateUserInfo({ user_id, email, name, language, skillLevel }) {
-	console.log('inse the updateuserinfo action, user id = ',user_id)
+export function updateUserInfo({ email, name, language, skillLevel }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/edit`, { user_id, email, name, language, skillLevel })
+		axios.post(`${API_URL}/user/edit`, { email, name, language, skillLevel })
 			.then(response => {
 				console.log('edit profile info response received');
 				console.log('edit profile info response is : ',response);
-				dispatch({ type: EDIT_PROFILE, payload: response.data.model })
+				// dispatch({ type: EDIT_PROFILE, payload: response.data.model })
 			})
 			.catch(response => {
-				console.log('error in dislikeCard action creator: ',response);
+				console.log('error in updateUserInfo action creator: ',response);
 			})
 	}
 }
