@@ -54,6 +54,24 @@ class Profile extends Component {
 		this.props.getCards();
 	}
 
+	
+	handleOnChangeInput(event,field){
+		console.log(event.target.value)
+		switch(field) {
+	    case 'name':
+	        this.setState({name:event.target.value});
+	        break;
+	    case 'email':
+	         this.setState({email:event.target.value});
+	        break;
+	    case 'language':
+	    		 this.setState({language:event.target.value});
+	    		 break;
+	    case 'skill':
+	    			this.setState({skill:event.target.value});
+	    			break;
+			}
+	}
 
 	render() {
 
