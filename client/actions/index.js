@@ -165,7 +165,7 @@ export function dislikeCard({ from_id, to_id }) {
 			.then(response => {
 				console.log('dislikeCard response received');
 				console.log('dislikeCard response is : ',response);
-				dispatch({ type: DISLIKE_CARD, payload: response.data })
+				dispatch({ type: NEW_PASS, payload: response.data.model })
 			})
 			.catch(response => {
 				console.log('error in dislikeCard action creator: ',response);
