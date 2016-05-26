@@ -77,4 +77,8 @@ db.schema.hasTable('passes').then(function(exists){
 });
 
 var Bookshelf = require('bookshelf')(db);
-module.exports = Bookshelf;
+
+module.exports = { 
+	Bookshelf: Bookshelf,
+	knex: knex
+};

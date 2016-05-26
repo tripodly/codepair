@@ -1,11 +1,15 @@
 var User = require('../models/user');
 var Users = require('../collections/users');
+
 var Pending = require('../models/pending');
 var Pendings = require('../collections/pendings');
+
 var Match = require('../models/match');
 var Matches = require('../collections/matches');
+
 var Pass = require('../models/pass');
 var Passes = require('../collections/passes');
+
 var _ = require('lodash');
 var Promise = require('bluebird');
 

@@ -1,7 +1,7 @@
-var db = require('../db/config');
+var Bookshelf = require('../db/config').Bookshelf;
 var Pass = require('../models/pass');
 
-var Passes = new db.Collection();
+var Passes = new Bookshelf.Collection();
 
 Passes.model = Pass;
 
