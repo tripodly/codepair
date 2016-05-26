@@ -17,6 +17,13 @@ module.exports = (app) => {
 		res.sendFile(path.join(__dirname, '../client/index.html'));
 	});
 
+	// route when user signs in
+	app.post('/user/signin', requireSignin, Auth.signin);
+
+	// route when new user signs up
+	app.post('/user/signup', Auth.signup);
+
+	// route when user gets to their profile page
 	app.get('/user/profile', requireAuth, function(req,res,next){
 		console.log('inside get request for user profile');
 		var user = req.user.attributes;
@@ -32,10 +39,17 @@ module.exports = (app) => {
 		res.send(userObject);
 	});
 
+	// route when user requests their cards
 	app.get('/user/cards', requireAuth, userController.getCards);
 
+	// route when user updates their information
 	app.post('/user/edit', requireAuth, userController.editProfileInfo);
+	
+	// route if user swipes left on a card
+	app.post('/cards/dislike', requireAuth, swipeController.dislike);
 
+	// route if user swipes right on a card
+	app.post('/cards/like', requireAuth, swipeController.like);
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
@@ -44,21 +58,4 @@ module.exports = (app) => {
 		res.redirect('/');
 	});
 
-	// route when user signs in
-	app.post('/user/signin', requireSignin, Auth.signin);
-
-	// route when new user signs up
-	app.post('/user/signup', Auth.signup);
-
-	// route when user updates their information
-	app.post('/user/update',function(req, res){
-		console.log('request inside /updateInfo is : ',req.body);
-		res.send("updateInfo POST received in server!");
-	});
-
-	// route if user swipes left on a card
-	app.post('/cards/dislike', requireAuth, swipeController.dislike);
-
-	// route if user swipes right on a card
-	app.post('/cards/like', requireAuth, swipeController.like);
 }
