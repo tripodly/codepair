@@ -1,14 +1,14 @@
 var User = require('../models/user');
 var Users = require('../collections/users');
 
-var pending = require('../models/pending');
+var Pending = require('../models/pending');
 var Pendings = require('../collections/pendings');
 
-var match = require('../models/match');
-var matches = require('../collections/matches');
+var Match = require('../models/match');
+var Matches = require('../collections/matches');
 
-var pass = require('../models/pass');
-var passes = require('../collections/passes');
+var Pass = require('../models/pass');
+var Passes = require('../collections/passes');
 
 module.exports = {
 
@@ -56,23 +56,58 @@ module.exports = {
 				res.status(200).send('Not a fit!');
 		})
 	},
-		accepted : function(req, res){
+	accepted : function(req, res){
 		var user = req.fromUser.id;
 		var acceptedUser = req.toUser.id;
 		var flag = false;
 		//check if the user is in the persons accepted yet if not then...
 		var matchedUser = new match({fromUser:user, toUser:deniedUser});
-	//check if the user said yes to this current user if so match them together
-	new match({toUser:user,fromUser:acceptedUser}).fetch().then(function(fetchedModel){
+		//check if the user said yes to this current user if so match them together
+		new match({toUser:user,fromUser:acceptedUser}).fetch().then(function(fetchedModel){
 				    if(fetchedModel){flag = true;}
 				}).catch(function(err){console.log('error occured in accepted controller with match model',err)});
-	//delete the match off the pending table
-	new pending({toUser:acceptedUser, fromUser: user}).fetch().then(function(fetchedModel) {
-    fetchedModel.destroy(); 
-}).catch(function(err){console.log('error occured in accepted controller with pending model',err)});
+		//delete the match off the pending table
+		new pending({toUser:acceptedUser, fromUser: user}).fetch()
+		.then(function(fetchedModel) {
+	  	fetchedModel.destroy(); 
+		})
+		.catch(function(err){console.log('error occured in accepted controller with pending model',err)});
 		matchedUser.save().then(function(accepted){
 			res.status(200).send('Looks Like a fit!');
 		})
-	}
+	},
 
+	dislike: function(req, res) {
+		console.log('dislike in swipeController fired!');
+		console.log('request body is : ',req.body);
+		var from_id = req.body.from_id;
+		var to_id = req.body.to_id;
+		var pending = new Pending({ 'fromUser': to_id, 'toUser': from_id }).fetch().then(function(pendingMatch){
+			if(!pendingMatch){
+				console.log('pending match does not exist, create it a new Pass in Passes table');
+
+			} else {
+				console.log('pending match does exist, delete it and create a new Pass in Passes table');
+				
+			}
+		})
+	},
+
+	like: function(req, res) {
+		console.log('like in swipeController fired!');
+		console.log('request body is : ',req.body);
+		var fromID = req.body["from_id"];
+		var toID = req.body["to_id"];
+		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
+			if(!pendingMatch){
+				console.log('pending match does not exist, create it...');
+				
+			} else {
+				console.log('pending match does exist, delete it and create a new Match in Matches table');
+				
+			}
+		})
+	}
 }
+
+
