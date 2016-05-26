@@ -184,7 +184,9 @@ export function dislikeCard({ from_id, to_id }) {
 
 export function updateUserInfo({ email, name, language, skillLevel }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/edit`, { email, name, language, skillLevel })
+		axios.post(`${API_URL}/user/edit`, { email, name, language, skillLevel }, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
 			.then(response => {
 				console.log('edit profile info response received');
 				console.log('edit profile info response is : ',response);
