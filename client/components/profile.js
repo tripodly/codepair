@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form'; 
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import * as actions from '../actions';
 import { Link } from 'react-router';
+import CircularProgress from 'material-ui/CircularProgress';
+
 
 const style = {
 	profilePic: {
 		width: 200,
 		height: 200,
 	},
-	editButotn:{
+	editButton:{
 		margin: 5
 	}
 }
@@ -31,9 +36,21 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
-		console.log('inside componentWillRender in Profile');
+		console.log('inside componentWillMount in Profile');
+		console.log('inside componentWillMount this.props.waiting = ',this.props.waiting)
 		this.props.getUserInfo();
+		console.log('inside componentWillMount, after getUserInfo call,  this.props.waiting = ',this.props.waiting)
+		console.log('inside componentWillMount, state.matches is : ', this.state.matches);
 	}
+
+	// componentDidUpdate() {
+	// 	console.log('inside componentDidUpdate, state.matches is : ', this.props.matches);
+	// 	 if(!this.props.matches) {
+ //    } else {
+ //    	console.log(this)
+ //    }
+	// }
+
 	handleEditInfo() {
 		flag = !flag;
 		prompt = flag ? ' Edit info:':'Cancel';
@@ -44,17 +61,16 @@ class Profile extends Component {
 			language:this.props.profileLanguage,
 			skill:this.props.profileSkillLevel
 			});
-
 		console.log('in here now',this.state.name);
-
 	}
 
 	componentDidMount() {
 		console.log('inside componentDidMount in Profile');
+		console.log('inside componentDidMount this.props.waiting = ',this.props.waiting)
 		this.props.getCards();
 	}
 
-	
+
 	handleOnChangeInput(event,field){
 		console.log(event.target.value)
 		switch(field) {
@@ -77,7 +93,13 @@ class Profile extends Component {
 
 		const cancel = 'cancel';
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
-
+		if(this.props.waiting){
+			return(
+				<div>
+				 <CircularProgress size={2} />
+				</div>
+			)
+		} else{
 		return (
 			<div className="container-fluid">
 				<div className="row">
@@ -96,7 +118,7 @@ class Profile extends Component {
 				    </div>
 				    <div className="col-md-4">
 				      <div>
-				      	<div style={style.editButotn} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
+				      	<div style={style.editButton} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
 				      	<div>
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
@@ -127,6 +149,11 @@ class Profile extends Component {
 				    <div className="col-md-4">
 				      <div>
 				      	<h3 className="text-xs-center">Matches</h3>
+				      	<List>
+				      		{ this.props.matches.map(match => 
+				      			<ListItem leftAvatar={<Avatar src={match.profile_url} />} primaryText={match.name} secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}/>
+				      		)}
+				      	</List>
 				      	<Link to="/cards"><button>Match me!</button></Link>
 				      </div>
 				    </div>
@@ -134,11 +161,21 @@ class Profile extends Component {
 				</div>
 			</div>
 		);
+		}
 	}
 }
 
 function mapStateToProps(state){
-	return { profileEmail: state.profile.email, profileName: state.profile.name, profileLanguage: state.profile.language, profileSkillLevel: state.profile.skillLevel, profileGithub: state.profile.github_handle, profilePicture: state.profile.profile_url };
+	return { 
+		profileEmail: state.profile.email, 
+		profileName: state.profile.name, 
+		profileLanguage: state.profile.language, 
+		profileSkillLevel: state.profile.skillLevel, 
+		profileGithub: state.profile.github_handle, 
+		profilePicture: state.profile.profile_url, 
+		matches: state.cards.matches,
+		waiting: state.response.waiting 
+	};
 }
 
 function validate(formProps) {

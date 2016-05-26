@@ -1,7 +1,7 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
 
@@ -64,6 +64,9 @@ export function signupUser({ email, name, language, skillLevel, password, github
 export function getUserInfo() {
 	console.log('inside getUserInfo action creator');
 	return function(dispatch) {
+		// Dispatch AWAITING_RESPONSE action
+		dispatch({ type: AWAITING_RESPONSE });
+
 		axios.get(`${API_URL}/user/profile`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
@@ -126,11 +129,15 @@ export function getCards() {
 				console.log('getCards response received');
 				console.log('getCards response is : ',response);
 				dispatch({ type: GET_CARDS, payload: response.data })
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
 				// log it
 				console.log('error in getCard action creator: ',response);
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
 			})
 	}
 }
