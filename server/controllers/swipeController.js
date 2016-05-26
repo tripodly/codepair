@@ -101,10 +101,16 @@ module.exports = {
 		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
 			if(!pendingMatch){
 				console.log('pending match does not exist, create it...');
-				
+				new Pending({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
+					res.send({ "match": false, "message": 'New pending match created!', "model": pendingModel });
+				})
 			} else {
 				console.log('pending match does exist, delete it and create a new Match in Matches table');
-				
+				pendingMatch.destroy().then(function(pendingModel){
+					new Match({ 'fromUser': fromID, 'toUser': toID }).save().then(function(model){
+						res.send({ "match": true, "message": 'New match created!', "model": model });
+					});
+				})
 			}
 		})
 	}

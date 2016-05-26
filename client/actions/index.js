@@ -1,7 +1,7 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, LIKE_CARD, DISLIKE_CARD } from './actionTypes';
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
 
@@ -141,7 +141,15 @@ export function likeCard({ from_id, to_id }) {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				dispatch({ type: LIKE_CARD, payload: response.data })
+				console.log('likeCard response received');
+				console.log('likeCard response is : ',response);
+
+				// If this swipe triggers a match, dispatch the NEW_MATCH action
+				if(response.data.match) {
+					dispatch({ type: NEW_MATCH, payload: response.data.model })
+				} else {
+					dispatch({ type: NEW_PENDING, payload: response.data.model });
+				}
 			})
 			.catch(response => {
 				console.log('error in likeCard action creator: ',response);
@@ -155,6 +163,8 @@ export function dislikeCard({ from_id, to_id }) {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
+				console.log('dislikeCard response received');
+				console.log('dislikeCard response is : ',response);
 				dispatch({ type: DISLIKE_CARD, payload: response.data })
 			})
 			.catch(response => {
