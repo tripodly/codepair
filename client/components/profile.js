@@ -7,6 +7,9 @@ const style = {
 	profilePic: {
 		width: 200,
 		height: 200,
+	},
+	editButotn:{
+		margin: 5
 	}
 }
 let flag = true;
@@ -75,7 +78,7 @@ class Profile extends Component {
 				    </div>
 				    <div className="col-md-4">
 				      <div>
-				      	<div onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
+				      	<div style={style.editButotn} onClick={() => this.handleEditInfo()} className="btn btn-primary">{prompt}</div>
 				      	<div>
 				      		<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				      			<fieldset className="form-group">
