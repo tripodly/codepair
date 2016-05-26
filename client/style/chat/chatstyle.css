@@ -1,18 +1,14 @@
-
-
 .wrapper {
   height: 520px;
   width: 320px;
-  overflow: hidden;
+  overflow:hidden;
   background-color: white;
   position: absolute;
   top: 100px;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+
   box-shadow: 0px 6px 6px 0px rgba(50, 50, 50, 0.5);
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+
 }
 
 .wrapper .inner {
@@ -43,8 +39,6 @@
   right: 0;
   height: 64px;
   z-index: 100;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
 }
 .nav .default-nav {
   height: 64px;
@@ -57,8 +51,7 @@
   border-bottom: 3px solid #ea1c0d;
   color: #ffffff;
   box-shadow: 0px 3px 3px 0px rgba(50, 50, 50, 0.1);
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+
 }
 .nav .default-nav .main-nav {
   position: absolute;
@@ -69,8 +62,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+
 }
 .nav .default-nav .main-nav .toggle {
   height: 32px;
@@ -101,8 +93,7 @@
   margin-right: 50px;
   position: relative;
   line-height: 64px;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+
 }
 .nav .default-nav .main-nav .main-nav-item .main-nav-item-link {
   display: block;
@@ -113,8 +104,7 @@
   line-height: 64px;
   text-decoration: none;
   color: inherit;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+
 }
 
 .bottom {
@@ -139,8 +129,7 @@
   overflow: scroll;
   padding-top: 24px;
   font-weight: 300;
-  -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none;
+  
 }
 .bottom .input:focus {
   outline: none;
@@ -241,8 +230,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
+
   }
   .wrapper .inner {
     height: 100%;
