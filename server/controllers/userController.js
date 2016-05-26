@@ -98,6 +98,7 @@ var userHelpers = {
 	editProfileInfo(req, res){
 		// console.log('inside editprofileinfo in usercontroller, req is = ',req)
 		var currentUser = req.user.attributes;
+		console.log('currentUser inside editprofileinfo is : ',currentUser);
 		var currentUserId = req.user.attributes.id;
 		var userObj = { 
 			id: currentUserId, 
@@ -133,7 +134,9 @@ var userHelpers = {
 				name: userObj.name, 
 				email: userObj.email, 
 				language: userObj.language, 
-				skillLevel: userObj.skillLevel
+				skillLevel: userObj.skillLevel,
+				github_handle: userObj.github_handle,
+				profile_url: userObj.profile_url
 			})
 		});
 	},
