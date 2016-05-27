@@ -23,6 +23,7 @@ exports.signin = function(req, res, next) {
 
 // Signup function
 exports.signup = function(req, res, next) {
+	console.log('inside authController.signup, req body is : ',req.body);
 	var email = req.body.email;
 	var name = req.body.name;
 	var language = req.body.language;

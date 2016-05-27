@@ -4,8 +4,8 @@ const INITIAL_STATE = {
 	id: "",
 	email: "",
 	name: "",
-	language: "",
-	skillLevel: "",
+	language: "JavaScript",
+	skillLevel: "Beginner",
 	github_handle: "",
 	profile_url: "https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png"
 };
@@ -14,7 +14,7 @@ export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
 		case CLEAR_USER:
 			console.log('CLEAR_USER action received in profileReducer');
-			return {...state, id: "", email: "", name: "", language: "", skillLevel: "", github_handle: "", profile_url: "" }; 
+			return {...state, id: "", email: "", name: "", language: "JavaScript", skillLevel: "Beginner", github_handle: "", profile_url: "" }; 
 		// if actionType is UPDATE_USER
 		case UPDATE_USER:
 			console.log('UPDATE_USER action received in profileReducer');
