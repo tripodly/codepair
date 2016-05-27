@@ -43,7 +43,7 @@ var userHelpers = {
 
 		// Query to select matches array
 		var matchesPromise = new Promise(function(resolve,reject){
-			knex('users').select('*').whereIn('id', 
+			knex('users').select('id','name','email','language','skillLevel','github_handle','profile_url').whereIn('id', 
 			knex('matches').select('fromUser').where('toUser',currentUserId).union([
 				knex('matches').select('toUser').where('fromUser',currentUserId)
 			]))
@@ -56,7 +56,7 @@ var userHelpers = {
 
 		// Query to select initiated array
 		var initiatedPromise = new Promise(function(resolve,reject){
-			knex('users').select('*').whereIn('id', knex('pendings').select('fromUser').where('toUser',currentUserId))
+			knex('users').select('id','name','email','language','skillLevel','github_handle','profile_url').whereIn('id', knex('pendings').select('fromUser').where('toUser',currentUserId))
 			.then(function(response){
 				console.log('inside PENDINGS knex select statement');
 				console.log('response from PENDINGS select query is : ',response);
@@ -66,7 +66,7 @@ var userHelpers = {
 
 		// Query to select users for uninitiated array
 		var uninitiatedPromise = new Promise(function(resolve,reject){
-			knex('users').select('*').whereNotIn('id', 
+			knex('users').select('id','name','email','language','skillLevel','github_handle','profile_url').whereNotIn('id', 
 			knex('pendings').select('fromUser').where('toUser',currentUserId).union([
 				knex('pendings').select('toUser').where('fromUser',currentUserId),
 				knex('matches').select('fromUser').where('toUser',currentUserId),
