@@ -1,7 +1,7 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, EDIT_PROFILE } from './actionTypes';
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
 
@@ -88,19 +88,23 @@ export function getUserInfo() {
 	}
 }
 
-export function updateUserInfo({ email, name, language, skillLevel, github_handle, profile_url }) {
+export function updateUserInfo({ email, name, language, skillLevel }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/update`, { email, name, language, skillLevel })
+		axios.post(`${API_URL}/user/edit`, { email, name, language, skillLevel }, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
 			.then(response => {
+				console.log('edit profile info response received');
+				console.log('edit profile info response is : ',response);
 				dispatch({ type: UPDATE_USER, payload: { 
-					email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profile_url
+					email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel, github_handle: response.data.github_handle, profile_url: response.data.profile_url
 				}});
 			})
 			.catch(response => {
 				console.log('error in signupUser action creator: ',response);
 				// -Show an error to the user
 				dispatch(authError(response));
-			});
+			})
 	}
 }
 
@@ -182,19 +186,6 @@ export function dislikeCard({ from_id, to_id }) {
 	}
 }
 
-export function updateUserInfo({ user_id, email, name, language, skillLevel }) {
-	console.log('inse the updateuserinfo action, user id = ',user_id)
-	return function(dispatch) {
-		axios.post(`${API_URL}/user/edit`, { user_id, email, name, language, skillLevel })
-			.then(response => {
-				console.log('edit profile info response received');
-				console.log('edit profile info response is : ',response);
-				dispatch({ type: EDIT_PROFILE, payload: response.data.model })
-			})
-			.catch(response => {
-				console.log('error in dislikeCard action creator: ',response);
-			})
-	}
-}
+
 
 

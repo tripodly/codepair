@@ -29,15 +29,16 @@ var userHelpers = {
 	},
 
 	getCards: function(req, res, next) {
+		var currentUser = req.user.attributes;
 		var currentUserId = req.user.attributes.id;
 		var userObject = { 
-			id: currentUserId.id, 
-			name: currentUserId.name, 
-			email: currentUserId.email, 
-			language: currentUserId.language, 
-			skillLevel: currentUserId.skillLevel, 
-			github_handle: currentUserId.github_handle, 
-			profile_url: currentUserId.profile_url 
+			id: currentUser.id, 
+			name: currentUser.name, 
+			email: currentUser.email, 
+			language: currentUser.language, 
+			skillLevel: currentUser.skillLevel, 
+			github_handle: currentUser.github_handle, 
+			profile_url: currentUser.profile_url 
 		};
 
 		// Query to select matches array
@@ -95,25 +96,28 @@ var userHelpers = {
 	},
 
 	editProfileInfo(req, res){
-		console.log('inside editprofileinfo in usercontroller, req is = ',req.user)
+		// console.log('inside editprofileinfo in usercontroller, req is = ',req)
 		var currentUser = req.user.attributes;
+		console.log('currentUser inside editprofileinfo is : ',currentUser);
+		var currentUserId = req.user.attributes.id;
 		var userObj = { 
-			id: currentUserId.id, 
-			name: currentUserId.name, 
-			email: currentUserId.email, 
-			language: currentUserId.language, 
-			skillLevel: currentUserId.skillLevel, 
-			github_handle: currentUserId.github_handle, 
-			profile_url: currentUserId.profile_url 
+			id: currentUserId, 
+			name: req.body.name, 
+			email: req.body.email, 
+			language: req.body.language, 
+			skillLevel: req.body.skillLevel, 
+			github_handle: currentUser.github_handle, 
+			profile_url: currentUser.profile_url 
 		};
 		var updateProfile = new Promise(function(resolve, reject){
 			knex('users')
-			  .where('id', '=', userObj.id)
+				.select('*')
+			  .where('id', currentUserId)
 			  .update({
-			    email: userObj.email || undefined,
-			    name: userObj.name || undefined ,
-			    language: userObj.language || undefined ,
-			    skillLevel: userObj.skillLevel || undefined
+			    email: req.body.email || undefined,
+			    name: req.body.name || undefined ,
+			    language: req.body.language || undefined ,
+			    skillLevel: req.body.skillLevel || undefined
 				})
 			  .then(function(response){
 				console.log('inside update profile knex update statement');
@@ -123,13 +127,16 @@ var userHelpers = {
 		});
 
 		updateProfile.then(function(response){
-			console.log('response from updateProfile is : ',response);
+			// console.log('response from updateProfile is : ',response);
+			console.log('inside promise resolved, userObj is : ',userObj);
 			res.send({	
-				id: userObject.id, 
-				name: userObject.name, 
-				email: userObject.email, 
-				language: userObject.language, 
-				skillLevel: userObject.skillLevel
+				id: userObj.id, 
+				name: userObj.name, 
+				email: userObj.email, 
+				language: userObj.language, 
+				skillLevel: userObj.skillLevel,
+				github_handle: userObj.github_handle,
+				profile_url: userObj.profile_url
 			})
 		});
 	},
