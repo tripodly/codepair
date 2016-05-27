@@ -6,7 +6,7 @@ import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import * as actions from '../actions';
 import { Link } from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
-
+import MatchItem from './matchItem';
 
 const style = {
 	profilePic: {
@@ -33,8 +33,8 @@ class Profile extends Component {
 	}
 
 	handleFormSubmit(formProps) {
-		console.log('handleFormSubmit called');
-		console.log('this is the formprops in profile.js',formProps);
+		// console.log('handleFormSubmit called');
+		// console.log('this is the formprops in profile.js',formProps);
 		this.props.updateUserInfo(formProps);
 		this.setState({
 			email: formProps.email,
@@ -45,14 +45,18 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
-		console.log('inside componentWillMount in Profile');
+		// console.log('inside componentWillMount in Profile');
 		this.props.getUserInfo();
 	}
 
 	componentDidMount() {
 		this.socket = io();
-		console.log('inside componentDidMount in Profile');
+		// console.log('inside componentDidMount in Profile');
 		this.props.getCards();
+	}
+
+	componentDidUpdate() {
+		this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
 	}
 
 	handleEditInfo() {
@@ -64,11 +68,11 @@ class Profile extends Component {
 			language:this.props.profileLanguage,
 			skill:this.props.profileSkillLevel
 			});
-		console.log('inside handleEditInfo this.state.name is : ',this.state.name);
+		// console.log('inside handleEditInfo this.state.name is : ',this.state.name);
 	}
 
-	handleOnChangeInput(event,field){
-		console.log(event.target.value)
+	handleOnChangeInput(event,field) {
+		// console.log(event.target.value)
 		switch(field) {
 	    case 'name':
 	        this.setState({name:event.target.value});
@@ -83,6 +87,12 @@ class Profile extends Component {
 	    			this.setState({skill:event.target.value});
 	    			break;
 			}
+	}
+
+	handleListItemClick(match) {
+		console.log('List Item Clicked in Profile Page!');
+		console.log('fromUser is : ',this.props.fromUser, ' & toUser is : ',match);
+		this.socket.emit('partner', { fromUser: this.props.fromUser, toUser: match });
 	}
 
 	render() {
@@ -146,8 +156,8 @@ class Profile extends Component {
 				      <div>
 				      	<h3 className="text-xs-center">Matches</h3>
 				      	<List>
-				      		{ this.props.matches.map(match => 
-				      			<ListItem leftAvatar={<Avatar src={match.profile_url} />} primaryText={match.name} secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}/>
+				      		{ this.props.matches.map(match =>
+				      			<MatchItem context={this} handleClick={this.handleListItemClick} match={match} /> 
 				      		)}
 				      	</List>
 				      	<Link to="/cards"><button>Match me!</button></Link>
@@ -163,6 +173,8 @@ class Profile extends Component {
 
 function mapStateToProps(state){
 	return { 
+		fromUser: state.profile,
+		profileID: state.profile.id,
 		profileEmail: state.profile.email, 
 		profileName: state.profile.name, 
 		profileLanguage: state.profile.language, 
