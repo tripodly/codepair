@@ -35,6 +35,7 @@
     "passport-jwt": "^2.0.0",
     "passport-local": "^1.0.0",
     "react": "^15.0.2",
+    "react-ace": "^3.4.1",
     "react-dom": "^15.0.2",
     "react-player": "^0.7.0",
     "react-redux": "^4.4.5",
