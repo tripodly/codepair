@@ -46,10 +46,13 @@ class Profile extends Component {
 
 	componentWillMount() {
 		console.log('inside componentWillMount in Profile');
-		console.log('inside componentWillMount this.props.waiting = ',this.props.waiting)
 		this.props.getUserInfo();
-		console.log('inside componentWillMount, after getUserInfo call,  this.props.waiting = ',this.props.waiting)
-		console.log('inside componentWillMount, state.matches is : ', this.state.matches);
+	}
+
+	componentDidMount() {
+		this.socket = io();
+		console.log('inside componentDidMount in Profile');
+		this.props.getCards();
 	}
 
 	handleEditInfo() {
@@ -63,13 +66,6 @@ class Profile extends Component {
 			});
 		console.log('inside handleEditInfo this.state.name is : ',this.state.name);
 	}
-
-	componentDidMount() {
-		console.log('inside componentDidMount in Profile');
-		console.log('inside componentDidMount this.props.waiting = ',this.props.waiting)
-		this.props.getCards();
-	}
-
 
 	handleOnChangeInput(event,field){
 		console.log(event.target.value)
