@@ -6,11 +6,13 @@ import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+// Imports language libraries to use in Ace Editor
 import 'brace/mode/javascript';
 import 'brace/mode/java';
 import 'brace/mode/python';
 import 'brace/mode/ruby';
 
+// Imports theme to use in Ace Editor
 import 'brace/theme/ambiance';
 
 const style = {

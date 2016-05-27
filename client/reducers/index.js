@@ -8,8 +8,9 @@ import partnerReducer from './partnerReducer';
 import responseReducer from './responseReducer';
 import messagesReducer from './chatReducers/messagesReducer';
 import typingReducer from './chatReducers/typingReducer';
+
 // This is a map of our Redux State object
-// e.g. application state: State = { form:..., auth:..., profile:..., cards:..., response:... }
+// e.g. application state: State = { form:..., auth:..., profile:..., cards:..., messages:..., typing:..., partner:..., response:... }
 
 // state.response.waiting is a boolean to show whether client is
 // currently waiting for a response from the server
@@ -18,7 +19,6 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	profile: profileReducer,
 	cards: cardsReducer,
-	response: responseReducer,
   messages: messagesReducer,
   typing: typingReducer,
 	partner: partnerReducer,
