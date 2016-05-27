@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, RECEIVE_MESSAGE, LOAD_MESSAGES, LOAD_MESSAGES_SUCCESS, LOAD_MESSAGES_FAIL, AUTH_SIGNOUT_SUCCESS} from '../constants/ActionTypes';
+import { ADD_MESSAGE, RECEIVE_MESSAGE, LOAD_MESSAGES, LOAD_MESSAGES_SUCCESS, LOAD_MESSAGES_FAIL } from '../../actions/actionTypes';
 
 const initialState = {
   loaded: false,
@@ -33,12 +33,7 @@ export default function messages(state = initialState, action) {
       error: action.error,
       data: [...state.data]
     };
-  case AUTH_SIGNOUT_SUCCESS:
-    return {
-      loaded: false,
-      data: [],
-      fetchHistory: []
-    };
+  
   default:
     return state;
   }

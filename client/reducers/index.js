@@ -5,7 +5,8 @@ import authReducer from './authReducer';
 import profileReducer from './profileReducer';
 import cardsReducer from './cardsReducer';
 import responseReducer from './responseReducer';
-
+import messages from './chat_reducers/messages';
+import typers from './chat_reducers/typers';
 // This is a map of our Redux State object
 // e.g. application state: State = { form:..., auth:..., profile:..., cards:..., response:... }
 
@@ -16,7 +17,9 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	profile: profileReducer,
 	cards: cardsReducer,
-	response: responseReducer
+	response: responseReducer,
+  messages,
+  typers
 });
 
 export default rootReducer;
