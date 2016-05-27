@@ -1,12 +1,9 @@
 var User = require('../models/user');
 var Users = require('../collections/users');
-
 var Pending = require('../models/pending');
 var Pendings = require('../collections/pendings');
-
 var Match = require('../models/match');
 var Matches = require('../collections/matches');
-
 var Pass = require('../models/pass');
 var Passes = require('../collections/passes');
 
@@ -17,7 +14,7 @@ module.exports = {
 		var fromID = req.body.from_id;
 		var toID = req.body.to_id;
 		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
-			if(!pendingMatch){
+			if(!pendingMatch) {
 				console.log('pending match does not exist, create a new Pass in Passes table');
 				new Pass({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
 					res.send({ "match": false, "message": 'New pass created!', "model": pendingModel });
@@ -35,11 +32,12 @@ module.exports = {
 
 	like: function(req, res) {
 		console.log('like in swipeController fired!');
+		// request body is :  { from_id: 35, to_id: 14 }
 		console.log('request body is : ',req.body);
 		var fromID = req.body["from_id"];
 		var toID = req.body["to_id"];
 		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
-			if(!pendingMatch){
+			if(!pendingMatch) {
 				console.log('pending match does not exist, create it...');
 				new Pending({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
 					res.send({ "match": false, "message": 'New pending match created!', "model": pendingModel });

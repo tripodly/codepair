@@ -1,17 +1,14 @@
 var path = require('path');
-
 var Auth = require('./controllers/authController');
 var passportService = require('./config/passport');
 var passport = require('passport');
-
 var userController = require('./controllers/userController');
+var cardsController = require('./controllers/cardsController');
 var swipeController = require('./controllers/swipeController');
-
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
 
-
-module.exports = (app) => {
+module.exports = function(app){
 	// route to get index route
 	app.get('/', function(req, res, next){
 		res.sendFile(path.join(__dirname, '../client/index.html'));
@@ -25,22 +22,20 @@ module.exports = (app) => {
 
 	// route when user gets to their profile page
 	app.get('/user/profile', requireAuth, function(req,res,next){
-		console.log('inside get request for user profile');
-		var user = req.user.attributes;
 		var userObject = { 
-			id: user.id, 
-			name: user.name, 
-			email: user.email, 
-			language: user.language, 
-			skillLevel: user.skillLevel, 
-			github_handle: user.github_handle, 
-			profile_url: user.profile_url 
+			id: req.user.attributes.id, 
+			name: req.user.attributes.name, 
+			email: req.user.attributes.email, 
+			language: req.user.attributes.language, 
+			skillLevel: req.user.attributes.skillLevel, 
+			github_handle: req.user.attributes.github_handle, 
+			profile_url: req.user.attributes.profile_url 
 		};
 		res.send(userObject);
 	});
 
 	// route when user requests their cards
-	app.get('/user/cards', requireAuth, userController.getCards);
+	app.get('/user/cards', requireAuth, cardsController.getCards);
 
 	// route when user updates their information
 	app.post('/user/edit', requireAuth, userController.editProfileInfo);
