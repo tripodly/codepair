@@ -1,13 +1,12 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-<<<<<<< 6f05c33c88534d9a34b3efa0fe9fde7c5b64c3ab
+
 
 import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET} from './actionTypes';
 
-=======
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER } from './actionTypes';
->>>>>>> [pull] creates partnerReducer and associated actions + types to handle setting current partner
+
+
 
 const API_URL = 'http://localhost:3090';
 

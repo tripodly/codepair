@@ -13,7 +13,7 @@ export const DISLIKE_CARD = "DISLIKE_CARD";
 export const NEW_MATCH = "NEW_MATCH";
 export const NEW_PENDING = "NEW_PENDING";
 export const NEW_PASS = "NEW_PASS";
-<<<<<<< 6f05c33c88534d9a34b3efa0fe9fde7c5b64c3ab
+
 
 // chat action types
 export const ADD_MESSAGE = 'ADD_MESSAGE';
@@ -24,7 +24,6 @@ export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';
 
 
 
-=======
+
 export const SET_PARTNER = "SET_PARTNER";
 export const CLEAR_PARTNER = "CLEAR_PARTNER";
->>>>>>> [pull] creates partnerReducer and associated actions + types to handle setting current partner
