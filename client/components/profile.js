@@ -31,6 +31,7 @@ class Profile extends Component {
 			skill:this.props.profileSkillLevel
 		}
 	}
+
 	handleFormSubmit(formProps) {
 		console.log('handleFormSubmit called');
 		console.log('this is the formprops in profile.js',formProps);
