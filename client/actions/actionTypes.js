@@ -13,7 +13,6 @@ export const DISLIKE_CARD = "DISLIKE_CARD";
 export const NEW_MATCH = "NEW_MATCH";
 export const NEW_PENDING = "NEW_PENDING";
 export const NEW_PASS = "NEW_PASS";
-export const EDIT_PROFILE = "EDIT_PROFILE";
 
 // chat action types
 export const ADD_MESSAGE = 'ADD_MESSAGE';
