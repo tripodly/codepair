@@ -51,6 +51,8 @@ class CodeShare extends Component {
 		})
 	}
 
+	// the parameter of onChange is the text currently in the editor
+	// will be important for implementation of sockets!
 	onChange(newValue) {
 		// console.log('values have changed, they are now : ',newValue);
 	}
