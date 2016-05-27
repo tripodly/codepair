@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import AceEditor from 'react-ace';
 
+import * as actions from '../actions';
+
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -83,4 +85,9 @@ class CodeShare extends Component {
 	}
 };
 
-export default CodeShare;
+function mapStateToProps(state) {
+	return { current: state.cards.current, cardID: state.cards.current.id, initiated: state.cards.initiated, uninitiated: state.cards.uninitiated, userID: state.profile.id };
+}
+
+
+export default connect(mapStateToProps, actions)(CodeShare);
