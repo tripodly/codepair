@@ -1,7 +1,9 @@
 // Actions will go here
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from './actionTypes';
+
+import { AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET} from './actionTypes';
+
 
 const API_URL = 'http://localhost:3090';
 
@@ -186,6 +188,81 @@ export function dislikeCard({ from_id, to_id }) {
 	}
 }
 
+// ------------Chat actions----------------------
+function addMessage(message) {
+	return {
+		types: types.ADD_MESSAGE,
+		message
+	};
+}
+export function receiveRawMessage(message) {
+	return {
+		type: types.REIEVE_MESSAGE,
+		message
+	};
+}
+
+export function typing(username) {
+  return {
+    type: types.TYPING,
+    username
+  };
+}
+export function stopTyping(username) {
+  return {
+    type: types.STOP_TYPING,
+    username
+  };
+}
+export function changeChannel(channel) {
+  return {
+    type: types.CHANGE_CHANNEL,
+    channel
+  };
+}
+// NOTE:Data Fetching actions
+
+function requestMessages() {
+  return {
+    type: types.LOAD_MESSAGES
+  }
+}
 
 
+function receiveMessages(json, channel) {
+  const date = moment().format('lll');
+  return {
+    type: types.LOAD_MESSAGES_SUCCESS,
+    json,
+    channel,
+    date
+  }
+}
 
+function shouldFetchMessages(state) {
+  const messages = state.messages.data;
+  if (!messages) {
+    return true
+  }
+}
+
+export function fetchMessagesIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchMessages(getState())) {
+      return dispatch(fetchMessages())
+    }
+  }
+}
+
+export function createMessage(message) {
+  return dispatch => {
+    dispatch(addMessage(message))
+    return fetch('/api/newmessage', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(message)})
+      .catch(error => {throw error});
+  }
+}

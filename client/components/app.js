@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './header';
+import Chat from './chat'
 import Paper from 'material-ui/Paper';
 import Footer from './footer';
 
@@ -31,6 +32,7 @@ export default class App extends Component {
 							<div style={style.body}>
 								{this.props.children}
 							</div>
+					<Chat />
               <Footer />
 					</Paper>
           

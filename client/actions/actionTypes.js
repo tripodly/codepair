@@ -13,3 +13,13 @@ export const DISLIKE_CARD = "DISLIKE_CARD";
 export const NEW_MATCH = "NEW_MATCH";
 export const NEW_PENDING = "NEW_PENDING";
 export const NEW_PASS = "NEW_PASS";
+
+// chat action types
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+export const TYPING = 'TYPING';
+export const STOP_TYPING = 'STOP_TYPING';
+export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';
+
+
+
