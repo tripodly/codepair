@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import uuid from 'node-uuid';
 
-export default class MessageCreator extends Component {
+export default class Message extends Component {
 
   // static propTypes = {
     

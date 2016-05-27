@@ -28,14 +28,13 @@ export default class App extends Component {
     return (
       <div style={style.app} >
 					<Paper style={style.paper} zDepth={2}>
-							<Header />
-							<div style={style.body}>
-								{this.props.children}
-							</div>
-					<Chat />
-              <Footer />
+						<Header />
+						<div style={style.body}>
+							{this.props.children}
+						</div>
+						<Chat />
+            <Footer />
 					</Paper>
-          
       </div>
     );
   }

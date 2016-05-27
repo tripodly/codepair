@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Draggable, { DraggableCore } from 'react-draggable';
 
-import MessageComposer from './chat_component/MessageCreator';
-import MessageListItem from './chat_component/MessageList';
+import Message from './chat/message';
+import MessageList from './chat/messageList';
 
 
 export default class Chat extends Component {
@@ -31,8 +31,6 @@ export default class Chat extends Component {
             </div>
           </div>
       </Draggable>
-     
-      
     )
   }
 }

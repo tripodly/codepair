@@ -19,6 +19,9 @@ import CodeShare from './components/codeshare';
 import reducers from './reducers';
 import { AUTHORIZE_USER } from './actions/actionTypes';
 
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
 const store = createStoreWithMiddleware(reducers,window.devToolsExtension ? window.devToolsExtension() : f => f);

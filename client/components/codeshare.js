@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import AceEditor from 'react-ace';
-
+import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import injectTapEventPlugin from "react-tap-event-plugin";
-injectTapEventPlugin();
-
+// Imports language libraries to use in Ace Editor
 import 'brace/mode/javascript';
 import 'brace/mode/java';
 import 'brace/mode/python';
 import 'brace/mode/ruby';
 
+// Imports theme to use in Ace Editor
 import 'brace/theme/ambiance';
 
 const style = {
@@ -55,6 +54,10 @@ class CodeShare extends Component {
 	// will be important for implementation of sockets!
 	onChange(newValue) {
 		// console.log('values have changed, they are now : ',newValue);
+		// use socket.emit('codeChange',newValue) to send new data to io('server')
+		// which will then be broadcast to the other user
+		// Need to have a way to identify the pair of users sharing the page
+
 	}
 
 	render() {
@@ -83,4 +86,9 @@ class CodeShare extends Component {
 	}
 };
 
-export default CodeShare;
+function mapStateToProps(state) {
+	return { userID: state.profile.id, pairID: state.partner.id };
+}
+
+
+export default connect(mapStateToProps, actions)(CodeShare);
