@@ -22,16 +22,14 @@ module.exports = function(app){
 
 	// route when user gets to their profile page
 	app.get('/user/profile', requireAuth, function(req,res,next){
-		console.log('inside get request for user profile');
-		var user = req.user.attributes;
 		var userObject = { 
-			id: user.id, 
-			name: user.name, 
-			email: user.email, 
-			language: user.language, 
-			skillLevel: user.skillLevel, 
-			github_handle: user.github_handle, 
-			profile_url: user.profile_url 
+			id: req.user.attributes.id, 
+			name: req.user.attributes.name, 
+			email: req.user.attributes.email, 
+			language: req.user.attributes.language, 
+			skillLevel: req.user.attributes.skillLevel, 
+			github_handle: req.user.attributes.github_handle, 
+			profile_url: req.user.attributes.profile_url 
 		};
 		res.send(userObject);
 	});
