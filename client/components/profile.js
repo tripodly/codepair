@@ -35,6 +35,12 @@ class Profile extends Component {
 		console.log('handleFormSubmit called');
 		console.log('this is the formprops in profile.js',formProps);
 		this.props.updateUserInfo(formProps);
+		this.setState({
+			email: formProps.email,
+			name: formProps.name,
+			language: formProps.language,
+			skill: formProps.skillLevel
+		})
 	}
 
 	componentWillMount() {
@@ -45,18 +51,9 @@ class Profile extends Component {
 		console.log('inside componentWillMount, state.matches is : ', this.state.matches);
 	}
 
-	// componentDidUpdate() {
-	// 	console.log('inside componentDidUpdate, state.matches is : ', this.props.matches);
-	// 	 if(!this.props.matches) {
- //    } else {
- //    	console.log(this)
- //    }
-	// }
-
 	handleEditInfo() {
 		flag = !flag;
 		prompt = flag ? ' Edit info:':'Cancel';
-		//this.setState({name:this.state.name,email:this.state.email,language:this.state.language,skill:this.state.skill})
 			this.setState({
 			email: this.props.profileEmail,
 			name:this.props.profileName,
