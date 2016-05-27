@@ -1,6 +1,6 @@
 // Cards Reducer will handle state changes for matches and swipes
 import { GET_CARDS, CLEAR_CARDS, LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS } from '../actions/actionTypes';
-
+import shuffle from 'lodash/shuffle';
 
 const INITIAL_STATE = { 
 	current: null,
@@ -14,8 +14,10 @@ export default function(state = INITIAL_STATE, action) {
 		case GET_CARDS:
 			console.log('inside GET_CARDS in cardsReducer:');
 			var initiatedCards = action.payload.cards.initiated.slice();
+			initiatedCards = shuffle(initiatedCards);
 			console.log('initiatedCards are : ',initiatedCards);
 			var uninitiatedCards = action.payload.cards.uninitiated.slice();
+			uninitiatedCards = shuffle(uninitiatedCards);
 			console.log('uninitiatedCards are : ',uninitiatedCards);
 			var matched = action.payload.cards.matched.slice();
 

@@ -1,4 +1,4 @@
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form'; 
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -9,12 +9,31 @@ import * as actions from '../../actions';
 
 
 class Signup extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			language: this.props.language,
+			skillLevel: this.props.skillLevel
+		}
+	}
+
 	handleFormSubmit(formProps) {
-		this.props.signupUser(formProps);
+		let formPropsWithLangSkill = {...formProps, language: this.state.language, skillLevel: this.state.skillLevel };
+		console.log('formPropsWithLangSkill is : ',formPropsWithLangSkill);
+		this.props.signupUser(formPropsWithLangSkill);
+	}
+
+	handleLangChange(event, index, value) {
+		this.setState({ language: value });
+	}
+
+	handleSkillChange(event, index, value) {
+		this.setState({ skillLevel: value });
 	}
 
 	render() {
-		const { handleSubmit, fields: { email, name, language, skillLevel, github_handle, profile_url, password, passwordConfirm }} = this.props;
+		const { handleSubmit, fields: { email, name, github_handle, profile_url, password, passwordConfirm }} = this.props;
 
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -25,10 +44,20 @@ class Signup extends Component {
 					<TextField {...name} floatingLabelText="Name" errorText={name.touched && name.error && <div className="error">{name.error}</div>} />
 				</fieldset>
 				<fieldset className="form-group">
-					<TextField {...language} floatingLabelText="Language" errorText={language.touched && language.error && <div className="error">{language.error}</div>} />
+					<SelectField value={this.state.language} floatingLabelText="Please choose your language:" onChange={(event, index, value) => this.handleLangChange(event, index, value)}>
+	          <MenuItem value={'JavaScript'} primaryText="JavaScript" />
+	          <MenuItem value={'Java'} primaryText="Java" />
+	          <MenuItem value={'Python'} primaryText="Python" />
+	          <MenuItem value={'Ruby'} primaryText="Ruby" />
+	        </SelectField>
 				</fieldset>
 				<fieldset className="form-group">
-					<TextField {...skillLevel} floatingLabelText="Skill Level" errorText={skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>} />
+					<SelectField value={this.state.skillLevel} floatingLabelText="Please choose your skill level:" onChange={(event, index, value) => this.handleSkillChange(event, index, value)}>
+	          <MenuItem value={'Beginner'} primaryText="Beginner" />
+	          <MenuItem value={'Mid-Level'} primaryText="Mid-Level" />
+	          <MenuItem value={'Experienced'} primaryText="Experienced" />
+	          <MenuItem value={'Master'} primaryText="Master" />
+	        </SelectField>
 				</fieldset>
 				<fieldset className="form-group">
 					<TextField {...github_handle} floatingLabelText="Enter a GitHub handle" errorText={github_handle.touched && github_handle.error && <div className="error">{github_handle.error}</div>} />
@@ -48,9 +77,13 @@ class Signup extends Component {
 	}
 }
 
+// <TextField {...language} floatingLabelText="Language" errorText={language.touched && language.error && <div className="error">{language.error}</div>} />
+// <TextField {...skillLevel} floatingLabelText="Skill Level" errorText={skillLevel.touched && skillLevel.error && <div className="error">{skillLevel.error}</div>} />
+
+
 function mapStateToProps(state){
 	console.log('mapStateToProps inside signup form , state.form is : ',state.form);
-	return { errorMessage: state.auth.error };
+	return { errorMessage: state.auth.error, language: state.profile.language, skillLevel: state.profile.skillLevel };
 }
 
 function validate(formProps) {
@@ -68,13 +101,9 @@ function validate(formProps) {
 		errors.name = 'Please enter a name!';
 	}
 
-	if (!formProps.language) {
-		errors.language = 'Please enter a language!';
-	}
-
-	if (!formProps.skillLevel) {
-		errors.skillLevel = 'Please enter your skill level!';
-	}
+	// if (!formProps.skillLevel) {
+	// 	errors.skillLevel = 'Please enter your skill level!';
+	// }
 
 	if (!formProps.github_handle) {
 		errors.github_handle = 'Please enter your GitHub handle!';
@@ -97,6 +126,6 @@ function validate(formProps) {
 
 export default reduxForm({
 	form: 'signup',
-	fields: ['email', 'name', 'language', 'skillLevel', 'github_handle', 'profile_url', 'password', 'passwordConfirm'],
+	fields: ['email', 'name', 'github_handle', 'profile_url', 'password', 'passwordConfirm'],
 	validate
 }, mapStateToProps, actions)(Signup);
