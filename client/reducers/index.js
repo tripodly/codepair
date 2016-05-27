@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form';
 import authReducer from './authReducer';
 import profileReducer from './profileReducer';
 import cardsReducer from './cardsReducer';
+import partnerReducer from './partnerReducer';
 import responseReducer from './responseReducer';
 import messages from './chat_reducers/messages';
 import typers from './chat_reducers/typers';
@@ -19,7 +20,9 @@ const rootReducer = combineReducers({
 	cards: cardsReducer,
 	response: responseReducer,
   messages,
-  typers
+  typers,
+	partner: partnerReducer,
+	response: responseReducer
 });
 
 export default rootReducer;

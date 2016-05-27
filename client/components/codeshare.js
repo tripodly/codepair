@@ -57,6 +57,10 @@ class CodeShare extends Component {
 	// will be important for implementation of sockets!
 	onChange(newValue) {
 		// console.log('values have changed, they are now : ',newValue);
+		// use socket.emit('codeChange',newValue) to send new data to io('server')
+		// which will then be broadcast to the other user
+		// Need to have a way to identify the pair of users sharing the page
+
 	}
 
 	render() {
@@ -86,7 +90,7 @@ class CodeShare extends Component {
 };
 
 function mapStateToProps(state) {
-	return { current: state.cards.current, cardID: state.cards.current.id, initiated: state.cards.initiated, uninitiated: state.cards.uninitiated, userID: state.profile.id };
+	return { userID: state.profile.id, pairID: state.partner.id };
 }
 
 
