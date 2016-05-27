@@ -8,8 +8,7 @@ import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import injectTapEventPlugin from "react-tap-event-plugin";
-injectTapEventPlugin();
+
 
 import 'brace/mode/javascript';
 import 'brace/mode/java';
