@@ -1,17 +1,14 @@
 var path = require('path');
-
 var Auth = require('./controllers/authController');
 var passportService = require('./config/passport');
 var passport = require('passport');
-
 var userController = require('./controllers/userController');
+var cardsController = require('./controllers/cardsController');
 var swipeController = require('./controllers/swipeController');
-
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
 
-
-module.exports = (app) => {
+module.exports = function(app){
 	// route to get index route
 	app.get('/', function(req, res, next){
 		res.sendFile(path.join(__dirname, '../client/index.html'));
@@ -40,7 +37,7 @@ module.exports = (app) => {
 	});
 
 	// route when user requests their cards
-	app.get('/user/cards', requireAuth, userController.getCards);
+	app.get('/user/cards', requireAuth, cardsController.getCards);
 
 	// route when user updates their information
 	app.post('/user/edit', requireAuth, userController.editProfileInfo);
