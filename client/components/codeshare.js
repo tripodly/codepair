@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import AceEditor from 'react-ace';
-
 import * as actions from '../actions';
-
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-
-
 
 import 'brace/mode/javascript';
 import 'brace/mode/java';
