@@ -20,6 +20,11 @@ io.on('connection', function(socket) {
 		console.log(people);
 	});
 
+	socket.on('codeChange', function(data) {
+		console.log('data inside codeChange is : ',data);
+		io.emit('updateCode',data);
+	})
+
 	socket.on('partner', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
 		var roomName = '' + partnerObject.fromUser.id + ':' + partnerObject.toUser.id + '';
@@ -29,6 +34,7 @@ io.on('connection', function(socket) {
 		var toID = partnerObject.toUser.id;
 		io.sockets.connected[people[fromID].socket].join(roomName);
 		io.sockets.connected[people[toID].socket].join(roomName);
+		io.to(roomName).emit('joinRoom',{ roomID: roomName, toID: toID, fromID: fromID });
 		console.log(sockets[0]);
 	})
 

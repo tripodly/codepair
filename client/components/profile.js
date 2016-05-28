@@ -53,6 +53,12 @@ class Profile extends Component {
 		this.socket = io();
 		// console.log('inside componentDidMount in Profile');
 		this.props.getCards();
+		this.socket.on('joinRoom',(data) => {
+			console.log('data from joinRoom is : ',data);
+			if(this.props.profileID == data.toID || this.props.profileID == data.fromID){
+				this.props.joinRoom({ roomID: data.roomID });
+			}
+		})
 	}
 
 	componentDidUpdate() {
