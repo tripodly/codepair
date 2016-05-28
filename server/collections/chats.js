@@ -1,8 +1,8 @@
 var Bookshelf = require('../db/config').Bookshelf;
-var Match = require('../models/chat');
+var Chat = require('../models/chat');
 
 var Chats = new Bookshelf.Collection();
 
-Chats.model = Match;
+Chats.model = Chat;
 
 module.exports = Chats;
