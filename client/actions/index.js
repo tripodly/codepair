@@ -247,7 +247,7 @@ export function receiveMessages({json, channel}) {
   }
 }
 
-export function shouldFetchMessages(state) {
+export function shouldFetchMessages({ state }) {
   const messages = state.messages.data;
   if (!messages) {
     return true
@@ -255,11 +255,9 @@ export function shouldFetchMessages(state) {
 }
 
 export function fetchMessagesIfNeeded() {
-  return (dispatch, getState) => {
-    if (shouldFetchMessages(getState())) {
-      return dispatch(fetchMessages())
+    if(shouldFetchMessages(getState())){
+        requestMessages();
     }
-  }
 }
 
 export function createMessage({fromID, toID, message}) {
