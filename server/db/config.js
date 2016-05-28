@@ -78,11 +78,11 @@ knex.schema.hasTable('passes').then(function(exists){
 
 knex.schema.hasTable('chats').then(function(exists){
 	if(!exists){
-		knex.schema.createTable('users',function(chat){
+		knex.schema.createTable('chats',function(chat){
 			chat.increments('id').primary();
-			pass.integer('fromUser',11).unsigned();
+			chat.integer('fromUser',11).unsigned();
 			chat.foreign('fromUser').references('id').inTable('users');
-			pass.integer('toUser',11).unsigned();
+			chat.integer('toUser',11).unsigned();
 			chat.foreign('toUser').references('id').inTable('users');
 			chat.string('message',2000);
 			chat.timestamps();

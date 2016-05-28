@@ -1,7 +1,6 @@
 var Bookshelf = require('../db/config').Bookshelf;
 var Promise = require('bluebird');
 
-// use bcrypt to encrypt user password to store in db
 var Chat = Bookshelf.Model.extend({
 	tableName : 'chats',
 	hashTimestamps : true,
