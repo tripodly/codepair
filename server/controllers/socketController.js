@@ -13,16 +13,23 @@ io.on('connection', function(socket) {
 
 	socket.on('join', function(user){
 		if(user.id) {
-			people[socket.id] = { id: user.id, name: user.name };
+			// people[socket.id] = { id: user.id, name: user.name };
+			var userID = user.id;
+			people[userID] = { socket: socket.id };
 		}
 		console.log(people);
 	});
 
 	socket.on('partner', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
-		var roomName = ''+partnerObject.fromUser.id+":"+partnerObject.toUser.id+'';
+		var roomName = '' + partnerObject.fromUser.id + ':' + partnerObject.toUser.id + '';
 		console.log('new room created, id is : ',roomName);
 		rooms.push(roomName);
+		var fromID = partnerObject.fromUser.id;
+		var toID = partnerObject.toUser.id;
+		io.sockets.connected[people[fromID].socket].join(roomName);
+		io.sockets.connected[people[toID].socket].join(roomName);
+		console.log(sockets[0]);
 	})
 
 	//disconnect from the server

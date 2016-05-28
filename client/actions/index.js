@@ -152,9 +152,9 @@ export function getCards() {
 	}
 }
 
-export function likeCard({ from_id, to_id }) {
+export function likeCard({ fromID, toID }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/like`, { from_id, to_id }, { 
+		axios.post(`${API_URL}/cards/like`, { fromID, to_id }, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
@@ -174,9 +174,9 @@ export function likeCard({ from_id, to_id }) {
 	}
 }
 
-export function dislikeCard({ from_id, to_id }) {
+export function dislikeCard({ fromID, toID }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/dislike`, { from_id, to_id }, { 
+		axios.post(`${API_URL}/cards/dislike`, { fromID, toID }, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
