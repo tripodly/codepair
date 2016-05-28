@@ -76,6 +76,22 @@ knex.schema.hasTable('passes').then(function(exists){
 	}
 });
 
+knex.schema.hasTable('chats').then(function(exists){
+	if(!exists){
+		knex.schema.createTable('chats',function(chat){
+			chat.increments('id').primary();
+			chat.integer('fromUser',11).unsigned();
+			chat.foreign('fromUser').references('id').inTable('users');
+			chat.integer('toUser',11).unsigned();
+			chat.foreign('toUser').references('id').inTable('users');
+			chat.string('message',2000);
+			chat.timestamps();
+		}).then(function (table) {
+      console.log('Created chats Table', table);
+    });
+	}
+});
+
 
 var Bookshelf = require('bookshelf')(knex);
 

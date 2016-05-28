@@ -32,6 +32,9 @@ var User = Bookshelf.Model.extend({
   },
   matches: function() {
     return this.hasMany(match);
+  },
+  chats : function(){
+  	return this.hasMany(chat);
   }
 });
 

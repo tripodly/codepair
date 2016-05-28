@@ -5,6 +5,7 @@ var passport = require('passport');
 var userController = require('./controllers/userController');
 var cardsController = require('./controllers/cardsController');
 var swipeController = require('./controllers/swipeController');
+var chatController = require('./controllers/chatController');
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
 
@@ -39,6 +40,12 @@ module.exports = function(app){
 
 	// route when user updates their information
 	app.post('/user/edit', requireAuth, userController.editProfileInfo);
+
+	// route when user sends message to another user
+	app.post('/user/send', requireAuth, chatController.sendMessage);
+
+	// route when user requests their messages they had with other user
+	app.get('/user/messages', requireAuth, chatController.getMessages);
 	
 	// route if user swipes left on a card
 	app.post('/cards/dislike', requireAuth, swipeController.dislike);
