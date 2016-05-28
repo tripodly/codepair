@@ -43,6 +43,9 @@ module.exports = function(app){
 
 	// route when user sends message to another user
 	app.post('/user/send', requireAuth, chatController.sendMessage);
+
+	// route when user requests their messages they had with other user
+	app.get('/user/messages', requireAuth, chatController.getMessages);
 	
 	// route if user swipes left on a card
 	app.post('/cards/dislike', requireAuth, swipeController.dislike);

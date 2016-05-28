@@ -14,11 +14,24 @@ module.exports = {
 		var toUser = req.toUser;
 			if(message) {
 				new Match({ 'fromUser': fromUser, 'toUser': toUser }).save().then(function(chatModel){
+					// chatModel is the message being saved
 					res.send('message sent!');
 				})
 			} else{
 				res.send('error sending message to :')
 			}
+	},
+	getMessages(req, res){
+		var fromUser = req.fromUser;
+		var toUser = req.toUser;
+		var messages = [];
+		var chatPromise = new Promise(function(resolve,reject){
+			knex('chats').select('*').where('fromUser',fromUser).andWhere('toUser',toUser)
+			.then(function(response){
+				console.log('this is the getMessages response :'response);
+				res.send(response)
+				resolve(response);
+			});
+		});
 	}
-	
 };
