@@ -272,8 +272,8 @@ export function createMessage({fromID, toID, message}) {
 					dispatch({ type: CREATE_MESSAGE, payload: { 
 					message: response.data.email, fromID: response.data.fromID, toID: response.data.toID
 				}});
+				})
 			.catch(response => {
 				console.log('error in createMessage action creator: ',response);
 			})
-	}
 }

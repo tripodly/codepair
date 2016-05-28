@@ -36,22 +36,22 @@ export default class Message extends Component {
   //     this.setState({ text: '', typing: false });
   //   }
   // }
-  // handleChange(event) {
-  //   const { socket, user, activeChannel } = this.props;
-  //   this.setState({ text: event.target.value });
-  //   if (event.target.value.length > 0 && !this.state.typing) {
-  //     socket.emit('typing', { user: user.username, channel: activeChannel });
-  //     this.setState({ typing: true});
-  //   }
-  //   if (event.target.value.length === 0 && this.state.typing) {
-  //     socket.emit('stop typing', { user: user.username, channel: activeChannel });
-  //     this.setState({ typing: false});
-  //   }
-  // }
+  handleChange(event) {
+    const { socket, user, activeChannel } = this.props;
+    this.setState({ text: event.target.value });
+    if (event.target.value.length > 0 && !this.state.typing) {
+      socket.emit('typing', { user: user.username, channel: activeChannel });
+      this.setState({ typing: true});
+    }
+    if (event.target.value.length === 0 && this.state.typing) {
+      socket.emit('stop typing', { user: user.username, channel: activeChannel });
+      this.setState({ typing: false});
+    }
+  }
   render() {
     return (
       <div>
-        <Input
+        <input
           style={{
             height: '100%',
             fontSize: '2em',
