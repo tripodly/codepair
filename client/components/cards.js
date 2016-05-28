@@ -36,17 +36,17 @@ class Cards extends Component {
 
   handleNoClick() {
     console.log('No clicked on cards page!');
-    console.log('from_id: ',this.props.userID);
-    console.log('to_id: ',this.props.cardID);
-    this.props.dislikeCard({ from_id: this.props.userID, to_id: this.props.cardID });
+    console.log('fromID: ',this.props.userID);
+    console.log('toID: ',this.props.cardID);
+    this.props.dislikeCard({ fromID: this.props.userID, toID: this.props.cardID });
 
   }
 
   handleYesClick() {
     console.log('Yes clicked on cards page!');
-    console.log('from_id: ',this.props.userID);
-    console.log('to_id: ',this.props.cardID);
-    this.props.likeCard({ from_id: this.props.userID, to_id: this.props.cardID });
+    console.log('fromID: ',this.props.userID);
+    console.log('toID: ',this.props.cardID);
+    this.props.likeCard({ fromID: this.props.userID, toID: this.props.cardID });
 
   }
 

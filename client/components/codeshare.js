@@ -40,13 +40,22 @@ class CodeShare extends Component {
 
 		this.state = {
 			language: 'javascript',
-			value: 1
+			value: 1,
+			codeData: ''
 		}
 	}
 
 	handleChange(event, index, value) {
 		this.setState({
 			language: value
+		})
+	}
+
+	componentDidMount(){
+		this.socket = io();
+		this.socket.on('updateCode',codeData => {
+			console.log('codeData is : ',codeData);
+			this.setState({ codeData: codeData });
 		})
 	}
 
@@ -57,7 +66,7 @@ class CodeShare extends Component {
 		// use socket.emit('codeChange',newValue) to send new data to io('server')
 		// which will then be broadcast to the other user
 		// Need to have a way to identify the pair of users sharing the page
-
+		this.socket.emit('codeChange',newValue);
 	}
 
 	render() {
@@ -77,6 +86,7 @@ class CodeShare extends Component {
 				    height='750px'
 				    width="100%"
 				    enableLiveAutocompletion={true}
+				    value={this.state.codeData}
 				    onChange={(value) => this.onChange(value)}
 				    name="UNIQUE_ID_OF_DIV"
 				    editorProps={{$blockScrolling: true}}

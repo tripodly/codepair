@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, 
-	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, 
+	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, JOIN_ROOM,
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
@@ -152,9 +152,9 @@ export function getCards() {
 	}
 }
 
-export function likeCard({ from_id, to_id }) {
+export function likeCard({ fromID, toID }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/like`, { from_id, to_id }, { 
+		axios.post(`${API_URL}/cards/like`, { fromID, toID }, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
@@ -174,9 +174,9 @@ export function likeCard({ from_id, to_id }) {
 	}
 }
 
-export function dislikeCard({ from_id, to_id }) {
+export function dislikeCard({ fromID, toID }) {
 	return function(dispatch) {
-		axios.post(`${API_URL}/cards/dislike`, { from_id, to_id }, { 
+		axios.post(`${API_URL}/cards/dislike`, { fromID, toID }, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
@@ -188,6 +188,13 @@ export function dislikeCard({ from_id, to_id }) {
 				console.log('error in dislikeCard action creator: ',response);
 			})
 	}
+}
+
+export function joinRoom({ roomID }) {
+	return {
+		type: JOIN_ROOM,
+		payload: { roomID }
+	};
 }
 
 // ------------Chat actions----------------------
