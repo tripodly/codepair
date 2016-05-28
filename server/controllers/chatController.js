@@ -28,7 +28,8 @@ module.exports = {
 		var chatPromise = new Promise(function(resolve,reject){
 			knex('chats').select('*').where('fromUser',fromUser).andWhere('toUser',toUser)
 			.then(function(response){
-				console.log('this is the getMessages response :'response);
+				console.log('this is the getMessages response :',response);
+				//need to sort messages based on timestamp here
 				res.send(response)
 				resolve(response);
 			});

@@ -198,11 +198,25 @@ export function joinRoom({ roomID }) {
 }
 
 // ------------Chat actions----------------------
-function addMessage(message) {
-	return {
-		types: types.ADD_MESSAGE,
-		message
-	};
+
+// sends message to the server
+//should re-name to send message
+
+export function addMessage({ fromID, toID, message }) {
+
+	return function(dispatch) {
+		axios.post(`${API_URL}/user/send`, { fromID, toID, message }, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log('dislikeCard response received');
+				console.log('dislikeCard response is : ',response);
+				dispatch({ type: ADD_MESSAGE, payload: response.data.model })
+			})
+			.catch(response => {
+				console.log('error in dislikeCard action creator: ',response);
+			})
+	}
 }
 export function receiveRawMessage(message) {
 	return {
@@ -231,14 +245,14 @@ export function changeChannel(channel) {
 }
 // NOTE:Data Fetching actions
 
-function requestMessages() {
+export function requestMessages() {
   return {
     type: types.LOAD_MESSAGES
   }
 }
 
 
-function receiveMessages(json, channel) {
+export function receiveMessages(json, channel) {
   const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,
@@ -248,7 +262,7 @@ function receiveMessages(json, channel) {
   }
 }
 
-function shouldFetchMessages(state) {
+export function shouldFetchMessages(state) {
   const messages = state.messages.data;
   if (!messages) {
     return true
