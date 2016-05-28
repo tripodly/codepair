@@ -199,66 +199,51 @@ export function joinRoom({ roomID }) {
 
 // ------------Chat actions----------------------
 
-// sends message to the server
-//should re-name to send message
-
-export function addMessage({ fromID, toID, message }) {
-
-	return function(dispatch) {
-		axios.post(`${API_URL}/user/send`, { fromID, toID, message }, { 
-			headers: { authorization: localStorage.getItem('token') }
-		})
-			.then(response => {
-				console.log('dislikeCard response received');
-				console.log('dislikeCard response is : ',response);
-				dispatch({ type: ADD_MESSAGE, payload: response.data.model })
-			})
-			.catch(response => {
-				console.log('error in dislikeCard action creator: ',response);
-			})
-	}
+function addMessage({message}) {
+	return { 
+		type: ADD_MESSAGE, 
+		payload: { message }
+	};
 }
-export function receiveRawMessage(message) {
+export function receiveRawMessage({message}) {
 	return {
-		type: types.RECEIVE_MESSAGE,
-		message
+		type: RECEIVE_MESSAGE,
+		payload: { message }
 	};
 }
 
-export function typing(username) {
+export function typing({ username }) {
   return {
-    type: types.TYPING,
-    username
+    type: TYPING,
+    payload: { username }
   };
 }
-export function stopTyping(username) {
+export function stopTyping({ username }) {
   return {
-    type: types.STOP_TYPING,
-    username
+    type: STOP_TYPING,
+    payload: { username }
   };
 }
-export function changeChannel(channel) {
+export function changeChannel({ channel }) {
   return {
-    type: types.CHANGE_CHANNEL,
-    channel
+    type: CHANGE_CHANNEL,
+    payload: { channel }
   };
 }
 // NOTE:Data Fetching actions
 
 export function requestMessages() {
   return {
-    type: types.LOAD_MESSAGES
-  }
+    type: LOAD_MESSAGES
+  };
 }
 
 
-export function receiveMessages(json, channel) {
+export function receiveMessages({json, channel}) {
   const date = moment().format('lll');
   return {
-    type: types.LOAD_MESSAGES_SUCCESS,
-    json,
-    channel,
-    date
+    type: LOAD_MESSAGES_SUCCESS,
+    payload: { json, channel, date }
   }
 }
 
@@ -277,15 +262,20 @@ export function fetchMessagesIfNeeded() {
   }
 }
 
-export function createMessage(message) {
-  return dispatch => {
-    dispatch(addMessage(message))
-    return fetch('/api/newmessage', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(message)})
-      .catch(error => {throw error});
-  }
+export function createMessage({fromID, toID, message}) {
+		axios.post(`${API_URL}/user/send`, { fromID, toID, message }, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log('create message response received');
+				console.log('create message response is : ',response);
+
+				// If this swipe triggers a match, dispatch the NEW_MATCH action
+					dispatch({ type: CREATE_MESSAGE, payload: { 
+					message: response.data.email, fromID: response.data.fromID, toID: response.data.toID
+				}});
+			.catch(response => {
+				console.log('error in createMessage action creator: ',response);
+			})
+	}
 }
