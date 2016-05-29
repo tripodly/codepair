@@ -91,6 +91,34 @@ knex.schema.hasTable('chats').then(function(exists){
     });
 	}
 });
+knex.schema.hasTable('posts').then(function(exists){
+	if(!exists){
+		knex.schema.createTable('posts',function(post){
+			post.increments('id').primary();
+			post.integer('userID',11).unsigned();
+			post.foreign('userId').references('id').inTable('users');
+			post.string('message',2000);
+			post.timestamps();
+		}).then(function (table) {
+      console.log('Created posts Table', table);
+    });
+	}
+});
+knex.schema.hasTable('replys').then(function(exists){
+	if(!exists){
+		knex.schema.createTable('replys',function(reply){
+			reply.increments('id').primary();
+			reply.integer('userID',11).unsigned();
+			reply.foreign('userID').references('id').inTable('users');
+			reply.integer('postID',11).unsigned();
+			reply.foreign('postID').references('id').inTable('posts');
+			reply.string('comment',2000);
+			reply.timestamps();
+		}).then(function (table) {
+      console.log('Created replys Table', table);
+    });
+	}
+});
 
 
 var Bookshelf = require('bookshelf')(knex);
