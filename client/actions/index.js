@@ -267,13 +267,10 @@ export function createMessage({fromID, toID, message}) {
 			.then(response => {
 				console.log('create message response received');
 				console.log('create message response is : ',response);
-
 				// If this swipe triggers a match, dispatch the NEW_MATCH action
-					dispatch({ type: CREATE_MESSAGE, payload: { 
-					message: response.data.email, fromID: response.data.fromID, toID: response.data.toID
-				}});
+				dispatch({ type: CREATE_MESSAGE, payload: { message: response.data.email, fromID: response.data.fromID, toID: response.data.toID } });
+			})
 			.catch(response => {
 				console.log('error in createMessage action creator: ',response);
 			})
-	}
 }
