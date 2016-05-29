@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, 
-	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, JOIN_ROOM,
+	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_ROOM,
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
@@ -163,7 +163,8 @@ export function likeCard({ fromID, toID }) {
 
 				// If this swipe triggers a match, dispatch the NEW_MATCH action
 				if(response.data.match) {
-					dispatch({ type: NEW_MATCH, payload: response.data.model })
+					dispatch({ type: NEW_MATCH, payload: response.data.model });
+					
 				} else {
 					dispatch({ type: NEW_PENDING, payload: response.data.model });
 				}
@@ -195,6 +196,10 @@ export function joinRoom({ roomID }) {
 		type: JOIN_ROOM,
 		payload: { roomID }
 	};
+}
+
+export function receiveInvite({ invite }) {
+	return { type: INVITE_RECEIVED, payload: { invite }};
 }
 
 // ------------Chat actions----------------------

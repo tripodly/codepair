@@ -26,3 +26,4 @@ export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';
 export const SET_PARTNER = "SET_PARTNER";
 export const CLEAR_PARTNER = "CLEAR_PARTNER";
 export const JOIN_ROOM = "JOIN_ROOM";
+export const INVITE_RECEIVED = "INVITE_RECEIVED";
