@@ -5,6 +5,7 @@ var io = require('../server').io;
 var sockets = [];
 var people = {};
 var rooms = [];
+var pairs = {};
 
 io.on('connection', function(socket) {
 	console.log('Client has connected to server!');
@@ -41,6 +42,19 @@ io.on('connection', function(socket) {
 		console.log('responder is : ',responder);
 		if(responder){
 			io.emit('matchMade', { toID: data.toID, fromID: data.fromID });
+		}
+	})
+
+	// acceptInvite event received, data is :  { fromID: 13, toID: 44 }
+	// acceptInvite event received, data is :  { fromID: 44, toID: 13 }
+	socket.on('acceptInvite', function(data) {
+		console.log('acceptInvite event received, data is : ',data);
+		pairs[data.fromID] = data.toID;
+		// if the opposite relation exists in the pairs table,
+		if(pairs[data.toID] === data.fromID) {
+			// then emit to both sockets that they both accepted
+			// which should trigger an action on client side to push them to codesharing page
+			io.emit('bothAccept',{ "idA": data.toID, "idB": data.fromID });
 		}
 	})
 

@@ -41,23 +41,6 @@ class MatchAlert extends Component {
 	      	}
 	      });
 	    }
-	    // else if(invite.fromID === this.props.userID){
-	    // 	console.log("I HAVE A NEW MATCH!");
-	    // 	this.props.waiting.forEach(waitingMatch => {
-	    // 		if(waitingMatch.id === invite.fromID){
-	    // 			this.socket.emit({})
-	    // 			this.setState({
-	    // 				open: true,
-	    // 				id: waitingMatch.id,
-	    // 				name: waitingMatch.name,
-	    // 				language: waitingMatch.language,
-	    // 				skillLevel: waitingMatch.skillLevel,
-	    // 				profile_url: waitingMatch.profile_url,
-	    // 				message: `You matched with ${waitingMatch.name}, want to pair?`
-	    // 			})
-	    // 		}
-	    // 	})
-	    // }
 	  });
 	  this.socket.on('matchMade',matchMadeObj => {
 	  	console.log('matchMade event received');
@@ -80,6 +63,12 @@ class MatchAlert extends Component {
 	  	  	}
 	  	  });
 	  	}
+	  });
+	  this.socket.on('bothAccept',acceptObj => {
+	  	if(acceptObj[idA] === this.props.userID || acceptObj[idB] === this.props.userID){
+	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
+	  		this.props.startPairing({ roomID: acceptObj[idA] + ":" + acceptObj[idB]});
+	  	}
 	  })
 	}
 
@@ -92,12 +81,18 @@ class MatchAlert extends Component {
 		      <FlatButton
 		        label="Let's CodePair!"
 		        primary={true}
-		        onTouchTap={() => this.handleClose()}
+		        onTouchTap={() => {
+		        	this.socket.emit('acceptInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.handleClose();
+		        }}
 		      />,
 		      <FlatButton
 		        label="Maybe later"
 		        primary={true}
-		        onTouchTap={() => this.handleClose()}
+		        onTouchTap={() => {
+		        	this.socket.emit('declineInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.handleClose()
+		        }}
 		      />,
 		    ];
 		return (

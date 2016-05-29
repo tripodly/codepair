@@ -201,7 +201,7 @@ export function joinRoom({ roomID }) {
 	};
 }
 
-export function joinCodeshare({ roomID }) {
+export function startPairing() {
 	return function(dispatch){
 		browserHistory.push('/codeshare');
 	}
