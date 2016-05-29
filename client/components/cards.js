@@ -39,7 +39,6 @@ class Cards extends Component {
     console.log('fromID: ',this.props.userID);
     console.log('toID: ',this.props.cardID);
     this.props.dislikeCard({ fromID: this.props.userID, toID: this.props.cardID });
-
   }
 
   handleYesClick() {
@@ -47,7 +46,17 @@ class Cards extends Component {
     console.log('fromID: ',this.props.userID);
     console.log('toID: ',this.props.cardID);
     this.props.likeCard({ fromID: this.props.userID, toID: this.props.cardID });
+  }
 
+  componentDidMount() {
+    // this.socket = io();
+    // this.socket.on('invite',invite => {
+    //   console.log('invite event received');
+    //   console.log('invite object is : ',invite);
+    //   if(invite.toID === this.props.userID){
+    //     console.log("I HAVE A NEW MATCH!");
+    //   }
+    // });
   }
 
 	render() {

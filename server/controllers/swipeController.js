@@ -1,31 +1,26 @@
-var User = require('../models/user');
-var Users = require('../collections/users');
-var Pending = require('../models/pending');
-var Pendings = require('../collections/pendings');
-var Match = require('../models/match');
-var Matches = require('../collections/matches');
-var Pass = require('../models/pass');
-var Passes = require('../collections/passes');
+
+var knex = require('../db/config').knex;
 
 module.exports = {
 	dislike: function(req, res) {
 		console.log('dislike in swipeController fired!');
 		console.log('request body is : ',req.body);
-		var fromID = req.body.from_id;
-		var toID = req.body.to_id;
-		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
-			if(!pendingMatch) {
+		var fromID = req.body.fromID;
+		var toID = req.body.toID;
+		knex('pendings').select('*').where({ 'fromUser': toID, 'toUser': fromID }).then(function(pendingID){
+			console.log('pendingID is : ',pendingID)
+			if(pendingID.length === 0) {
 				console.log('pending match does not exist, create a new Pass in Passes table');
-				new Pass({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
-					res.send({ "match": false, "message": 'New pass created!', "model": pendingModel });
-				})
+				knex('passes').insert({ 'fromUser': fromID, 'toUser': toID })
+					.then(function(response){
+						res.send({ "match": false, "message": 'New pass created!' });
+					})
 			} else {
 				console.log('pending match does exist, delete it and create a new Pass in Passes table');
-				pendingMatch.destroy().then(function(pendingModel){
-					new Pass({ 'fromUser': fromID, 'toUser': toID }).save().then(function(model){
-						res.send({ "match": false, "message": 'New pass created!', "model": model });
-					});
-				})
+				knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).del()
+					.then(function(response){
+						res.send({ "match": false, "message": 'New pass created!' });
+					})
 			}
 		})
 	},
@@ -34,20 +29,25 @@ module.exports = {
 		console.log('like in swipeController fired!');
 		// request body is :  { from_id: 35, to_id: 14 }
 		console.log('request body is : ',req.body);
-		var fromID = req.body["from_id"];
-		var toID = req.body["to_id"];
-		var pending = new Pending({ 'fromUser': toID, 'toUser': fromID }).fetch().then(function(pendingMatch){
-			if(!pendingMatch) {
+		var fromID = req.body.fromID;
+		var toID = req.body.toID;
+		knex('pendings').select('*').where({ 'fromUser': toID, 'toUser': fromID }).then(function(pendingID){
+			console.log('pendingID is : ',pendingID)
+			if(pendingID.length === 0) {
 				console.log('pending match does not exist, create it...');
-				new Pending({ 'fromUser': fromID, 'toUser': toID }).save().then(function(pendingModel){
-					res.send({ "match": false, "message": 'New pending match created!', "model": pendingModel });
-				})
+				knex('pendings').insert({ 'fromUser': fromID, 'toUser': toID })
+					.then(function(response){
+						res.send({ "match": false, "message": 'New pending match created!' });
+					})
 			} else {
 				console.log('pending match does exist, delete it and create a new Match in Matches table');
-				pendingMatch.destroy().then(function(pendingModel){
-					new Match({ 'fromUser': fromID, 'toUser': toID }).save().then(function(model){
-						res.send({ "match": true, "message": 'New match created!', "model": model });
-					});
+				knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).del()
+				.then(function(response){
+					knex('matches').insert({ 'fromUser': fromID, 'toUser': toID })
+						.then(function(response){
+							console.log('new match saved with an id of : ',response);
+							res.send({ "match": true, "message": 'New match created!', "pair": { fromID: fromID, toID: toID } });
+						})
 				})
 			}
 		})

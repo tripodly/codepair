@@ -6,7 +6,8 @@ const INITIAL_STATE = {
 	current: null,
 	initiated: [],
 	uninitiated: [],
-	matches: []
+	matches: [],
+	waiting: []
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -25,7 +26,7 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('current is set to : ',current);
 			console.log('after setting current - initiatedCards are : ',initiatedCards);
 			console.log('after setting current - uninitiatedCards are : ',uninitiatedCards);
-			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched };
+			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched, waiting: action.payload.cards.waiting };
 		
 		case CLEAR_CARDS:
 			return {...state, current: null, initiated: [], uninitiated: [], matches: [] };
@@ -47,11 +48,13 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('NEW_PENDING action received in cardsReducer');
 			var newInitiatedCards = state.initiated.slice();
 			var newUninitiatedCards = state.uninitiated.slice();
+			var newWaitingCards = state.waiting.slice();
+			newWaitingCards.push(state.current);
 			var newCurrent = newInitiatedCards.length !== 0 ? newInitiatedCards.shift() : newUninitiatedCards.length !== 0 ? newUninitiatedCards.shift() : null;
 			if(!newCurrent){
-				return {...state, current: null, initiated: [], uninitiated: [], matches: [] };
+				return {...state, current: null, initiated: [], uninitiated: [], matches: [], waiting: newWaitingCards };
 			}
-			return {...state, current: newCurrent, initiated: newInitiatedCards, uninitiated: newUninitiatedCards };
+			return {...state, current: newCurrent, initiated: newInitiatedCards, uninitiated: newUninitiatedCards, waiting: newWaitingCards };
 		
 		case NEW_PASS:
 			console.log('NEW_PASS action received in cardsReducer');

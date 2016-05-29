@@ -16,6 +16,7 @@ io.on('connection', function(socket) {
 			// people[socket.id] = { id: user.id, name: user.name };
 			var userID = user.id;
 			people[userID] = { socket: socket.id };
+			console.log('people inside join event in socketController are : ',people);
 			io.emit('online',{ onlineID: userID });
 		}
 		console.log(people);
@@ -24,6 +25,14 @@ io.on('connection', function(socket) {
 	socket.on('codeChange', function(data) {
 		console.log('data inside codeChange is : ',data);
 		io.emit('updateCode',data);
+	})
+
+	socket.on('match',function(data) {
+		console.log('match event received, data is : ',data);
+		var matchReceiver = people[data.toID];
+		console.log('matchReceiver is : ',matchReceiver);
+		console.log('matchReceived socket it : ',matchReceiver.socket);
+		io.emit('invite',{toID: data.toID, fromID: data.fromID, message: 'hi'});
 	})
 
 	socket.on('partner', function(partnerObject){
