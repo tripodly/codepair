@@ -32,7 +32,7 @@ export default class App extends Component {
 						<div style={style.body}>
 							{this.props.children}
 						</div>
-						<Chat />
+						
             <Footer />
 					</Paper>
       </div>
