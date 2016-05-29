@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
 import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 // export default ({ context, handleClick, match }) => {
@@ -74,12 +75,15 @@ class MatchItem extends Component {
 		const handleClick = this.props.handleClick.bind(context,match);
 
 		return (
-			<ListItem 
-				key={match.id}
-				leftAvatar={<Avatar style={this.state.online ? style.online : style.offline} src={match.profile_url} />} primaryText={match.name} 
-				secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}
-				onTouchTap={() => {if(this.state.online)handleClick()} }
-			/>
+			<div>
+				<ListItem 
+					key={match.id}
+					leftAvatar={<Avatar style={this.state.online ? style.online : style.offline} src={match.profile_url} />} primaryText={match.name} 
+					secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}
+					onTouchTap={() => {if(this.state.online)handleClick()} }
+				/>
+				<Divider />
+			</div>
 		);
 	}
 }
