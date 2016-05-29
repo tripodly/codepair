@@ -53,6 +53,9 @@ module.exports = function(app){
 	// route if user swipes right on a card
 	app.post('/cards/like', requireAuth, swipeController.like);
 
+	// route if user getspost for the forum
+	app.get('/user/getPosts', requireAuth, postController.getsposts);
+
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
 		// TODO: change to send back index.html

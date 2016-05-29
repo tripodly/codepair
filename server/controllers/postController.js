@@ -25,7 +25,14 @@ module.exports = {
 		}
 	},
 	getPosts: function(req,res,next){
-
+			var postPromise = new Promise(function(resolve,reject){
+			knex.select('*').from('posts')
+			.then(function(response){
+				console.log('this is the getPosts response :',response);
+				res.send(response);
+				resolve(response);
+			});
+		});
 	},
 	getComments: function(req,res,next){
 		var postID = req.post.postID;
