@@ -200,6 +200,14 @@ export function joinRoom({ roomID }) {
 	};
 }
 
+export function joinCodeshare({ roomID }) {
+	return function(dispatch){
+		browserHistory.push('/codeshare');
+	}
+}
+
+
+
 export function receiveInvite({ invite }) {
 	return { type: INVITE_RECEIVED, payload: { invite }};
 }

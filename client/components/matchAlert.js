@@ -26,7 +26,6 @@ class MatchAlert extends Component {
 	    console.log('invite object is : ',invite);
 	    if(invite.toID === this.props.userID){
 	      console.log("I HAVE A NEW MATCH!");
-
 	      this.props.waiting.forEach(waitingMatch => {
 	      	if(waitingMatch.id === invite.fromID){
 	      		this.setState({
