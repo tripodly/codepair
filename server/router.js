@@ -8,6 +8,7 @@ var swipeController = require('./controllers/swipeController');
 var chatController = require('./controllers/chatController');
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
+var postController = require('./controllers/postController')
 
 module.exports = function(app){
 	// route to get index route
@@ -54,7 +55,10 @@ module.exports = function(app){
 	app.post('/cards/like', requireAuth, swipeController.like);
 
 	// route if user getspost for the forum
-	app.get('/user/getPosts', requireAuth, postController.getsposts);
+	app.get('/user/postMessage', requireAuth, postController.postMessage);
+
+	// route if user posts a new post to the forum
+	app.get('/user/getPosts', requireAuth, postController.getPosts);
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){
