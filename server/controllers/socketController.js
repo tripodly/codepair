@@ -16,6 +16,7 @@ io.on('connection', function(socket) {
 			// people[socket.id] = { id: user.id, name: user.name };
 			var userID = user.id;
 			people[userID] = { socket: socket.id };
+			io.emit('online',{ onlineID: userID });
 		}
 		console.log(people);
 	});
