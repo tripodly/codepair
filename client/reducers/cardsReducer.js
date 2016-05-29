@@ -6,7 +6,8 @@ const INITIAL_STATE = {
 	current: null,
 	initiated: [],
 	uninitiated: [],
-	matches: []
+	matches: [],
+	waiting: []
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -25,7 +26,7 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('current is set to : ',current);
 			console.log('after setting current - initiatedCards are : ',initiatedCards);
 			console.log('after setting current - uninitiatedCards are : ',uninitiatedCards);
-			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched };
+			return {...state, current: current, initiated: initiatedCards, uninitiated: uninitiatedCards, matches: matched, waiting: action.payload.cards.waiting };
 		
 		case CLEAR_CARDS:
 			return {...state, current: null, initiated: [], uninitiated: [], matches: [] };

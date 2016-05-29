@@ -8,6 +8,7 @@ import {
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
+const socket = io();
 
 // signinUser action creator uses redux-thunk to return a function
 // takes object with email and password properties
@@ -163,8 +164,9 @@ export function likeCard({ fromID, toID }) {
 
 				// If this swipe triggers a match, dispatch the NEW_MATCH action
 				if(response.data.match) {
+					console.log('match!');
 					dispatch({ type: NEW_MATCH, payload: response.data.model });
-					
+					socket.emit('match',{ fromID, toID });
 				} else {
 					dispatch({ type: NEW_PENDING, payload: response.data.model });
 				}

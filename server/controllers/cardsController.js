@@ -22,6 +22,15 @@ module.exports = {
 			profile_url: req.user.attributes.profile_url 
 		};
 
+		// Query to get waiting array
+		var waitingPromise = new Promise(function(resolve,reject) {
+			knex('users').select('id','name','email','language','skillLevel','github_handle','profile_url').whereIn('id', 
+			knex('pendings').select('toUser').where('fromUser',userObject.id))
+			.then(function(response){
+				resolve(response);
+			});
+		})
+
 		// Query to select matches array
 		var matchesPromise = new Promise(function(resolve,reject){
 			knex('users').select('id','name','email','language','skillLevel','github_handle','profile_url').whereIn('id', 
@@ -57,9 +66,10 @@ module.exports = {
 			});
 		});
 
-		Promise.all([matchesPromise, initiatedPromise, uninitiatedPromise]).then(function(values){
+		Promise.all([matchesPromise, initiatedPromise, uninitiatedPromise, waitingPromise]).then(function(values){
 			res.send({ id: userObject.id, name: userObject.name, email: userObject.email, language: userObject.language, skillLevel: userObject.skillLevel, github_handle: userObject.github_handle, profile_url: userObject.profile_url,
 				cards: {
+					waiting: values[3],
 					uninitiated: values[2],
 					initiated: values[1],
 					matched: values[0]

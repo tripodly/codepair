@@ -7,9 +7,9 @@ module.exports = {
 		console.log('request body is : ',req.body);
 		var fromID = req.body.fromID;
 		var toID = req.body.toID;
-		knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).select('id').then(function(pendingID){
+		knex('pendings').select('*').where({ 'fromUser': toID, 'toUser': fromID }).then(function(pendingID){
 			console.log('pendingID is : ',pendingID)
-			if(~pendingID.length) {
+			if(pendingID.length === 0) {
 				console.log('pending match does not exist, create a new Pass in Passes table');
 				knex('passes').insert({ 'fromUser': fromID, 'toUser': toID })
 					.then(function(response){
@@ -17,7 +17,7 @@ module.exports = {
 					})
 			} else {
 				console.log('pending match does exist, delete it and create a new Pass in Passes table');
-				knex('pendings').where({ 'fromUser': fromID, 'toUser': toID }).del()
+				knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).del()
 					.then(function(response){
 						res.send({ "match": false, "message": 'New pass created!' });
 					})
@@ -31,9 +31,9 @@ module.exports = {
 		console.log('request body is : ',req.body);
 		var fromID = req.body.fromID;
 		var toID = req.body.toID;
-		knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).select('id').then(function(pendingID){
+		knex('pendings').select('*').where({ 'fromUser': toID, 'toUser': fromID }).then(function(pendingID){
 			console.log('pendingID is : ',pendingID)
-			if(~pendingID.length) {
+			if(pendingID.length === 0) {
 				console.log('pending match does not exist, create it...');
 				knex('pendings').insert({ 'fromUser': fromID, 'toUser': toID })
 					.then(function(response){
@@ -41,12 +41,14 @@ module.exports = {
 					})
 			} else {
 				console.log('pending match does exist, delete it and create a new Match in Matches table');
-				knex('pendings').where({ 'fromUser': fromID, 'toUser': toID }).del();
-				knex('matches').insert({ 'fromUser': fromID, 'toUser': toID })
-					.then(function(response){
-						console.log('new match saved with an id of : ',response);
-						res.send({ "match": true, "message": 'New match created!', "pair": { fromID: fromID, toID: toID } });
-					})
+				knex('pendings').where({ 'fromUser': toID, 'toUser': fromID }).del()
+				.then(function(response){
+					knex('matches').insert({ 'fromUser': fromID, 'toUser': toID })
+						.then(function(response){
+							console.log('new match saved with an id of : ',response);
+							res.send({ "match": true, "message": 'New match created!', "pair": { fromID: fromID, toID: toID } });
+						})
+				})
 			}
 		})
 	}

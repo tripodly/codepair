@@ -49,11 +49,14 @@ class Cards extends Component {
   }
 
   componentDidMount() {
-    this.socket = io();
-    this.socket.on('invite',invite => {
-      console.log('invite event received');
-      
-    })
+    // this.socket = io();
+    // this.socket.on('invite',invite => {
+    //   console.log('invite event received');
+    //   console.log('invite object is : ',invite);
+    //   if(invite.toID === this.props.userID){
+    //     console.log("I HAVE A NEW MATCH!");
+    //   }
+    // });
   }
 
 	render() {
