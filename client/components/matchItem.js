@@ -23,7 +23,7 @@ const style = {
 	},
 	offline: {
 		borderRadius: '100%',
-		border:'4px solid #F34235',
+		border:'2px solid #F34235',
 	},
 }
 
@@ -78,7 +78,7 @@ class MatchItem extends Component {
 				key={match.id}
 				leftAvatar={<Avatar style={this.state.online ? style.online : style.offline} src={match.profile_url} />} primaryText={match.name} 
 				secondaryText={`${match.language} - ${match.skillLevel}`} rightIcon={<ChatBubble />}
-				onTouchTap={() => handleClick()}
+				onTouchTap={() => {if(this.state.online)handleClick()} }
 			/>
 		);
 	}
