@@ -231,6 +231,50 @@ export function leaveSession({ sessionID }) {
 export function receiveInvite({ invite }) {
 	return { type: INVITE_RECEIVED, payload: { invite }};
 }
+//-------------post actions----------------------
+
+export function newPost({ subject, message }){
+	return function(dispatch) {
+		axios.post(`${API_URL}/user/postMessage`, { subject, message },
+			{ headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log('this was a good post in newPost with a response of: ', response);
+				// if post is successful, dispatch an action
+				// dispatch action to set current users info
+				// update users posts
+				// dispatch({ type: UPDATE_USER, payload: { 
+				// 	id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profileUrl
+				// }});
+			})
+			.catch(response => {
+				// if there is an error from the post to the server,
+				console.log('error in newPost action creator: ',response);
+			});
+	}
+}
+export function getPosts({ subject, message }){
+	console.log('getposts action creator called');
+	return function(dispatch) {
+		axios.get(`${API_URL}/user/getPosts`, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log('getPosts response received');
+				console.log('getposts response is : ',response);
+				// dispatch({ type: GET_CARDS, payload: response.data })
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
+			})
+			.catch(response => {
+				// if there is an error from the post to the server,
+				// log it
+				console.log('error in getpost action creator: ',response);
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
+			})
+	}
+}
 
 // ------------Chat actions----------------------
 

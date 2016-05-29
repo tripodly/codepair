@@ -20,7 +20,7 @@ module.exports = {
 				// postModel is the post being saved
 				res.send('post sent!');
 			})
-		} else{
+		} else {
 			res.send('error making post');
 		}
 	},
@@ -28,7 +28,7 @@ module.exports = {
 			var postPromise = new Promise(function(resolve,reject){
 			knex.select('*').from('posts')
 			.then(function(response){
-				console.log('this is the getPosts response :',response);
+				console.log('this is the getPosts response in the controller :',response);
 				res.send(response);
 				resolve(response);
 			});

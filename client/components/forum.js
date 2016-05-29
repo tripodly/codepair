@@ -57,24 +57,32 @@ class Forum extends Component {
 			filter: 'Most Recent',
 			posts: [],
 			comments: [],
-			input: ''
+			input: '',
+			subject:''
 		}
 	}
-	handleClick(){
+	handleClick(body, subject){
 		console.log('handlde click was clicked in the forum conpment');
+		this.props.newPost({ body, subject });
 	}
 	handleChange(event, index, value) {
 		this.setState({
 			filter: value
 		})
 	}
-	handlChangeInput(event){
+	handlChangeInput(event,subject){
+		if(subject){
+			this.setState({subject:event.target.value})
+		}else{
 		this.setState({input:event.target.value})
-		console.log(event.target.value);
+		}
 	}
 
 	componentDidMount(){
-
+		var m = this.props.getPosts();
+		setTimeout(function(){
+			console.log('this is the get posts=>>>>',m);
+		},2000);
 	}
 	render() {
 		return (
@@ -88,13 +96,14 @@ class Forum extends Component {
 				}/>	
 				<div style={style.newPost}>
 					<br></br>
-					<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick()} />
+					<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
 					<br></br>
 					<TextField 
 						style={style.subject}
 						placeholder={'Subject'}
 						multiLine={false}
 						name="POST_SUBJECT"
+						onChange={(e)=> this.handlChangeInput(e,'subject')}
 					/>
 					<TextField 
 						style={style.textField}
