@@ -1,6 +1,7 @@
-import { CLEAR_USER, UPDATE_USER } from '../actions/actionTypes';
+import { USER_INITIATED, CLEAR_USER, UPDATE_USER } from '../actions/actionTypes';
 
-const INITIAL_STATE = { 
+const INITIAL_STATE = {
+	initiated: false, 
 	id: "",
 	email: "",
 	name: "",
@@ -12,9 +13,11 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
+		case USER_INITIATED:
+			return {...state, initiated: true };
 		case CLEAR_USER:
 			console.log('CLEAR_USER action received in profileReducer');
-			return {...state, id: "", email: "", name: "", language: "JavaScript", skillLevel: "Beginner", github_handle: "", profile_url: "" }; 
+			return {...state, initiated: false, id: "", email: "", name: "", language: "JavaScript", skillLevel: "Beginner", github_handle: "", profile_url: "" }; 
 		// if actionType is UPDATE_USER
 		case UPDATE_USER:
 			console.log('UPDATE_USER action received in profileReducer');

@@ -33,6 +33,15 @@ io.on('connection', function(socket) {
 		console.log('matchReceiver is : ',matchReceiver);
 		console.log('matchReceived socket it : ',matchReceiver.socket);
 		io.emit('invite',{toID: data.toID, fromID: data.fromID, message: 'hi'});
+	});
+
+	socket.on('inviteResponse', function(data) {
+		console.log('inviteResponse event received, data is : ',data);
+		var responder = people[data.toID];
+		console.log('responder is : ',responder);
+		if(responder){
+			io.emit('matchMade', { toID: data.toID, fromID: data.fromID });
+		}
 	})
 
 	socket.on('partner', function(partnerObject){
