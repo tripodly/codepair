@@ -97,6 +97,7 @@ knex.schema.hasTable('posts').then(function(exists){
 			post.increments('id').primary();
 			post.integer('userID',11).unsigned();
 			post.foreign('userId').references('id').inTable('users');
+			post.integer('vote',11);
 			post.string('message',2000);
 			post.timestamps();
 		}).then(function (table) {
