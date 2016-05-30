@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
-// import forEach from 'lodash/forEach';
 import FlatButton from 'material-ui/FlatButton';
 import * as actions from '../actions';
 
@@ -23,10 +22,7 @@ class MatchAlert extends Component {
 	componentDidMount() {
 	  this.socket = io();
 	  this.socket.on('invite',inviteObject => {
-	    console.log('invite event received');
-	    console.log('invite object is : ',inviteObject);
 	    if(inviteObject.toID === this.props.userID){
-	      console.log("I HAVE A NEW MATCH!");
 	      this.props.waiting.forEach(waitingMatch => {
 	      	if(waitingMatch.id === inviteObject.fromID){
 	      		this.socket.emit('inviteResponse', { fromID: this.props.userID, toID: inviteObject.fromID });
@@ -44,14 +40,9 @@ class MatchAlert extends Component {
 	    }
 	  });
 	  this.socket.on('matchMade',matchMadeObj => {
-	  	console.log('matchMade event received');
-	  	console.log('matchMade object is : ',matchMadeObj);
-	  	console.log('this.props.userID is : ',this.props.userID);
 	  	if(matchMadeObj.toID === this.props.userID){
-	  	  console.log("I HAVE A NEW MATCH!");
 	  	  this.props.matches.forEach(waitingMatch => {
 	  	  	if(waitingMatch.id === matchMadeObj.fromID){
-	  	  		console.log('waitingmatchid found to match matchmadeobj.fromid')
 	  	  		this.setState({
 	  	  			open: true,
 	  	  			id: waitingMatch.id,
@@ -67,9 +58,7 @@ class MatchAlert extends Component {
 	  });
 
 	  this.socket.on('rejectInvite',rejectObj => {
-	  	console.log('rejectInvite event received, rejectObj is : ',rejectObj);
 	  	if(rejectObj.idA === this.props.userID || rejectObj.idB === this.props.userID){
-	  		console.log('INVITE HAS BEEN REJECTED!');
 	  		this.setState({
 	  			open: false,
 	  			id: null,
@@ -83,9 +72,7 @@ class MatchAlert extends Component {
 	  })
 
 	  this.socket.on('bothAccept',acceptObj => {
-	  	console.log('bothAccept event received, acceptObj is : ',acceptObj);
 	  	if(acceptObj.idA === this.props.userID || acceptObj.idB === this.props.userID){
-	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
 	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url })
 	  		const SESSION_ID = "" + acceptObj.idA + ":" + acceptObj.idB + "";
 	  		this.props.joinSession({ sessionID: SESSION_ID });
@@ -125,7 +112,7 @@ class MatchAlert extends Component {
 
 function mapStateToProps (state) {
 	if(state.profile.initiated) {
-		return { current: state.cards.current, cardID: state.cards.current.id, matches: state.cards.matches, waiting: state.cards.waiting, userID: state.profile.id };
+		return { current: state.cards.current, matches: state.cards.matches, waiting: state.cards.waiting, userID: state.profile.id };
 	} else {
 		return state;
 	}

@@ -122,6 +122,7 @@ export function authError(error) {
 }
 
 export function signoutUser() {
+	socket.emit('leave');
 	localStorage.removeItem('token');
 	return function(dispatch) {
 		dispatch({ type: DEAUTHORIZE_USER });
@@ -143,6 +144,7 @@ export function getCards() {
 				dispatch({ type: GET_CARDS, payload: response.data })
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
+				socket.emit('getOnlineUsers');
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
@@ -196,6 +198,10 @@ export function dislikeCard({ fromID, toID }) {
 
 export function setPartner({ id, name, email, language, skillLevel, profile_url }) {
 	return { type: SET_PARTNER, payload: { id, name, email, language, skillLevel, profile_url }};
+}
+
+export function clearPartner({ fromID, toID }){
+	return { type: CLEAR_PARTNER };
 }
 
 export function startPairing() {
