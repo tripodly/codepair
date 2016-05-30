@@ -121,7 +121,7 @@ class Forum extends Component {
 				</div>
 			);
 		}
-		else if(!flag){
+		else if(!flag && this.props.posts){
 			console.log(this.props.posts)
 			return (
 				<div style={style.forumWindow}>
@@ -200,7 +200,7 @@ class Forum extends Component {
 
 function mapStateToProps(state) {
 	return { 
-		posts: state.message,
+		posts: state.posts.posts,
 		waiting: state.response.waiting 
 	};
 }
