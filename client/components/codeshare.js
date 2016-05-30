@@ -26,12 +26,29 @@ const style = {
 		width: '100%',
 		height: 50,
 		backgroundColor: '#FF0A9C',
-		display: 'flex',
-		flexDirection: 'column',
 		alignItems: 'center',
 	},
 	optionsMenu: {
 		marginTop: -15,
+	},
+	optionsTitleChildren: {
+		float: 'right',
+		display: 'inline-block',
+		alignItems: 'center',
+	},
+	optionsTitleChild: {
+		display: 'inline-block',
+		verticalAlign: 'middle',
+		paddingRight: 10,
+		marginRight: 10,
+	},
+	optionsTitle: {
+		display: 'inline-block',
+		verticalAlign: 'middle',
+		textDecoration: 'none',
+		color: '#FFF',
+		float: 'left',
+		fontSize: 14,
 	},
 }
 
@@ -80,11 +97,14 @@ class CodeShare extends Component {
 	renderPartner(){
 		if(this.props.pairID && this.props.sessionID) {
 			return (
-				<div>Partner: <Avatar src={this.props.partner.profile_url} size={30} /> {this.props.partner.name}</div>
+				<div style={style.optionsTitleChildren}>
+					<Avatar style={style.optionsTitleChild} src={this.props.partner.profile_url} size={30} /> 
+					<div style={style.optionsTitleChild}>{this.props.partner.name}</div>
+				</div>
 			);
 		} else {
 			return (
-				<div>Hi!</div>
+				<div>No partner...</div>
 			);
 		}
 	}
@@ -93,8 +113,8 @@ class CodeShare extends Component {
 		const renderPartner = this.renderPartner.bind(this);
 		return (
 			<div style={style.codeWindow}>
-				<AppBar style={style.optionsBar} showMenuIconButton={false} 
-					title={this.props.partner.name}
+				<AppBar style={style.optionsBar} showMenuIconButton={false} zDepth={1}
+					title={<div style={style.optionsTitle}>{this.renderPartner()}</div>}
 					iconElementRight={
 						<DropDownMenu style={style.optionsMenu} value={this.state.language} onChange={(event, index, value) => this.handleChange(event, index, value)}>
 		          <MenuItem value={'javascript'} primaryText="JavaScript" />
