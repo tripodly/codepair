@@ -12,7 +12,10 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('this is postsreducer action : ',action)
 			var posts = action.payload.slice();
 			console.log('payload =====',posts)
-			return {...state, posts:action.payload };
+			return {...state, posts: action.payload };
+		case GET_COMMENTS:
+			console.log('this is the getComments reducer function',action);
+			return{...state, comments: action.payload }
 		default:
 			return state;
 	}

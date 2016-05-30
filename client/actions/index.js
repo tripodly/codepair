@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, USER_INITIATED,
 	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
-	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS } from './actionTypes';
+	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS, GET_COMMENTS } from './actionTypes';
 
 // URL FOR DEVELOPMENT
 const API_URL = 'http://localhost:3090';
@@ -287,7 +287,7 @@ export function getComments({id}){
 			.then(response => {
 				console.log('getComments response received',response);
 				console.log('getComments response is : ',response.data);
-				dispatch({ type: GET_POSTS, payload: response.data })
+				dispatch({ type: GET_COMMENTS, payload: response.data });
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
