@@ -13,6 +13,20 @@ import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
+	comment:{
+		height: 100,
+		marginTop: 25,
+		marginLeft: 150,
+		marginRight: 150,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		display: 'inline-block',
+		width: '100%',
+	},
+	commentButton: {
+		marginTop: -100,
+	},
 	button: {
 		textDecoration: 'none',
 		color: 'white',
@@ -172,6 +186,7 @@ class Forum extends Component {
 						</div>
 					);
 		} else if(this.props.comments){
+			console.log('this is the comments of props', this.props.comments,this.props.post,this.props.posts)
 			let item = this.props.post;
 			if(this.props.comments.length < 1){
 				return (
@@ -199,6 +214,18 @@ class Forum extends Component {
 									<div>{'Be the first to comment!'}</div>
 								</List>
 							</Paper>
+						</div>
+						<div style={style.comment}>
+							<br></br>
+							<br></br>
+							<TextField 
+								style={style.subject}
+								placeholder={'Comment'}
+								multiLine={true}
+								name="POST_COMMENT"
+								onChange={(e)=> this.handlChangeInput(e,'subject')}
+							/>
+							<RaisedButton label="New Post" primary={true} style={style.commentButton} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
 						</div>
 					</div>
 				);
