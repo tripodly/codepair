@@ -71,6 +71,10 @@ io.on('connection', function(socket) {
 		// io.in(data.room).emit('updateCode',"Hello World!");
 	});
 
+	socket.on('changeLanguage', function(data) {
+		io.to(data.room).emit('languageUpdate',data);
+	});
+
 	socket.on('rejectInvite', function(data) {
 		console.log('reject event received, data is : ',data);
 		io.emit('declineInvite',{ "idA": data.toID, "idB": data.fromID });

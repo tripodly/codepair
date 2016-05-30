@@ -48,7 +48,8 @@ class CodeShare extends Component {
 	handleChange(event, index, value) {
 		this.setState({
 			language: value
-		})
+		});
+		this.socket.emit('changeLanguage', { room: this.props.sessionID, language: value });
 	}
 
 	componentDidMount(){
@@ -56,9 +57,16 @@ class CodeShare extends Component {
 		this.socket.emit('joinSession', {room: this.props.sessionID});
 		this.socket.on('updateCode',codeData => {
 			console.log('codeData is : ',codeData);
-			if(codeData.room === this.props.sessionID){
+			if(this.props.sessionID && codeData.room === this.props.sessionID){
 				console.log('msg received in this sessionID');
 				this.setState({ codeData: codeData.value });
+			}
+		})
+		this.socket.on('updateLanguage',languageData => {
+			console.log('languageData is : ',languageData);
+			if(this.props.sessionID && languageData.room === this.props.sessionID){
+				console.log('new lang received in this sessionID');
+				this.setState({ language: languageData.language });
 			}
 		})
 	}
