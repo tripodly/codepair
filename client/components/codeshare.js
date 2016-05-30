@@ -83,22 +83,26 @@ class CodeShare extends Component {
 	}
 
 	renderPartner(){
-		if(this.props.pairID !== "" && this.props.sessionID !== "") {
+		console.log('renderPartner called');
+		console.log('pairID is : ',this.props.pairID,' and sessionID is : ',this.props.sessionID );
+		if(this.props.pairID && this.props.sessionID) {
 			return (
-				<div>
-					Partner: <Avatar src={this.props.partner.profile_url} size={30} /> {this.props.partner.name}
-				</div>
+				<div>Partner: <Avatar src={this.props.partner.profile_url} size={30} /> {this.props.partner.name}</div>
+			);
+		} else {
+			return (
+				<div>Hi!</div>
 			);
 		}
 	}
 
 	render() {
+		const renderPartner = this.renderPartner.bind(this);
+		console.log('this.props in codeshare render method are : ',this.props);
 		return (
 			<div style={style.codeWindow}>
 				<AppBar style={style.optionsBar} showMenuIconButton={false} 
-					iconElementLeft={
-						this.renderPartner()
-					}
+					title={this.props.partner.name}
 					iconElementRight={
 						<DropDownMenu style={style.optionsMenu} value={this.state.language} onChange={(event, index, value) => this.handleChange(event, index, value)}>
 		          <MenuItem value={'javascript'} primaryText="JavaScript" />

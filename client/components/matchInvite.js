@@ -21,8 +21,18 @@ class MatchInvite extends Component {
 		}
 	}
 
-	componentDidUpdate(){
-		console.log('componentDidUpdate fired in matchInvite and state is now : ',this.state);
+	componentWillUnmount(){
+		console.log('componentWillUnmount fired!');
+		this.setState({
+			inviter: null,
+			open: false,
+			id: null,
+			name: null,
+			language: null,
+			skillLevel: null,
+			profile_url: null,
+			message: null
+		});
 	}
 
 	componentDidMount() {
@@ -66,24 +76,6 @@ class MatchInvite extends Component {
 	      });
 	    }
 	  });
-
-
-	  // this.socket.on('rejectInvite',rejectObj => {
-	  // 	console.log('rejectInvite event received, rejectObj is : ',rejectObj);
-	  // 	if(rejectObj.idA === this.props.userID || rejectObj.idB === this.props.userID){
-	  // 		console.log('INVITE HAS BEEN REJECTED!');
-	  // 		this.setState({
-	  // 			inviter: null,
-	  // 			open: false,
-	  // 			id: null,
-	  // 			name: null,
-	  // 			language: null,
-	  // 			skillLevel: null,
-	  // 			profile_url: null,
-	  // 			message: null
-	  // 		})
-	  // 	}
-	  // })
 
 	  this.socket.on('partnerInviteeAccepted',data => {
 	  	console.log('partnerInviteeAccepted event received, data is : ',data);
@@ -131,7 +123,7 @@ class MatchInvite extends Component {
 		        label="Let's CodePair!"
 		        primary={true}
 		        onTouchTap={() => {
-		        	this.socket.emit('partnerInviteeAccept',{ inviteeID: this.props.user.id, inviterID: this.state.id});
+		        	this.socket.emit('partnerInviteeAccept',{inviteeID: this.props.user.id, inviterID: this.state.id});
 		        	this.handleClose();
 		        }}
 		      />,
