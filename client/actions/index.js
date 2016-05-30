@@ -194,17 +194,18 @@ export function dislikeCard({ fromID, toID }) {
 	}
 }
 
-export function joinSession({ sessionID }) {
-	return {
-		type: JOIN_SESSION,
-		payload: { sessionID }
-	};
-}
 
 export function startPairing() {
 	return function(dispatch){
 		browserHistory.push('/codeshare');
 	}
+}
+
+export function joinSession({ sessionID }) {
+	return {
+		type: JOIN_SESSION,
+		payload: { sessionID }
+	};
 }
 
 export function leaveSession({ sessionID }) {

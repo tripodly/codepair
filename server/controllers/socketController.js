@@ -23,10 +23,6 @@ io.on('connection', function(socket) {
 		console.log(people);
 	});
 
-	socket.on('codeChange', function(data) {
-		console.log('data inside codeChange is : ',data);
-		io.emit('updateCode',data);
-	})
 
 	socket.on('match',function(data) {
 		console.log('match event received, data is : ',data);
@@ -55,8 +51,25 @@ io.on('connection', function(socket) {
 			// then emit to both sockets that they both accepted
 			// which should trigger an action on client side to push them to codesharing page
 			io.emit('bothAccept',{ "idA": data.toID, "idB": data.fromID });
+			var newRoom = ""+data.toID+":"+data.fromID+""
+			rooms.push(newRoom);
+			socket.join(newRoom);
+			console.log('socket obj is now : ',socket);
+			io.in(newRoom).emit('user joined', data);
 		}
 	})
+
+	socket.on('codeChange', function(data) {
+		console.log('current socket is : ',socket);
+		console.log('data inside codeChange is : ',data);
+		io.in(data.room).emit('updateCode',data);
+	});
+
+	socket.on('joinSession', function(data) {
+		console.log('joinSession event, data is : ',data);
+		socket.join(data.room);
+		// io.in(data.room).emit('updateCode',"Hello World!");
+	});
 
 	socket.on('rejectInvite', function(data) {
 		console.log('reject event received, data is : ',data);

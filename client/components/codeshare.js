@@ -53,9 +53,13 @@ class CodeShare extends Component {
 
 	componentDidMount(){
 		this.socket = io();
+		this.socket.emit('joinSession', {room: this.props.sessionID});
 		this.socket.on('updateCode',codeData => {
 			console.log('codeData is : ',codeData);
-			this.setState({ codeData: codeData });
+			if(codeData.room === this.props.sessionID){
+				console.log('msg received in this sessionID');
+				this.setState({ codeData: codeData.value });
+			}
 		})
 	}
 
@@ -66,7 +70,7 @@ class CodeShare extends Component {
 		// use socket.emit('codeChange',newValue) to send new data to io('server')
 		// which will then be broadcast to the other user
 		// Need to have a way to identify the pair of users sharing the page
-		this.socket.emit('codeChange',newValue);
+		this.socket.emit('codeChange',{ room: this.props.sessionID, value: newValue });
 	}
 
 	render() {
@@ -97,7 +101,7 @@ class CodeShare extends Component {
 };
 
 function mapStateToProps(state) {
-	return { userID: state.profile.id, pairID: state.partner.id };
+	return { userID: state.profile.id, pairID: state.partner.id, sessionID: state.profile.sessionID };
 }
 
 
