@@ -64,6 +64,10 @@ const style = {
 		alignItems: 'center',
 		backgroundColor:'#D8D8D8',
 	},
+	mainPost:{
+		border:' 3px solid #585858',
+
+	},
 }
 
 
@@ -169,7 +173,6 @@ class Forum extends Component {
 					);
 		} else if(this.props.comments){
 			let item = this.props.post;
-			console.log('here in the forumjs line 128',this.props.post);
 			if(this.props.comments.length < 1){
 				return (
 					<div style={style.forumWindow}>
@@ -192,7 +195,7 @@ class Forum extends Component {
 							<div>
 							<Paper zDepth={2}>
 								<List>
-									<ForumItem item={item} />
+									<ForumItem style={style.mainPost} item={item} />
 									<div>{'Be the first to comment!'}</div>
 								</List>
 							</Paper>
@@ -200,7 +203,6 @@ class Forum extends Component {
 					</div>
 				);
 				} else {
-					console.log('reverts into here this is the comments of props=====',this.props.comments)
 						return (
 							<div style={style.forumWindow}>
 								<AppBar style={style.optionsBar} showMenuIconButton={false}
