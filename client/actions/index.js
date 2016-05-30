@@ -262,9 +262,9 @@ export function getPosts(){
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('getPosts response received');
-				console.log('getposts response is : ',response.posts);
-				dispatch({ type: GET_POSTS, payload: response.posts })
+				console.log('getPosts response received',response);
+				console.log('getposts response is : ',response.data);
+				dispatch({ type: GET_POSTS, payload: response.data })
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})

@@ -114,8 +114,7 @@ class Forum extends Component {
 		console.log('clicked')
 	}
 	render() {
-console.log('waiting ====== ',this.props.waiting)
-		if(!this.props.waiting){
+		if(this.props.waiting){
 			return(
 				<div>
 				 <CircularProgress size={2} />
