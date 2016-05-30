@@ -104,14 +104,15 @@ class Forum extends Component {
 
 	componentDidMount(){
 		this.props.getPosts();
-		// setTimeout(function(){
-		// 	console.log('this is the getPosts method return in forum.js=>>>>',m);
-		// },2000);
 	}
 	handleModal(){
 		flag = !flag;
 		this.setState({});
 		console.log('clicked')
+	}
+	handleForumItemClick(id){
+		console.log('this is the item you clicked ID: ', id);
+		this.props.getComments(id);
 	}
 	render() {
 		if(this.props.waiting){
@@ -145,7 +146,7 @@ class Forum extends Component {
 						<Paper zDepth={2}>
 									<List>
 										{ this.props.posts.map(item =>
-											<ForumItem context={this} handleClick={this.handleListItemClick} item={item} /> 
+											<ForumItem context={this} handleClick={this.handleForumItemClick} item={item} /> 
 										)}
 									</List>
 								</Paper>

@@ -22,7 +22,7 @@ module.exports = {
 
 			new Post({ 'userID': req.user.attributes.id, 'message': messageObject.postMessage, subject: messageObject.subject }).save().then(function(postModel){
 				// postModel is the post being saved
-				res.send('post sent!');
+				res.send('post sent!',postModel);
 			})
 		} else {
 			res.send('error making post');
@@ -40,6 +40,35 @@ module.exports = {
 	},
 	getComments: function(req,res,next){
 		var postID = req.post.postID;
-		//query db for all replys with postID === to req postID
+		//query db for all replys with postID === to req id
+			var postPromise = new Promise(function(resolve,reject){
+			knex.select('*').from('replys').where('id',req.body.id)
+			.then(function(response){
+				console.log('this is the getComments response in the controller :',response);
+				res.send(response);
+				resolve(response);
+			});
+		});
+	},
+	postComment: function(req, res, next){
+		console.log('this is in the post commentController');
+		var messageObject = {
+			userId: req.user.attributes.id,
+			postComment : req.body.comment,
+			postID: req.body.id
+		};
+		if(messageObject.postComment.length >= 2 && messageObject.postID){
+		new Reply({ 'userID': req.user.attributes.id, 'comment': messageObject.postComment, postID: messageObject.postID }).save().then(function(postComment){
+				res.send('post sent!',postModel);
+			})
+		} else{
+			res.send('error making a comment!');
+		}
 	}
+
+
+
+
+
+
 };

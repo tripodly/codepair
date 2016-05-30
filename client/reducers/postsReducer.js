@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
 		case GET_POSTS:
-			console.log('this is where the error is coming undefined in postsreducer',action)
+			console.log('this is postsreducer action : ',action)
 			var posts = action.payload.slice();
 			console.log('payload =====',posts)
 			return {...state, posts:action.payload };

@@ -277,7 +277,29 @@ export function getPosts(){
 			})
 	}
 }
-
+export function getComments({id}){
+	console.log('getComments action creator called');
+	return function(dispatch) {
+	dispatch({ type: AWAITING_RESPONSE });
+		axios.get(`${API_URL}/user/getComments`,{ id }, { 
+			headers: { authorization: localStorage.getItem('token') }
+		})
+			.then(response => {
+				console.log('getComments response received',response);
+				console.log('getComments response is : ',response.data);
+				dispatch({ type: GET_POSTS, payload: response.data })
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
+			})
+			.catch(response => {
+				// if there is an error from the post to the server,
+				// log it
+				console.log('error in getComments action creator: ',response);
+				// Dispatch action that signals server response has been received
+				dispatch({ type: RESPONSE_RECEIVED });
+			})
+	}
+}
 // ------------Chat actions----------------------
 
 function addMessage({message}) {
