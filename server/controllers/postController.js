@@ -41,13 +41,19 @@ module.exports = {
 	getComments: function(req,res,next){
 		var postID = req.body.id;
 		//query db for all replys with postID === to req id
+		var postObject = {post:'', comments:''}
 		console.log('the req body in getComments post method is :',req.body.id)
 			var postPromise = new Promise(function(resolve,reject){
 			knex.select('*').from('replys').where('postID',postID)
 			.then(function(response){
+				postObject.comments = response;
+				knex.select('*').from('posts').where('id',postID)
+				.then(function(resp){
+					postObject.post = resp;
+					res.send(postObject);
+					resolve(response);
+				})
 				console.log('this is the getComments response in the controller :',response);
-				res.send(response);
-				resolve(response);
 			});
 		});
 	},
@@ -66,10 +72,5 @@ module.exports = {
 			res.send('error making a comment!');
 		}
 	}
-
-
-
-
-
 
 };

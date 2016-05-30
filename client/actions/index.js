@@ -301,7 +301,6 @@ export function getComments({ id }){
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
-				// log it
 				console.log('error in getComments action creator: ',response);
 				// Dispatch action that signals server response has been received
 				dispatch({ type: GET_COMMENTS, payload: [] });

@@ -3,7 +3,8 @@ import { GET_POSTS, GET_COMMENTS } from '../actions/actionTypes';
 
 const INITIAL_STATE = { 
 	posts: [],
-	comments:[]
+	comments:[],
+	post:{}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -14,12 +15,8 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('payload =====',posts)
 			return {...state, posts: action.payload, comments: '' };
 		case GET_COMMENTS:
-			console.log('this is the getComments reducer function',action);
-			if(action.payload.length <1){
-				return {...state, comments:['No Comments yet'],posts: ''};
-			}else{
-				return{...state, comments: action.payload, posts: '' };
-			}
+			console.log('this is the getComments reducer function',action.payload);
+			return{...state, comments: action.payload.comments,post:action.payload.post[0], posts: '' };
 		default:
 			return state;
 	}

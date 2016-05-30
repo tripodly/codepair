@@ -10,7 +10,10 @@ class ForumItem extends Component {
 	render() {
 		const item = this.props.item;
 		const context = this.props.context;
-		const handleClick = this.props.handleClick.bind(context,item);
+		let handleClick = function(){};
+		if(this.props.handleClick){
+			handleClick = this.props.handleClick.bind(context,item);
+		}
 		return (
 			<div>
 				<ListItem 

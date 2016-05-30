@@ -123,10 +123,54 @@ class Forum extends Component {
 				 <CircularProgress size={2} />
 				</div>
 			);
-		}
-		else if(this.props.comments){
-			console.log('here in the forumjs line 128');
-			if(typeof(this.props.comments[0]) === 'string'){
+		} else if(flag){
+			//if the user clicked on post we want the modal to pop up before anything else
+					return (
+						<div style={style.forumWindow}>
+							<AppBar style={style.optionsBar} showMenuIconButton={false}
+								children={
+									<div style={style.optionsElements}>
+										<div style={style.optionElement}>
+											<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+										</div>
+										<div style={style.optionElement}>
+											<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+							          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
+							          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
+							          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
+							        </DropDownMenu>
+										</div>
+									</div>
+								}
+								/>	
+								<div style={style.newPost}>
+									<br></br>
+									<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
+									<br></br>
+									<TextField 
+										style={style.subject}
+										placeholder={'Subject'}
+										multiLine={false}
+										name="POST_SUBJECT"
+										onChange={(e)=> this.handlChangeInput(e,'subject')}
+									/>
+									<TextField 
+										style={style.textField}
+										placeholder={'Body...'}
+										multiLine={true}
+										rows={10}
+									  rowsMax={15}
+										name="POST_COMPONENT"
+										value={this.state.input}
+										onChange={(e)=> this.handlChangeInput(e)}
+									/>
+								</div>		
+						</div>
+					);
+		} else if(this.props.comments){
+			let item = this.props.post;
+			console.log('here in the forumjs line 128',this.props.post);
+			if(this.props.comments.length < 1){
 				return (
 					<div style={style.forumWindow}>
 						<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -148,14 +192,15 @@ class Forum extends Component {
 							<div>
 							<Paper zDepth={2}>
 								<List>
-									<div>{'No Comments to Display'}</div>
+									<ForumItem item={item} />
+									<div>{'Be the first to comment!'}</div>
 								</List>
 							</Paper>
 						</div>
 					</div>
 				);
 				} else {
-					console.log('reverts into here')
+					console.log('reverts into here this is the comments of props=====',this.props.comments)
 						return (
 							<div style={style.forumWindow}>
 								<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -187,7 +232,7 @@ class Forum extends Component {
 					);
 				}
 		}
-		else if(!flag && this.props.posts){
+		else {
 			return (
 				<div style={style.forumWindow}>
 					<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -217,50 +262,7 @@ class Forum extends Component {
 					</div>		
 				</div>
 			)
-		} else {
-		return (
-			<div style={style.forumWindow}>
-				<AppBar style={style.optionsBar} showMenuIconButton={false}
-					children={
-						<div style={style.optionsElements}>
-							<div style={style.optionElement}>
-								<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
-							</div>
-							<div style={style.optionElement}>
-								<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-				          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-				          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-				          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-				        </DropDownMenu>
-							</div>
-						</div>
-					}
-					/>	
-					<div style={style.newPost}>
-						<br></br>
-						<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
-						<br></br>
-						<TextField 
-							style={style.subject}
-							placeholder={'Subject'}
-							multiLine={false}
-							name="POST_SUBJECT"
-							onChange={(e)=> this.handlChangeInput(e,'subject')}
-						/>
-						<TextField 
-							style={style.textField}
-							placeholder={'Body...'}
-							multiLine={true}
-							rows={10}
-						  rowsMax={15}
-							name="POST_COMPONENT"
-							value={this.state.input}
-							onChange={(e)=> this.handlChangeInput(e)}
-						/>
-					</div>		
-			</div>
-		);
-	}
+		}
 	};
 }
 
@@ -268,7 +270,8 @@ function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
 		waiting: state.response.waiting ,
-		comments: state.posts.comments
+		comments: state.posts.comments,
+		post: state.posts.post
 	};
 }
 
