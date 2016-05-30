@@ -21,16 +21,20 @@ class MatchInvite extends Component {
 		}
 	}
 
+	componentDidUpdate(){
+		console.log('componentDidUpdate fired in matchInvite and state is now : ',this.state);
+	}
+
 	componentDidMount() {
 	  this.socket = io();
 	  this.socket.on('partnerInvite',inviteObject => {
 	    console.log('invite event received');
 	    console.log('invite object is : ',inviteObject);
 	    // do this if the current user is the instigator
-	    if(inviteObject.fromID === this.props.user.id){
+	    if(inviteObject.inviterID === this.props.user.id){
 	    	console.log("I've invited someone to pair...");
 	    	this.props.matches.forEach(match => {
-	    		if(match.id === inviteObject.toID){
+	    		if(match.id === inviteObject.inviteeID){
 	    			this.setState({
 	    				inviter: true,
 	    				open: true,
@@ -40,15 +44,15 @@ class MatchInvite extends Component {
 	    				skillLevel: match.skillLevel,
 	    				profile_url: match.profile_url,
 	    				message: `Waiting to see if ${match.name} wants to pair...`
-	    			})
+	    			})	    			
 	    		}
 	    	});
 	    }
 	    // do this if the current user is the receiver
-	    if(inviteObject.toID === this.props.user.id){
+	    if(inviteObject.inviteeID === this.props.user.id){
 	      console.log("I have an invite to pair!");
 	      this.props.matches.forEach(match => {
-	      	if(match.id === inviteObject.fromID){
+	      	if(match.id === inviteObject.inviterID){
 	      		this.setState({
 	      			open: true,
 	      			id: match.id,
@@ -63,28 +67,6 @@ class MatchInvite extends Component {
 	    }
 	  });
 
-	  // this.socket.on('matchMade',matchMadeObj => {
-	  // 	console.log('matchMade event received');
-	  // 	console.log('matchMade object is : ',matchMadeObj);
-	  // 	console.log('this.props.userID is : ',this.props.userID);
-	  // 	if(matchMadeObj.toID === this.props.userID){
-	  // 	  console.log("I HAVE A NEW MATCH!");
-	  // 	  this.props.matches.forEach(waitingMatch => {
-	  // 	  	if(waitingMatch.id === matchMadeObj.fromID){
-	  // 	  		console.log('waitingmatchid found to match matchmadeobj.fromid')
-	  // 	  		this.setState({
-	  // 	  			open: true,
-	  // 	  			id: waitingMatch.id,
-	  // 	  			name: waitingMatch.name,
-	  // 	  			language: waitingMatch.language,
-	  // 	  			skillLevel: waitingMatch.skillLevel,
-	  // 	  			profile_url: waitingMatch.profile_url,
-	  // 	  			message: `You matched with ${waitingMatch.name}, want to pair?`
-	  // 	  		})
-	  // 	  	}
-	  // 	  });
-	  // 	}
-	  // });
 
 	  // this.socket.on('rejectInvite',rejectObj => {
 	  // 	console.log('rejectInvite event received, rejectObj is : ',rejectObj);
@@ -103,12 +85,26 @@ class MatchInvite extends Component {
 	  // 	}
 	  // })
 
-	  this.socket.on('partnerAccepted',data => {
-	  	console.log('partnerAccepted event received, data is : ',data);
-	  	if(data.fromID === this.props.userID && data.toID === this.state.id || data.toID === this.props.userID && data.fromID === this.state.id){
-	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
-	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url })
-	  		const SESSION_ID = "" + data.idA + ":" + data.idB + "";
+	  this.socket.on('partnerInviteeAccepted',data => {
+	  	console.log('partnerInviteeAccepted event received, data is : ',data);
+	  	// If the current user is the INVITER:
+	  	if(data.inviterID === this.props.user.id && data.inviteeID === this.state.id){
+	  		console.log('My invite to : ' + data.inviteeID+' was accepted!');
+	  		console.log('My new partner is : ',{ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
+	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
+	  		this.setState({
+	  			open: false
+	  		})
+	  		const SESSION_ID = "" + data.inviterID + ":" + data.inviteeID + "";
+	  		this.props.joinSession({ sessionID: SESSION_ID });
+	  		this.props.startPairing();
+	  	}
+	  	// If the current user is the INVITEE:
+	  	if(data.inviteeID === this.props.user.id && data.inviterID === this.state.id){
+	  		console.log('The invite from : ' + data.inviterID+' was accepted!');
+	  		console.log('My new partner is : ',{ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
+	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
+	  		const SESSION_ID = "" + data.inviterID  + ":" + data.inviteeID + "";
 	  		this.props.joinSession({ sessionID: SESSION_ID });
 	  		this.props.startPairing();
 	  	}
@@ -125,7 +121,7 @@ class MatchInvite extends Component {
 		        label="Cancel invite?"
 		        primary={true}
 		        onTouchTap={() => {
-		        	this.socket.emit('declineInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.socket.emit('declineInvite',{fromID: this.props.user.id, toID: this.state.id});
 		        	this.handleClose()
 		        }}
 		      />,
@@ -135,7 +131,7 @@ class MatchInvite extends Component {
 		        label="Let's CodePair!"
 		        primary={true}
 		        onTouchTap={() => {
-		        	this.socket.emit('partnerAccept',{fromID: this.props.userID, toID: this.state.id});
+		        	this.socket.emit('partnerInviteeAccept',{ inviteeID: this.props.user.id, inviterID: this.state.id});
 		        	this.handleClose();
 		        }}
 		      />,
@@ -143,7 +139,7 @@ class MatchInvite extends Component {
 		        label="Maybe later"
 		        primary={true}
 		        onTouchTap={() => {
-		        	this.socket.emit('declineInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.socket.emit('declineInvite',{fromID: this.props.user.id, toID: this.state.id});
 		        	this.handleClose()
 		        }}
 		      />,

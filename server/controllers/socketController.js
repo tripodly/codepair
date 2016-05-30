@@ -84,22 +84,24 @@ io.on('connection', function(socket) {
 		io.emit('declineInvite',{ "idA": data.toID, "idB": data.fromID });
 	})
 
+	// These socket routes handle pairing with users the current user has already matched with:
 	socket.on('partnerWithMatch', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
-		var fromID = partnerObject.fromUser.id;
-		var toID = partnerObject.toUser.id;
-		var newRoom = '' + toID + ':' + fromID + '';
+		var inviterID = partnerObject.inviter.id;
+		var inviteeID = partnerObject.invitee.id;
+		var newRoom = '' + inviteeID + ':' + inviterID + '';
 		console.log('new room created, id is : ',newRoom);
 		rooms.push(newRoom);
-		io.emit('partnerInvite', {fromID: fromID, toID: toID});
+		io.emit('partnerInvite', {inviterID: inviterID, inviteeID: inviteeID});
 		// io.sockets.connected[people[fromID].socket].join(newRoom);
 		// io.sockets.connected[people[toID].socket].join(newRoom);
 		// io.to(newRoom).emit('joinRoom',{ roomID: newRoom, toID: toID, fromID: fromID });
 		// console.log(sockets[0]);
 	});
 
-	socket.on('partnerAccept', function(data) {
-		io.emit('partnerAccepted',data);
+	socket.on('partnerInviteeAccept', function(data) {
+		console.log('partnerInviteeAccept event received, data is : ',data);
+		io.emit('partnerInviteeAccepted',data);
 	});
 
 	//disconnect from the server
