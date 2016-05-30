@@ -121,7 +121,7 @@ class Forum extends Component {
 				</div>
 			);
 		}
-		else if(!flag && this.props.posts){
+		else if(!flag){
 			console.log(this.props.posts)
 			return (
 				<div style={style.forumWindow}>
