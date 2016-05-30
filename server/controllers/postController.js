@@ -13,12 +13,13 @@ module.exports = {
 		console.log('this is the request in the',req.body.message);
 		var messageObject = {
 			userId: req.user.attributes.id,
-			postMessage : req.body.message
+			postMessage : req.body.message,
+			subject: req.body.message
 			// subject: req.body.subject
 		};
 		//need to make sure message doesnt exceed limit
 		if(messageObject.postMessage) {
-			new Post({ 'userId': req.user.attributes.id, 'message': messageObject.postMessage }).save().then(function(postModel){
+			new Post({ 'userID': req.user.attributes.id, 'message': messageObject.postMessage, subject: messageObject.subject }).save().then(function(postModel){
 				// postModel is the post being saved
 				res.send('post sent!');
 			})

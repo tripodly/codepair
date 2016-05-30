@@ -242,7 +242,7 @@ export function newPost({ subject, message }){
 			.then(response => {
 				console.log('this was a good post in newPost with a response of: ', response);
 				// if post is successful, dispatch an action
-				// dispatch action to set current users info
+				// dispatch to set current users info
 				// update users posts
 				// dispatch({ type: UPDATE_USER, payload: { 
 				// 	id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profileUrl
