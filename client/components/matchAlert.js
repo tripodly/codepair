@@ -15,31 +15,82 @@ class MatchAlert extends Component {
 			name: null,
 			language: null,
 			skillLevel: null,
-			profile_url: null
+			profile_url: null,
+			message: null
 		}
 	}
 
 	componentDidMount() {
 	  this.socket = io();
-	  this.socket.on('invite',invite => {
+	  this.socket.on('invite',inviteObject => {
 	    console.log('invite event received');
-	    console.log('invite object is : ',invite);
-	    if(invite.toID === this.props.userID){
+	    console.log('invite object is : ',inviteObject);
+	    if(inviteObject.toID === this.props.userID){
 	      console.log("I HAVE A NEW MATCH!");
 	      this.props.waiting.forEach(waitingMatch => {
-	      	if(waitingMatch.id === invite.fromID){
+	      	if(waitingMatch.id === inviteObject.fromID){
+	      		this.socket.emit('inviteResponse', { fromID: this.props.userID, toID: inviteObject.fromID });
 	      		this.setState({
 	      			open: true,
 	      			id: waitingMatch.id,
 	      			name: waitingMatch.name,
 	      			language: waitingMatch.language,
 	      			skillLevel: waitingMatch.skillLevel,
-	      			profile_url: waitingMatch.profile_url
+	      			profile_url: waitingMatch.profile_url,
+	      			message: `${waitingMatch.name} wants to pair!`
 	      		})
 	      	}
 	      });
 	    }
 	  });
+	  this.socket.on('matchMade',matchMadeObj => {
+	  	console.log('matchMade event received');
+	  	console.log('matchMade object is : ',matchMadeObj);
+	  	console.log('this.props.userID is : ',this.props.userID);
+	  	if(matchMadeObj.toID === this.props.userID){
+	  	  console.log("I HAVE A NEW MATCH!");
+	  	  this.props.matches.forEach(waitingMatch => {
+	  	  	if(waitingMatch.id === matchMadeObj.fromID){
+	  	  		console.log('waitingmatchid found to match matchmadeobj.fromid')
+	  	  		this.setState({
+	  	  			open: true,
+	  	  			id: waitingMatch.id,
+	  	  			name: waitingMatch.name,
+	  	  			language: waitingMatch.language,
+	  	  			skillLevel: waitingMatch.skillLevel,
+	  	  			profile_url: waitingMatch.profile_url,
+	  	  			message: `You matched with ${waitingMatch.name}, want to pair?`
+	  	  		})
+	  	  	}
+	  	  });
+	  	}
+	  });
+
+	  this.socket.on('rejectInvite',rejectObj => {
+	  	console.log('rejectInvite event received, rejectObj is : ',rejectObj);
+	  	if(rejectObj.idA === this.props.userID || rejectObj.idB === this.props.userID){
+	  		console.log('INVITE HAS BEEN REJECTED!');
+	  		this.setState({
+	  			open: false,
+	  			id: null,
+	  			name: null,
+	  			language: null,
+	  			skillLevel: null,
+	  			profile_url: null,
+	  			message: null
+	  		})
+	  	}
+	  })
+
+	  this.socket.on('bothAccept',acceptObj => {
+	  	console.log('bothAccept event received, acceptObj is : ',acceptObj);
+	  	if(acceptObj.idA === this.props.userID || acceptObj.idB === this.props.userID){
+	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
+	  		const SESSION_ID = "" + acceptObj.idA + ":" + acceptObj.idB + "";
+	  		this.props.joinSession({ sessionID: SESSION_ID });
+	  		this.props.startPairing();
+	  	}
+	  })
 	}
 
 	handleClose(){
@@ -51,23 +102,29 @@ class MatchAlert extends Component {
 		      <FlatButton
 		        label="Let's CodePair!"
 		        primary={true}
-		        onTouchTap={() => this.handleClose()}
+		        onTouchTap={() => {
+		        	this.socket.emit('acceptInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.handleClose();
+		        }}
 		      />,
 		      <FlatButton
 		        label="Maybe later"
 		        primary={true}
-		        onTouchTap={() => this.handleClose()}
+		        onTouchTap={() => {
+		        	this.socket.emit('declineInvite',{fromID: this.props.userID, toID: this.state.id});
+		        	this.handleClose()
+		        }}
 		      />,
 		    ];
 		return (
-			<Dialog actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>{this.state.name} want's to pair</Dialog>
+			<Dialog actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>{this.state.message}</Dialog>
 		);
 	}
 }
 
 function mapStateToProps (state) {
-	if(state.cards.waiting.length > 0) {
-		return { current: state.cards.current, cardID: state.cards.current.id, waiting: state.cards.waiting, userID: state.profile.id };
+	if(state.profile.initiated) {
+		return { current: state.cards.current, cardID: state.cards.current.id, matches: state.cards.matches, waiting: state.cards.waiting, userID: state.profile.id };
 	} else {
 		return state;
 	}

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import { 
-	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, 
-	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_ROOM,
+	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, USER_INITIATED,
+	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
@@ -83,6 +83,7 @@ export function getUserInfo() {
 				dispatch({ type: UPDATE_USER, payload: { 
 					id: response.data.id, email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel, github_handle: response.data.github_handle, profile_url: response.data.profile_url
 				}});
+				dispatch({ type: USER_INITIATED });
 			})
 			.catch(response => {
 				console.log('error in getUserInfo action creator: ',response);
@@ -193,19 +194,25 @@ export function dislikeCard({ fromID, toID }) {
 	}
 }
 
-export function joinRoom({ roomID }) {
+export function joinSession({ sessionID }) {
 	return {
-		type: JOIN_ROOM,
-		payload: { roomID }
+		type: JOIN_SESSION,
+		payload: { sessionID }
 	};
 }
 
-export function joinCodeshare({ roomID }) {
+export function startPairing() {
 	return function(dispatch){
 		browserHistory.push('/codeshare');
 	}
 }
 
+export function leaveSession({ sessionID }) {
+	return {
+		type: LEAVE_SESSION,
+		payload: { sessionID }
+	};
+}
 
 
 export function receiveInvite({ invite }) {
