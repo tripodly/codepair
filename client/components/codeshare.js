@@ -72,6 +72,11 @@ class CodeShare extends Component {
 		})
 	}
 
+	componentWillUnmount(){
+		this.props.clearPartner({ fromID: this.props.userID, toID: this.props.pairID });
+		this.socket.emit('clearPartner',{ fromID: this.props.userID, toID: this.props.pairID });
+	}
+
 	// the parameter of onChange is the text currently in the editor
 	// will be important for implementation of sockets!
 	onChange(newValue) {
