@@ -11,7 +11,7 @@
     "start": "node server/server.js"
   },
   "engines": {
-      "node": "6.2.0"
+    "node": "6.2.0"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.1",
     "bookshelf": "^0.9.5",
+    "cors": "^2.7.1",
     "es6-promise": "^3.2.1",
     "express": "^4.13.4",
     "isomorphic-fetch": "^2.2.1",
