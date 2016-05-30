@@ -240,6 +240,7 @@ handleCommentSubmit(comment,id){
 					</div>
 				);
 				} else {
+					let item = this.props.post;
 						return (
 							<div style={style.forumWindow}>
 								<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -264,6 +265,7 @@ handleCommentSubmit(comment,id){
 								<div>
 									<Paper zDepth={2}>
 												<List>
+													<ForumItem style={style.mainPost} item={item} />
 													{ this.props.comments.map(item =>
 														<ForumItem context={this} item={item} /> 
 													)}
