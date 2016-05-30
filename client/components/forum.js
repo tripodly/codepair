@@ -202,6 +202,9 @@ handleCommentSubmit(comment,id){
 						<AppBar style={style.optionsBar} showMenuIconButton={false}
 							children={
 								<div style={style.optionsElements}>
+								<div style={style.optionElement}>
+									<FlatButton onClick={()=> this.props.getPosts()} style={style.button} label="Back" />
+								</div>
 									<div style={style.optionElement}>
 										<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
 									</div>
@@ -242,6 +245,9 @@ handleCommentSubmit(comment,id){
 								<AppBar style={style.optionsBar} showMenuIconButton={false}
 									children={
 										<div style={style.optionsElements}>
+										<div style={style.optionElement}>
+											<FlatButton onClick={()=> this.props.getPosts()} style={style.button} label="Back" />
+										</div>
 											<div style={style.optionElement}>
 												<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Submit a Post" />
 											</div>
