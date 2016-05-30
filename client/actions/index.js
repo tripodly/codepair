@@ -234,6 +234,7 @@ export function receiveInvite({ invite }) {
 //-------------post actions----------------------
 
 export function newPost({ subject, message }){
+		console.log('this is the subject', subject, message)
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/postMessage`, { subject, message },
 			{ headers: { authorization: localStorage.getItem('token') }
@@ -253,7 +254,7 @@ export function newPost({ subject, message }){
 			});
 	}
 }
-export function getPosts({ subject, message }){
+export function getPosts(){
 	console.log('getposts action creator called');
 	return function(dispatch) {
 		axios.get(`${API_URL}/user/getPosts`, { 

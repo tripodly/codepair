@@ -55,7 +55,7 @@ module.exports = function(app){
 	app.post('/cards/like', requireAuth, swipeController.like);
 
 	// route if user getspost for the forum
-	app.get('/user/postMessage', requireAuth, postController.postMessage);
+	app.post('/user/postMessage', requireAuth, postController.postMessage);
 
 	// route if user posts a new post to the forum
 	app.get('/user/getPosts', requireAuth, postController.getPosts);

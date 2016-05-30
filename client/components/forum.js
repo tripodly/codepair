@@ -63,7 +63,7 @@ class Forum extends Component {
 	}
 	handleClick(body, subject){
 		console.log('handlde click was clicked in the forum conpment');
-		this.props.newPost({ body, subject });
+		this.props.newPost({ subject: this.state.subject, message:this.state.input });
 	}
 	handleChange(event, index, value) {
 		this.setState({
