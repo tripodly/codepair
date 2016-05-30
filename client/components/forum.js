@@ -131,8 +131,10 @@ class Forum extends Component {
 		this.setState({});
 		console.log('clicked')
 	}
-handleCommentSubmit(){
-	this.props.postComment({});
+handleCommentSubmit(comment,id){
+	console.log('this is the id of the post',id);
+	console.log('this is the comment in the post',comment);
+	this.props.postComment({comment, id});
 }
 	handleForumItemClick(item){
 		console.log('this is the item you : ', item.id);
@@ -223,15 +225,14 @@ handleCommentSubmit(){
 						</div>
 						<div style={style.comment}>
 							<br></br>
-							<br></br>
 							<TextField 
 								style={style.subject}
 								placeholder={'Comment'}
 								multiLine={true}
 								name="POST_COMMENT"
-								onChange={(e)=> this.handlChangeInput(e,'subject')}
+								onChange={(e)=> this.handlChangeInput(e,'comment')}
 							/>
-							<RaisedButton label="New Post" primary={true} style={style.commentButton} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
+							<RaisedButton label="Comment" primary={true} style={style.commentButton} onClick={()=>this.handleCommentSubmit(this.state.commentValue, this.props.post.id)} />
 						</div>
 					</div>
 				);
@@ -242,7 +243,7 @@ handleCommentSubmit(){
 									children={
 										<div style={style.optionsElements}>
 											<div style={style.optionElement}>
-												<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+												<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Submit a Post" />
 											</div>
 											<div style={style.optionElement}>
 												<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
@@ -271,9 +272,9 @@ handleCommentSubmit(){
 										placeholder={'Comment'}
 										multiLine={true}
 										name="POST_COMMENT"
-										onChange={(e)=> this.handlChangeInput(e,'subject')}
+										onChange={(e)=> this.handlChangeInput(e,'comment')}
 									/>
-									<RaisedButton label="New Post" primary={true} style={style.commentButton} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
+									<RaisedButton label="Comment" primary={true} style={style.commentButton} onClick={()=>this.handleCommentSubmit(this.state.commentValue, this.props.post.id)} />
 								</div>		
 							</div>
 					);

@@ -11,6 +11,7 @@ class ForumItem extends Component {
 		const item = this.props.item;
 		const context = this.props.context;
 		let handleClick = function(){};
+		console.log(item)
 		if(this.props.handleClick){
 			handleClick = this.props.handleClick.bind(context,item);
 		}
@@ -18,8 +19,8 @@ class ForumItem extends Component {
 			<div>
 				<ListItem 
 					key={this.props.item.id}
-					primaryText={this.props.item.subject} 
-					secondaryText={`${this.props.item.message}`}
+					primaryText={this.props.item.subject|| item.comment} 
+					secondaryText={this.props.item.message || item.created_at }
 					onTouchTap={() => {handleClick()} }
 				/>
 				<Divider />

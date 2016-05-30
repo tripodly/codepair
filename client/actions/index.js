@@ -272,18 +272,18 @@ export function getPosts(){
 			})
 	}
 }
-export function newComment({id, comment}){
-		console.log('this is in the newComment action');
+export function postComment({comment, id}){
+		console.log('this is in the postComment action', comment, id);
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/newComment`, { id, comment },
+		axios.post(`${API_URL}/user/postComment`, { id, comment },
 			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('this was a good post in newComment with a response of: ', response);
+				console.log('this was a good post in postComment with a response of: ', response);
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
-				console.log('error in newComment action creator: ',response);
+				console.log('error in postComment action creator: ',response);
 			});
 	}
 
