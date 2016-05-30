@@ -23,6 +23,10 @@ io.on('connection', function(socket) {
 		console.log(people);
 	});
 
+	socket.on('getOnlineUsers', function(){
+		console.log('getOnlineUsers event received!');
+		io.emit('broadcastOnline',{ users: people });
+	});
 
 	socket.on('match',function(data) {
 		console.log('match event received, data is : ',data);
