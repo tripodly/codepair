@@ -98,7 +98,8 @@ class Forum extends Component {
 			posts: '',
 			comments: '',
 			input: '',
-			subject:''
+			subject:'',
+			commentValue:''
 		}
 	}
 	handleClick(body, subject){
@@ -113,7 +114,10 @@ class Forum extends Component {
 		})
 	}
 	handlChangeInput(event,subject){
-		if(subject){
+		if(subject === 'comment'){
+			this.setState({commentValue:event.target.value});
+		}
+		else if(subject === 'subject'){
 			this.setState({subject:event.target.value})
 		}else{
 		this.setState({input:event.target.value})
@@ -127,7 +131,9 @@ class Forum extends Component {
 		this.setState({});
 		console.log('clicked')
 	}
-
+handleCommentSubmit(){
+	this.props.postComment({});
+}
 	handleForumItemClick(item){
 		console.log('this is the item you : ', item.id);
 		//the this reffers to the forumItem not this fourm.js
@@ -256,6 +262,18 @@ class Forum extends Component {
 													)}
 												</List>
 											</Paper>
+								</div>
+								<div style={style.comment}>
+									<br></br>
+									<br></br>
+									<TextField 
+										style={style.subject}
+										placeholder={'Comment'}
+										multiLine={true}
+										name="POST_COMMENT"
+										onChange={(e)=> this.handlChangeInput(e,'subject')}
+									/>
+									<RaisedButton label="New Post" primary={true} style={style.commentButton} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
 								</div>		
 							</div>
 					);
