@@ -84,18 +84,23 @@ io.on('connection', function(socket) {
 		io.emit('declineInvite',{ "idA": data.toID, "idB": data.fromID });
 	})
 
-	socket.on('partner', function(partnerObject){
+	socket.on('partnerWithMatch', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
-		var roomName = '' + partnerObject.fromUser.id + ':' + partnerObject.toUser.id + '';
-		console.log('new room created, id is : ',roomName);
-		rooms.push(roomName);
 		var fromID = partnerObject.fromUser.id;
 		var toID = partnerObject.toUser.id;
-		io.sockets.connected[people[fromID].socket].join(roomName);
-		io.sockets.connected[people[toID].socket].join(roomName);
-		io.to(roomName).emit('joinRoom',{ roomID: roomName, toID: toID, fromID: fromID });
-		console.log(sockets[0]);
-	})
+		var newRoom = '' + toID + ':' + fromID + '';
+		console.log('new room created, id is : ',newRoom);
+		rooms.push(newRoom);
+		io.emit('partnerInvite', {fromID: fromID, toID: toID});
+		// io.sockets.connected[people[fromID].socket].join(newRoom);
+		// io.sockets.connected[people[toID].socket].join(newRoom);
+		// io.to(newRoom).emit('joinRoom',{ roomID: newRoom, toID: toID, fromID: fromID });
+		// console.log(sockets[0]);
+	});
+
+	socket.on('partnerAccept', function(data) {
+		io.emit('partnerAccepted',data);
+	});
 
 	//disconnect from the server
 	socket.on('disconnect', function(){

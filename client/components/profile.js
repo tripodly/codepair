@@ -128,7 +128,7 @@ class Profile extends Component {
 	handleListItemClick(match) {
 		console.log('List Item Clicked in Profile Page!');
 		console.log('fromUser is : ',this.props.fromUser, ' & toUser is : ',match);
-		this.socket.emit('partner', { fromUser: this.props.fromUser, toUser: match });
+		this.socket.emit('partnerWithMatch', { fromUser: this.props.fromUser, toUser: match });
 	}
 
 	renderEditBox(){

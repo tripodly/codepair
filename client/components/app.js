@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './header';
+import MatchInvite from './matchInvite';
 import MatchAlert from './matchAlert';
 import Chat from './chat';
 import Paper from 'material-ui/Paper';
@@ -32,6 +33,7 @@ export default class App extends Component {
 						<Header />
 						<div style={style.body}>
 							{this.props.children}
+							<MatchInvite />
 							<MatchAlert />
 						</div>
             <Footer />
