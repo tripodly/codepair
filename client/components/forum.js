@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import { List, ListItem } from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
+import ForumItem from './forumItem';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
+	button: {
+		textDecoration: 'none',
+		color: 'white',
+	},
 	forumWindow: {
 		textAlign: 'left',
 		width: '100%',
@@ -19,6 +28,16 @@ const style = {
 		backgroundColor: '#FF0A9C',
 		display: 'flex',
 		flexDirection: 'column',
+		alignItems: 'flex-end',
+	},
+	optionElement: {
+		display: 'inline-block',
+		paddingRight: 10,
+		verticalAlign: 'middle',
+	},
+	optionsElements: {
+		float: 'right',
+		display: 'inline-block',
 		alignItems: 'center',
 	},
 	optionsMenu: {
@@ -46,6 +65,8 @@ const style = {
 		backgroundColor:'#D8D8D8',
 	},
 }
+
+
 //when user wants to create a new post, make this true
 let flag = false;
 
@@ -54,6 +75,7 @@ class Forum extends Component {
 		super(props);
 
 		this.state = {
+			modalOpen:false,
 			filter: 'Most Recent',
 			posts: [],
 			comments: [],
@@ -64,6 +86,8 @@ class Forum extends Component {
 	handleClick(body, subject){
 		console.log('handlde click was clicked in the forum conpment');
 		this.props.newPost({ subject: this.state.subject, message:this.state.input });
+		flag = !flag;
+		this.setState({});
 	}
 	handleChange(event, index, value) {
 		this.setState({
@@ -82,47 +106,107 @@ class Forum extends Component {
 		var m = this.props.getPosts();
 		setTimeout(function(){
 			console.log('this is the get posts=>>>>',m);
-		},2000);
+		},1000);
+	}
+	handleModal(){
+		flag = !flag;
+		this.setState({});
+		console.log('clicked')
 	}
 	render() {
+
+		if(this.props.waiting){
+			return(
+				<div>
+				 <CircularProgress size={2} />
+				</div>
+			);
+		}
+		if(!flag){
+			return (
+				<div style={style.forumWindow}>
+					<AppBar style={style.optionsBar} showMenuIconButton={false}
+						children={
+							<div style={style.optionsElements}>
+								<div style={style.optionElement}>
+									<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+								</div>
+								<div style={style.optionElement}>
+									<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+					          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
+					          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
+					          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
+					        </DropDownMenu>
+								</div>
+							</div>
+						}
+					/>
+					<div>
+						<Paper zDepth={2}>
+									<List>
+										{ this.props.posts.map(item =>
+											<ForumItem context={this} handleClick={this.handleListItemClick} item={item} /> 
+										)}
+									</List>
+								</Paper>
+					</div>		
+				</div>
+			)
+		} else
 		return (
 			<div style={style.forumWindow}>
-				<AppBar style={style.optionsBar} showMenuIconButton={false} iconElementRight={
-					<DropDownMenu style={style.optionsMenu} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-	          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-	          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-	          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-	        </DropDownMenu>
-				}/>	
-				<div style={style.newPost}>
-					<br></br>
-					<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
-					<br></br>
-					<TextField 
-						style={style.subject}
-						placeholder={'Subject'}
-						multiLine={false}
-						name="POST_SUBJECT"
-						onChange={(e)=> this.handlChangeInput(e,'subject')}
-					/>
-					<TextField 
-						style={style.textField}
-						placeholder={'Body...'}
-						multiLine={true}
-						rows={10}
-					  rowsMax={15}
-						name="POST_COMPONENT"
-						value={this.state.input}
-						onChange={(e)=> this.handlChangeInput(e)}
-					/>
-				</div>		
+				<AppBar style={style.optionsBar} showMenuIconButton={false}
+					children={
+						<div style={style.optionsElements}>
+							<div style={style.optionElement}>
+								<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+							</div>
+							<div style={style.optionElement}>
+								<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+				          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
+				          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
+				          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
+				        </DropDownMenu>
+							</div>
+						</div>
+					}
+					/>	
+					<div style={style.newPost}>
+						<br></br>
+						<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
+						<br></br>
+						<TextField 
+							style={style.subject}
+							placeholder={'Subject'}
+							multiLine={false}
+							name="POST_SUBJECT"
+							onChange={(e)=> this.handlChangeInput(e,'subject')}
+						/>
+						<TextField 
+							style={style.textField}
+							placeholder={'Body...'}
+							multiLine={true}
+							rows={10}
+						  rowsMax={15}
+							name="POST_COMPONENT"
+							value={this.state.input}
+							onChange={(e)=> this.handlChangeInput(e)}
+						/>
+					</div>		
 			</div>
 		);
 	}
 };
 
 function mapStateToProps(state) {
-	return { posts: state.posts, comments: state.comments };
+	return { 
+		posts: state.posts,
+		waiting: state.response.waiting 
+	};
 }
 
 export default connect(mapStateToProps, actions)(Forum);
+
+
+
+
