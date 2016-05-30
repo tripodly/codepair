@@ -23,10 +23,10 @@ io.on('connection', function(socket) {
 		console.log(people);
 	});
 
-	socket.on('codeChange', function(data) {
-		console.log('data inside codeChange is : ',data);
-		io.emit('updateCode',data);
-	})
+	socket.on('getOnlineUsers', function(){
+		console.log('getOnlineUsers event received!');
+		io.emit('broadcastOnline',{ users: people });
+	});
 
 	socket.on('match',function(data) {
 		console.log('match event received, data is : ',data);
@@ -55,26 +55,54 @@ io.on('connection', function(socket) {
 			// then emit to both sockets that they both accepted
 			// which should trigger an action on client side to push them to codesharing page
 			io.emit('bothAccept',{ "idA": data.toID, "idB": data.fromID });
+			var newRoom = ""+data.toID+":"+data.fromID+""
+			rooms.push(newRoom);
+			socket.join(newRoom);
+			console.log('socket obj is now : ',socket);
+			io.in(newRoom).emit('user joined', data);
 		}
 	})
+
+	socket.on('codeChange', function(data) {
+		console.log('data inside codeChange is : ',data);
+		io.in(data.room).emit('updateCode',data);
+	});
+
+	socket.on('joinSession', function(data) {
+		console.log('joinSession event, data is : ',data);
+		socket.join(data.room);
+		// io.in(data.room).emit('updateCode',"Hello World!");
+	});
+
+	socket.on('changeLanguage', function(data) {
+		console.log('changeLanguage event, data is : ',data);
+		io.to(data.room).emit('updateLanguage',data);
+	});
 
 	socket.on('rejectInvite', function(data) {
 		console.log('reject event received, data is : ',data);
 		io.emit('declineInvite',{ "idA": data.toID, "idB": data.fromID });
 	})
 
-	socket.on('partner', function(partnerObject){
+	// These socket routes handle pairing with users the current user has already matched with:
+	socket.on('partnerWithMatch', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
-		var roomName = '' + partnerObject.fromUser.id + ':' + partnerObject.toUser.id + '';
-		console.log('new room created, id is : ',roomName);
-		rooms.push(roomName);
-		var fromID = partnerObject.fromUser.id;
-		var toID = partnerObject.toUser.id;
-		io.sockets.connected[people[fromID].socket].join(roomName);
-		io.sockets.connected[people[toID].socket].join(roomName);
-		io.to(roomName).emit('joinRoom',{ roomID: roomName, toID: toID, fromID: fromID });
-		console.log(sockets[0]);
-	})
+		var inviterID = partnerObject.inviter.id;
+		var inviteeID = partnerObject.invitee.id;
+		var newRoom = '' + inviteeID + ':' + inviterID + '';
+		console.log('new room created, id is : ',newRoom);
+		rooms.push(newRoom);
+		io.emit('partnerInvite', {inviterID: inviterID, inviteeID: inviteeID});
+		// io.sockets.connected[people[fromID].socket].join(newRoom);
+		// io.sockets.connected[people[toID].socket].join(newRoom);
+		// io.to(newRoom).emit('joinRoom',{ roomID: newRoom, toID: toID, fromID: fromID });
+		// console.log(sockets[0]);
+	});
+
+	socket.on('partnerInviteeAccept', function(data) {
+		console.log('partnerInviteeAccept event received, data is : ',data);
+		io.emit('partnerInviteeAccepted',data);
+	});
 
 	//disconnect from the server
 	socket.on('disconnect', function(){

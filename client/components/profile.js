@@ -80,10 +80,12 @@ class Profile extends Component {
 				this.props.joinRoom({ roomID: data.roomID });
 			}
 		})
+
 	}
 
 	componentDidUpdate() {
 		this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
+		this.socket.emit('getOnlineUsers');
 	}
 
 	handleEditInfo() {
@@ -126,7 +128,7 @@ class Profile extends Component {
 	handleListItemClick(match) {
 		console.log('List Item Clicked in Profile Page!');
 		console.log('fromUser is : ',this.props.fromUser, ' & toUser is : ',match);
-		this.socket.emit('partner', { fromUser: this.props.fromUser, toUser: match });
+		this.socket.emit('partnerWithMatch', { inviter: this.props.fromUser, invitee: match });
 	}
 
 	renderEditBox(){

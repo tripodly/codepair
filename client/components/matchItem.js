@@ -53,6 +53,12 @@ class MatchItem extends Component {
 				this.setOffline();
 			}
 		})
+		
+		this.socket.on('broadcastOnline', data => {
+			if(data.users[this.state.itemID]){
+				this.setOnline();
+			}
+		});
 	}
 
 	setOnline(){
