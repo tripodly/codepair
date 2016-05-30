@@ -60,7 +60,6 @@ io.on('connection', function(socket) {
 	})
 
 	socket.on('codeChange', function(data) {
-		console.log('current socket is : ',socket);
 		console.log('data inside codeChange is : ',data);
 		io.in(data.room).emit('updateCode',data);
 	});
@@ -72,7 +71,8 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('changeLanguage', function(data) {
-		io.to(data.room).emit('languageUpdate',data);
+		console.log('changeLanguage event, data is : ',data);
+		io.to(data.room).emit('updateLanguage',data);
 	});
 
 	socket.on('rejectInvite', function(data) {

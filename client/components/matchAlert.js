@@ -86,6 +86,7 @@ class MatchAlert extends Component {
 	  	console.log('bothAccept event received, acceptObj is : ',acceptObj);
 	  	if(acceptObj.idA === this.props.userID || acceptObj.idB === this.props.userID){
 	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
+	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url })
 	  		const SESSION_ID = "" + acceptObj.idA + ":" + acceptObj.idB + "";
 	  		this.props.joinSession({ sessionID: SESSION_ID });
 	  		this.props.startPairing();

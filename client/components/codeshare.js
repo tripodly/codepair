@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
+import Avatar from 'material-ui/Avatar';
 import AceEditor from 'react-ace';
 import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -81,16 +82,30 @@ class CodeShare extends Component {
 		this.socket.emit('codeChange',{ room: this.props.sessionID, value: newValue });
 	}
 
+	renderPartner(){
+		if(this.props.pairID !== "" && this.props.sessionID !== "") {
+			return (
+				<div>
+					Partner: <Avatar src={this.props.partner.profile_url} size={30} /> {this.props.partner.name}
+				</div>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<div style={style.codeWindow}>
-				<AppBar style={style.optionsBar} showMenuIconButton={false} iconElementRight={
-					<DropDownMenu style={style.optionsMenu} value={this.state.language} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-	          <MenuItem value={'javascript'} primaryText="JavaScript" />
-	          <MenuItem value={'java'} primaryText="Java" />
-	          <MenuItem value={'python'} primaryText="Python" />
-	          <MenuItem value={'ruby'} primaryText="Ruby" />
-	        </DropDownMenu>
+				<AppBar style={style.optionsBar} showMenuIconButton={false} 
+					iconElementLeft={
+						this.renderPartner()
+					}
+					iconElementRight={
+						<DropDownMenu style={style.optionsMenu} value={this.state.language} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+		          <MenuItem value={'javascript'} primaryText="JavaScript" />
+		          <MenuItem value={'java'} primaryText="Java" />
+		          <MenuItem value={'python'} primaryText="Python" />
+		          <MenuItem value={'ruby'} primaryText="Ruby" />
+		        </DropDownMenu>
 				}/>			
 				<AceEditor
 				    mode={this.state.language}
@@ -109,7 +124,7 @@ class CodeShare extends Component {
 };
 
 function mapStateToProps(state) {
-	return { userID: state.profile.id, pairID: state.partner.id, sessionID: state.profile.sessionID };
+	return { userID: state.profile.id, pairID: state.partner.id, sessionID: state.profile.sessionID, partner: state.partner };
 }
 
 

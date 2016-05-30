@@ -194,6 +194,9 @@ export function dislikeCard({ fromID, toID }) {
 	}
 }
 
+export function setPartner({ id, name, email, language, skillLevel, profile_url }) {
+	return { type: SET_PARTNER, payload: { id, name, email, language, skillLevel, profile_url }};
+}
 
 export function startPairing() {
 	return function(dispatch){
