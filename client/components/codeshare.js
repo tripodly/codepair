@@ -129,6 +129,7 @@ class CodeShare extends Component {
 				    theme="ambiance"
 				    height='750px'
 				    width="100%"
+				    fontSize={16}
 				    showGutter={true}
 				    enableBasicAutocompletion={true}
 				    enableLiveAutocompletion={true}
