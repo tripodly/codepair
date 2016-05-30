@@ -57,16 +57,12 @@ class CodeShare extends Component {
 		this.socket = io();
 		this.socket.emit('joinSession', {room: this.props.sessionID});
 		this.socket.on('updateCode',codeData => {
-			console.log('codeData is : ',codeData);
 			if(this.props.sessionID && codeData.room === this.props.sessionID){
-				console.log('msg received in this sessionID');
 				this.setState({ codeData: codeData.value });
 			}
 		})
 		this.socket.on('updateLanguage',languageData => {
-			console.log('languageData is : ',languageData);
 			if(this.props.sessionID && languageData.room === this.props.sessionID){
-				console.log('new lang received in this sessionID');
 				this.setState({ language: languageData.language });
 			}
 		})
@@ -77,19 +73,11 @@ class CodeShare extends Component {
 		this.socket.emit('clearPartner',{ fromID: this.props.userID, toID: this.props.pairID });
 	}
 
-	// the parameter of onChange is the text currently in the editor
-	// will be important for implementation of sockets!
 	onChange(newValue) {
-		// console.log('values have changed, they are now : ',newValue);
-		// use socket.emit('codeChange',newValue) to send new data to io('server')
-		// which will then be broadcast to the other user
-		// Need to have a way to identify the pair of users sharing the page
 		this.socket.emit('codeChange',{ room: this.props.sessionID, value: newValue });
 	}
 
 	renderPartner(){
-		console.log('renderPartner called');
-		console.log('pairID is : ',this.props.pairID,' and sessionID is : ',this.props.sessionID );
 		if(this.props.pairID && this.props.sessionID) {
 			return (
 				<div>Partner: <Avatar src={this.props.partner.profile_url} size={30} /> {this.props.partner.name}</div>
@@ -103,7 +91,6 @@ class CodeShare extends Component {
 
 	render() {
 		const renderPartner = this.renderPartner.bind(this);
-		console.log('this.props in codeshare render method are : ',this.props);
 		return (
 			<div style={style.codeWindow}>
 				<AppBar style={style.optionsBar} showMenuIconButton={false} 
