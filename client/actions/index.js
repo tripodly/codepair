@@ -7,7 +7,10 @@ import {
 	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
-const API_URL = 'http://localhost:3090';
+// URL FOR DEVELOPMENT
+// const API_URL = 'http://localhost:3090';
+// URL FOR PRODUCTION
+const API_URL = 'https://warm-escarpment-27689.herokuapp.com';
 const socket = io();
 
 // signinUser action creator uses redux-thunk to return a function
