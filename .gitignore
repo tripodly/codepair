@@ -11,3 +11,13 @@ server/config/envConfig.js
 # For WebStorm
 **/.idea/**
 .idea/
+
+# Logs
+logs
+*.log
+
+# Floobits
+.floo
+.floobit
+.floo
+.flooignore
