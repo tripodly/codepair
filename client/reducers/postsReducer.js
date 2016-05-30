@@ -1,5 +1,5 @@
 // Cards Reducer will handle state changes for matches and swipes
-import { GET_POSTS } from '../actions/actionTypes';
+import { GET_POSTS, GET_COMMENTS } from '../actions/actionTypes';
 
 const INITIAL_STATE = { 
 	posts: [],
@@ -12,10 +12,14 @@ export default function(state = INITIAL_STATE, action) {
 			console.log('this is postsreducer action : ',action)
 			var posts = action.payload.slice();
 			console.log('payload =====',posts)
-			return {...state, posts: action.payload };
+			return {...state, posts: action.payload, comments: '' };
 		case GET_COMMENTS:
 			console.log('this is the getComments reducer function',action);
-			return{...state, comments: action.payload }
+			if(action.payload.length <1){
+				return {...state, comments:['No Comments yet'],posts: ''};
+			}else{
+				return{...state, comments: action.payload, posts: '' };
+			}
 		default:
 			return state;
 	}

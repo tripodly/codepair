@@ -39,10 +39,11 @@ module.exports = {
 		});
 	},
 	getComments: function(req,res,next){
-		var postID = req.post.postID;
+		var postID = req.body.id;
 		//query db for all replys with postID === to req id
+		console.log('the req body in getComments post method is :',req.body.id)
 			var postPromise = new Promise(function(resolve,reject){
-			knex.select('*').from('replys').where('id',req.body.id)
+			knex.select('*').from('replys').where('postID',postID)
 			.then(function(response){
 				console.log('this is the getComments response in the controller :',response);
 				res.send(response);

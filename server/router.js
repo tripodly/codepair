@@ -57,8 +57,14 @@ module.exports = function(app){
 	// route if user getspost for the forum
 	app.post('/user/postMessage', requireAuth, postController.postMessage);
 
+		// route if user getspost for the forum
+	app.post('/user/postComment', requireAuth, postController.postComment);
+
 	// route if user posts a new post to the forum
 	app.get('/user/getPosts', requireAuth, postController.getPosts);
+
+	// route if user clicks on a forum post to get the comments
+	app.post('/user/getComments', requireAuth, postController.getComments);
 
 	// catch all route which redirects to index
 	app.get('*',function(req, res){

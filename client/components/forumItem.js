@@ -6,15 +6,18 @@ import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 class ForumItem extends Component {
 	constructor(props) {
 		super(props);
-
+	}
 	render() {
+		const item = this.props.item;
+		const context = this.props.context;
+		const handleClick = this.props.handleClick.bind(context,item);
 		return (
 			<div>
 				<ListItem 
 					key={this.props.item.id}
 					primaryText={this.props.item.subject} 
 					secondaryText={`${this.props.item.message}`}
-					onTouchTap={() => {this.props.handleClick(this.props.item.id)} }
+					onTouchTap={() => {handleClick()} }
 				/>
 				<Divider />
 			</div>

@@ -77,8 +77,8 @@ class Forum extends Component {
 		this.state = {
 			modalOpen:false,
 			filter: 'Most Recent',
-			posts: [],
-			comments: [],
+			posts: '',
+			comments: '',
 			input: '',
 			subject:''
 		}
@@ -101,7 +101,6 @@ class Forum extends Component {
 		this.setState({input:event.target.value})
 		}
 	}
-
 	componentDidMount(){
 		this.props.getPosts();
 	}
@@ -110,11 +109,14 @@ class Forum extends Component {
 		this.setState({});
 		console.log('clicked')
 	}
-	handleForumItemClick(id){
-		console.log('this is the item you clicked ID: ', id);
-		this.props.getComments(id);
+
+	handleForumItemClick(item){
+		console.log('this is the item you : ', item.id);
+		//the this reffers to the forumItem not this fourm.js
+		this.props.getComments({id: item.id});
 	}
 	render() {
+		console.log('this is the comments in forumsjs', this.props.comments)
 		if(this.props.waiting){
 			return(
 				<div>
@@ -122,8 +124,70 @@ class Forum extends Component {
 				</div>
 			);
 		}
-		else if(!flag){
-			console.log(this.props.posts)
+		else if(this.props.comments){
+			console.log('here in the forumjs line 128');
+			if(typeof(this.props.comments[0]) === 'string'){
+				return (
+					<div style={style.forumWindow}>
+						<AppBar style={style.optionsBar} showMenuIconButton={false}
+							children={
+								<div style={style.optionsElements}>
+									<div style={style.optionElement}>
+										<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+									</div>
+									<div style={style.optionElement}>
+										<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+						          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
+						          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
+						          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
+						        </DropDownMenu>
+									</div>
+								</div>
+							}
+						/>
+							<div>
+							<Paper zDepth={2}>
+								<List>
+									<div>{'No Comments to Display'}</div>
+								</List>
+							</Paper>
+						</div>
+					</div>
+				);
+				} else {
+					console.log('reverts into here')
+						return (
+							<div style={style.forumWindow}>
+								<AppBar style={style.optionsBar} showMenuIconButton={false}
+									children={
+										<div style={style.optionsElements}>
+											<div style={style.optionElement}>
+												<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+											</div>
+											<div style={style.optionElement}>
+												<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
+								          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
+								          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
+								          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
+								        </DropDownMenu>
+											</div>
+										</div>
+									}
+								/>
+								<div>
+									<Paper zDepth={2}>
+												<List>
+													{ this.props.comments.map(item =>
+														<ForumItem context={this} item={item} /> 
+													)}
+												</List>
+											</Paper>
+								</div>		
+							</div>
+					);
+				}
+		}
+		else if(!flag && this.props.posts){
 			return (
 				<div style={style.forumWindow}>
 					<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -153,7 +217,7 @@ class Forum extends Component {
 					</div>		
 				</div>
 			)
-		} else
+		} else {
 		return (
 			<div style={style.forumWindow}>
 				<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -197,12 +261,14 @@ class Forum extends Component {
 			</div>
 		);
 	}
-};
+	};
+}
 
 function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
-		waiting: state.response.waiting 
+		waiting: state.response.waiting ,
+		comments: state.posts.comments
 	};
 }
 

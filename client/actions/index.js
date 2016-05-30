@@ -241,12 +241,7 @@ export function newPost({ subject, message }){
 		})
 			.then(response => {
 				console.log('this was a good post in newPost with a response of: ', response);
-				// if post is successful, dispatch an action
-				// dispatch to set current users info
-				// update users posts
-				// dispatch({ type: UPDATE_USER, payload: { 
-				// 	id: id, email: email, name: name, language: language, skillLevel: skillLevel, github_handle: github_handle, profile_url: profileUrl
-				// }});
+
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
@@ -277,16 +272,29 @@ export function getPosts(){
 			})
 	}
 }
-export function getComments({id}){
-	console.log('getComments action creator called');
+export function newComment({id, comment}){
+		console.log('this is in the newComment action');
 	return function(dispatch) {
-	dispatch({ type: AWAITING_RESPONSE });
-		axios.get(`${API_URL}/user/getComments`,{ id }, { 
-			headers: { authorization: localStorage.getItem('token') }
+		axios.post(`${API_URL}/user/newComment`, { id, comment },
+			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('getComments response received',response);
-				console.log('getComments response is : ',response.data);
+				console.log('this was a good post in newComment with a response of: ', response);
+			})
+			.catch(response => {
+				// if there is an error from the post to the server,
+				console.log('error in newComment action creator: ',response);
+			});
+	}
+
+}
+export function getComments({ id }){
+	console.log('getComments action creator called',id);
+	return function(dispatch) {
+	dispatch({ type: AWAITING_RESPONSE });
+		axios.post(`${API_URL}/user/getComments`,{ id },
+			{ headers: { authorization: localStorage.getItem('token') }})
+			.then(response => {
 				dispatch({ type: GET_COMMENTS, payload: response.data });
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
@@ -296,6 +304,7 @@ export function getComments({id}){
 				// log it
 				console.log('error in getComments action creator: ',response);
 				// Dispatch action that signals server response has been received
+				dispatch({ type: GET_COMMENTS, payload: [] });
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
 	}
