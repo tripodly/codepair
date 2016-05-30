@@ -54,7 +54,6 @@ class Profile extends Component {
 	}
 
 	handleFormSubmit(formProps) {
-		console.log('handleFormSubmit called');
 		let email = formProps.email ? formProps.email : this.props.profileEmail;
 		let name = formProps.name ? formProps.name : this.props.profileName;
 		let formPropsWithLangSkill = {...formProps, email: email, name: name, language: this.state.language, skillLevel: this.state.skillLevel };
@@ -75,18 +74,16 @@ class Profile extends Component {
 		this.socket = io();
 		this.props.getCards();
 		this.socket.on('joinRoom',(data) => {
-			console.log('data from joinRoom is : ',data);
 			if(this.props.profileID == data.toID || this.props.profileID == data.fromID){
 				this.props.joinRoom({ roomID: data.roomID });
 			}
 		})
-		this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
 	}
 
-	// componentDidUpdate() {
-	// 	this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
-	// 	this.socket.emit('getOnlineUsers');
-	// }
+	componentDidUpdate() {
+		this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
+		this.socket.emit('getOnlineUsers');
+	}
 
 	handleEditInfo() {
 		flag = !flag;
@@ -100,7 +97,6 @@ class Profile extends Component {
 	}
 
 	handleOnChangeInput(event,field) {
-		// console.log(event.target.value)
 		switch(field) {
 	    case 'name':
 	        this.setState({name:event.target.value});
@@ -126,14 +122,11 @@ class Profile extends Component {
 	}
 
 	handleListItemClick(match) {
-		console.log('List Item Clicked in Profile Page!');
-		console.log('fromUser is : ',this.props.fromUser, ' & toUser is : ',match);
 		this.socket.emit('partnerWithMatch', { inviter: this.props.fromUser, invitee: match });
 	}
 
 	renderEditBox(){
 		const { handleSubmit, fields: { email, name, language, skillLevel }} = this.props;
-		console.log('inside renderEditBox this.props is : ',this.props);
 		const cancel = 'cancel';
 		return (
 			<div>
