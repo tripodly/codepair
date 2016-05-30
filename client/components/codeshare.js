@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
 import AceEditor from 'react-ace';
+import brace from 'brace';
 import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-
 // Imports language libraries to use in Ace Editor
 import 'brace/mode/javascript';
 import 'brace/mode/java';
 import 'brace/mode/python';
 import 'brace/mode/ruby';
-
 // Imports theme to use in Ace Editor
 import 'brace/theme/ambiance';
+// Imports Brace Language tools for auto complete
+import 'brace/ext/language_tools';
 
 const style = {
 	codeWindow: {
@@ -128,6 +129,8 @@ class CodeShare extends Component {
 				    theme="ambiance"
 				    height='750px'
 				    width="100%"
+				    showGutter={true}
+				    enableBasicAutocompletion={true}
 				    enableLiveAutocompletion={true}
 				    value={this.state.codeData}
 				    onChange={(value) => this.onChange(value)}
