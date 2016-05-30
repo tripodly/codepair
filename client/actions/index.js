@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, USER_INITIATED,
-	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_ROOM,
+	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
 
 const API_URL = 'http://localhost:3090';
@@ -194,10 +194,10 @@ export function dislikeCard({ fromID, toID }) {
 	}
 }
 
-export function joinRoom({ roomID }) {
+export function joinSession({ sessionID }) {
 	return {
-		type: JOIN_ROOM,
-		payload: { roomID }
+		type: JOIN_SESSION,
+		payload: { sessionID }
 	};
 }
 
@@ -207,6 +207,12 @@ export function startPairing() {
 	}
 }
 
+export function leaveSession({ sessionID }) {
+	return {
+		type: LEAVE_SESSION,
+		payload: { sessionID }
+	};
+}
 
 
 export function receiveInvite({ invite }) {

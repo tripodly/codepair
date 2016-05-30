@@ -15,7 +15,8 @@ class MatchAlert extends Component {
 			name: null,
 			language: null,
 			skillLevel: null,
-			profile_url: null
+			profile_url: null,
+			message: null
 		}
 	}
 
@@ -64,10 +65,30 @@ class MatchAlert extends Component {
 	  	  });
 	  	}
 	  });
+
+	  this.socket.on('rejectInvite',rejectObj => {
+	  	console.log('rejectInvite event received, rejectObj is : ',rejectObj);
+	  	if(rejectObj.idA === this.props.userID || rejectObj.idB === this.props.userID){
+	  		console.log('INVITE HAS BEEN REJECTED!');
+	  		this.setState({
+	  			open: false,
+	  			id: null,
+	  			name: null,
+	  			language: null,
+	  			skillLevel: null,
+	  			profile_url: null,
+	  			message: null
+	  		})
+	  	}
+	  })
+
 	  this.socket.on('bothAccept',acceptObj => {
-	  	if(acceptObj[idA] === this.props.userID || acceptObj[idB] === this.props.userID){
+	  	console.log('bothAccept event received, acceptObj is : ',acceptObj);
+	  	if(acceptObj.idA === this.props.userID || acceptObj.idB === this.props.userID){
 	  		console.log('USER SHOULD NOW JOIN CODEPAIR SESSION!');
-	  		this.props.startPairing({ roomID: acceptObj[idA] + ":" + acceptObj[idB]});
+	  		const SESSION_ID = "" + acceptObj.idA + ":" + acceptObj.idB + "";
+	  		this.props.joinSession({ sessionID: SESSION_ID });
+	  		this.props.startPairing();
 	  	}
 	  })
 	}

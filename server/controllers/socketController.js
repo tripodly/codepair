@@ -58,6 +58,11 @@ io.on('connection', function(socket) {
 		}
 	})
 
+	socket.on('rejectInvite', function(data) {
+		console.log('reject event received, data is : ',data);
+		io.emit('declineInvite',{ "idA": data.toID, "idB": data.fromID });
+	})
+
 	socket.on('partner', function(partnerObject){
 		console.log('partnerObject is : ',partnerObject);
 		var roomName = '' + partnerObject.fromUser.id + ':' + partnerObject.toUser.id + '';

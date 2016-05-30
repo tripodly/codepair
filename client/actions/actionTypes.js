@@ -26,5 +26,6 @@ export const RECEIVE_SOCKET = 'RECEIVE_SOCKET';
 // Actions for setting and clearing the current partner
 export const SET_PARTNER = "SET_PARTNER";
 export const CLEAR_PARTNER = "CLEAR_PARTNER";
-export const JOIN_ROOM = "JOIN_ROOM";
+export const JOIN_SESSION = "JOIN_SESSION";
+export const LEAVE_SESSION = "LEAVE_SESSION";
 export const INVITE_RECEIVED = "INVITE_RECEIVED";
