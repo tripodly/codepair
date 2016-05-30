@@ -103,7 +103,6 @@ class Forum extends Component {
 		}
 	}
 	handleClick(body, subject){
-		console.log('handlde click was clicked in the forum conpment');
 		this.props.newPost({ subject: this.state.subject, message:this.state.input });
 		flag = !flag;
 		this.setState({});
@@ -129,20 +128,15 @@ class Forum extends Component {
 	handleModal(){
 		flag = !flag;
 		this.setState({});
-		console.log('clicked')
 	}
 handleCommentSubmit(comment,id){
-	console.log('this is the id of the post',id);
-	console.log('this is the comment in the post',comment);
 	this.props.postComment({comment, id});
 }
 	handleForumItemClick(item){
-		console.log('this is the item you : ', item.id);
 		//the this reffers to the forumItem not this fourm.js
 		this.props.getComments({id: item.id});
 	}
 	render() {
-		console.log('this is the comments in forumsjs', this.props.comments)
 		if(this.props.waiting){
 			return(
 				<div>
@@ -194,7 +188,6 @@ handleCommentSubmit(comment,id){
 						</div>
 					);
 		} else if(this.props.comments){
-			console.log('this is the comments of props', this.props.comments,this.props.post,this.props.posts)
 			let item = this.props.post;
 			if(this.props.comments.length < 1){
 				return (
@@ -332,7 +325,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(Forum);
-
-
-
-

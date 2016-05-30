@@ -11,13 +11,13 @@ class ForumItem extends Component {
 		const item = this.props.item;
 		const context = this.props.context;
 		let handleClick = function(){};
-		console.log(item)
 		if(this.props.handleClick){
 			handleClick = this.props.handleClick.bind(context,item);
 		}
 		return (
 			<div>
 				<ListItem 
+					multiLine={true}
 					key={this.props.item.id}
 					primaryText={this.props.item.subject|| item.comment} 
 					secondaryText={this.props.item.message || item.created_at }
