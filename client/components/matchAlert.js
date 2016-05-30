@@ -125,7 +125,7 @@ class MatchAlert extends Component {
 
 function mapStateToProps (state) {
 	if(state.profile.initiated) {
-		return { current: state.cards.current, cardID: state.cards.current.id, matches: state.cards.matches, waiting: state.cards.waiting, userID: state.profile.id };
+		return { current: state.cards.current, matches: state.cards.matches, waiting: state.cards.waiting, userID: state.profile.id };
 	} else {
 		return state;
 	}
