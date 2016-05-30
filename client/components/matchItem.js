@@ -40,16 +40,16 @@ class MatchItem extends Component {
 	componentDidMount(){
 		this.socket = io();
 		this.socket.on('online',status => {
-			console.log('socket online event received in matchitem');
-			console.log('status is : ',status);
+			// console.log('socket online event received in matchitem');
+			// console.log('status is : ',status);
 			if(status.onlineID === this.state.itemID){
 				this.setOnline();
 			}
 		})
 		this.socket.on('offline',status => {
-			console.log('socket offline event received in matchitem');
-			console.log('status is : ',status);
-			if(status.onlineID === this.state.itemID){
+			// console.log('socket offline event received in matchitem');
+			// console.log('status is : ',status);
+			if(status.offlineID === this.state.itemID){
 				this.setOffline();
 			}
 		})

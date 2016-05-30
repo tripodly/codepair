@@ -17,10 +17,11 @@ io.on('connection', function(socket) {
 			// people[socket.id] = { id: user.id, name: user.name };
 			var userID = user.id;
 			people[userID] = { socket: socket.id };
+			people[socket.id] = user.id;
 			console.log('people inside join event in socketController are : ',people);
 			io.emit('online',{ onlineID: userID });
 		}
-		console.log(people);
+		console.log('people object inside join event is : ',people);
 	});
 
 	socket.on('getOnlineUsers', function(){
@@ -105,10 +106,23 @@ io.on('connection', function(socket) {
 	});
 
 	//disconnect from the server
-	socket.on('disconnect', function(){
+	socket.on('leave', function(){
+		var userID = people[socket.id];
+		console.log('inside disconnect socket event, userID is : ',userID);
+		socket.emit('offline', { offlineID: people[userID] });
 	  delete people[socket.id];
-	  sockets.splice(sockets.indexOf(socket), 1);
+	  for(var key in people){
+	  	if(people[key] === userID){
+	  		delete people[key];
+	  	}
+	  }
+	  console.log('people object is now : ',people);
 	});
+
+	socket.on('disconnect', function(){
+		delete people[socket.id];
+		sockets.splice(sockets.indexOf(socket), 1);
+	})
 })
 
 module.exports = {

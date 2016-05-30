@@ -80,13 +80,13 @@ class Profile extends Component {
 				this.props.joinRoom({ roomID: data.roomID });
 			}
 		})
-
-	}
-
-	componentDidUpdate() {
 		this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
-		this.socket.emit('getOnlineUsers');
 	}
+
+	// componentDidUpdate() {
+	// 	this.socket.emit('join', { id: this.props.profileID, name: this.props.profileName });
+	// 	this.socket.emit('getOnlineUsers');
+	// }
 
 	handleEditInfo() {
 		flag = !flag;
