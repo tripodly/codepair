@@ -6,7 +6,7 @@ build/**
 **/bundle.js
 
 # ENV Config
-server/config/envConfig.js
+# server/config/envConfig.js
 
 # For WebStorm
 **/.idea/**
