@@ -8,9 +8,9 @@ import {
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS, GET_COMMENTS } from './actionTypes';
 
 // URL FOR DEVELOPMENT
- // const API_URL = 'http://localhost:3090';
+const API_URL = 'http://localhost:3090';
 // URL FOR PRODUCTION
-const API_URL = 'https://warm-escarpment-27689.herokuapp.com';
+// const API_URL = 'https://protected-taiga-40784.herokuapp.com';
 const socket = io();
 
 // signinUser action creator uses redux-thunk to return a function
