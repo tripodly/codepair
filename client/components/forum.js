@@ -103,10 +103,10 @@ class Forum extends Component {
 	}
 
 	componentDidMount(){
-		var m = this.props.getPosts();
-		setTimeout(function(){
-			console.log('this is the get posts=>>>>',m);
-		},1000);
+		this.props.getPosts();
+		// setTimeout(function(){
+		// 	console.log('this is the getPosts method return in forum.js=>>>>',m);
+		// },2000);
 	}
 	handleModal(){
 		flag = !flag;
@@ -114,15 +114,16 @@ class Forum extends Component {
 		console.log('clicked')
 	}
 	render() {
-
-		if(this.props.waiting){
+console.log('waiting ====== ',this.props.waiting)
+		if(!this.props.waiting){
 			return(
 				<div>
 				 <CircularProgress size={2} />
 				</div>
 			);
 		}
-		if(!flag){
+		else if(!flag){
+			console.log(this.props.posts)
 			return (
 				<div style={style.forumWindow}>
 					<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -200,7 +201,7 @@ class Forum extends Component {
 
 function mapStateToProps(state) {
 	return { 
-		posts: state.posts,
+		posts: state.message,
 		waiting: state.response.waiting 
 	};
 }

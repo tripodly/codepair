@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, USER_INITIATED,
 	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
-	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET } from './actionTypes';
+	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS } from './actionTypes';
 
 // URL FOR DEVELOPMENT
 const API_URL = 'http://localhost:3090';
@@ -257,13 +257,14 @@ export function newPost({ subject, message }){
 export function getPosts(){
 	console.log('getposts action creator called');
 	return function(dispatch) {
+	dispatch({ type: AWAITING_RESPONSE });
 		axios.get(`${API_URL}/user/getPosts`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
 				console.log('getPosts response received');
-				console.log('getposts response is : ',response);
-				// dispatch({ type: GET_CARDS, payload: response.data })
+				console.log('getposts response is : ',response.posts);
+				dispatch({ type: GET_POSTS, payload: response.posts })
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
