@@ -8,16 +8,21 @@ import MessageList from './chat/messageList';
 
 
 export default class Chat extends Component {
- 
+  constructor(props){
+    super(props);
+
+
+  }
+
   render() {
     return (
-      <Draggable>
+      <Draggable defaultPosition={{x: 420, y: 180}}>
           <div className="wrapper">
             <nav id="nav" className="nav">
               <div className="default-nav">
                 <div className="main-nav">
                   <div className="toggle"></div>
-                  <div className="main-nav-item"><a href="#" className="main-nav-item-link">Andrew</a></div>
+                  <div className="main-nav-item"><a href="#" className="main-nav-item-link">{this.props.partnerName}</a></div>
                   <div className="options"></div>
                 </div>
               </div>

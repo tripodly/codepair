@@ -7,6 +7,7 @@ import brace from 'brace';
 import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import Chat from './chat';
 // Imports language libraries to use in Ace Editor
 import 'brace/mode/javascript';
 import 'brace/mode/java';
@@ -22,6 +23,8 @@ const style = {
 		textAlign: 'left',
 		width: '100%',
 		height: 800,
+		backgroundColor: '#3D3D3D',
+		position: 'relative',
 	},
 	optionsBar: {
 		width: '100%',
@@ -51,6 +54,12 @@ const style = {
 		float: 'left',
 		fontSize: 14,
 	},
+	chat: {
+		position: 'relative',
+	},
+	chatBox: {
+		paddingLeft: 100,
+	},
 }
 
 class CodeShare extends Component {
@@ -60,7 +69,8 @@ class CodeShare extends Component {
 		this.state = {
 			language: 'javascript',
 			value: 1,
-			codeData: ''
+			codeData: '',
+			chatData: ''
 		}
 	}
 
@@ -128,7 +138,7 @@ class CodeShare extends Component {
 				    mode={this.state.language}
 				    theme="ambiance"
 				    height='750px'
-				    width="100%"
+				    width="50%"
 				    fontSize={16}
 				    showGutter={true}
 				    enableBasicAutocompletion={true}
@@ -137,7 +147,10 @@ class CodeShare extends Component {
 				    onChange={(value) => this.onChange(value)}
 				    name="UNIQUE_ID_OF_DIV"
 				    editorProps={{$blockScrolling: true}}
-				  />
+			  />
+				<div style={style.chatBox}>
+					<Chat partnerName={this.props.partner.name}/>
+				</div>
 			</div>
 		);
 	}
