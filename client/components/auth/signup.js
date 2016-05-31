@@ -20,7 +20,6 @@ class Signup extends Component {
 
 	handleFormSubmit(formProps) {
 		let formPropsWithLangSkill = {...formProps, language: this.state.language, skillLevel: this.state.skillLevel };
-		console.log('formPropsWithLangSkill is : ',formPropsWithLangSkill);
 		this.props.signupUser(formPropsWithLangSkill);
 	}
 
@@ -82,7 +81,6 @@ class Signup extends Component {
 
 
 function mapStateToProps(state){
-	console.log('mapStateToProps inside signup form , state.form is : ',state.form);
 	return { errorMessage: state.auth.error, language: state.profile.language, skillLevel: state.profile.skillLevel };
 }
 
