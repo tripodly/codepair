@@ -12,8 +12,6 @@ const style = {
 				minHeight: 1000,
 		},
 		app: {
-				// paddingRight: 40,
-				// paddingLeft: 40,
 				minHeight: 1000,
 		},
 		body: {
