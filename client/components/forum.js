@@ -13,6 +13,10 @@ import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
+	customList:{
+		height:'600',
+		overflow: 'scroll',
+	},
 	comment:{
 		height: 100,
 		marginTop: 25,
@@ -80,7 +84,7 @@ const style = {
 	},
 	mainPost:{
 		border:' 3px solid #585858',
-
+		backgroundColor:'#D8D8D8',
 	},
 }
 
@@ -131,6 +135,11 @@ class Forum extends Component {
 	}
 handleCommentSubmit(comment,id){
 	this.props.postComment({comment, id});
+	var that = this;
+	setTimeout(function(){
+		that.props.getComments({id: id});
+	},100);
+
 }
 	handleForumItemClick(item){
 		//the this reffers to the forumItem not this fourm.js
@@ -188,7 +197,9 @@ handleCommentSubmit(comment,id){
 						</div>
 					);
 		} else if(this.props.comments){
+			//if the post was clicked show the comments belonging to that post
 			let item = this.props.post;
+			//check the length of the comments array, if it is empty dont try to map comments to the page
 			if(this.props.comments.length < 1){
 				return (
 					<div style={style.forumWindow}>
@@ -213,7 +224,7 @@ handleCommentSubmit(comment,id){
 						/>
 							<div>
 							<Paper zDepth={2}>
-								<List>
+								<List style={style.customList}>
 									<ForumItem style={style.mainPost} item={item} />
 									<div>{'Be the first to comment!'}</div>
 								</List>
@@ -233,6 +244,7 @@ handleCommentSubmit(comment,id){
 					</div>
 				);
 				} else {
+					// this else statement is in the comment if statment, and maps the comments to the page
 					let item = this.props.post;
 						return (
 							<div style={style.forumWindow}>
@@ -257,7 +269,7 @@ handleCommentSubmit(comment,id){
 								/>
 								<div>
 									<Paper zDepth={2}>
-												<List>
+												<List style={style.customList}>
 													<ForumItem style={style.mainPost} item={item} />
 													{ this.props.comments.map(item =>
 														<ForumItem context={this} item={item} /> 
@@ -282,6 +294,7 @@ handleCommentSubmit(comment,id){
 				}
 		}
 		else {
+			// this last else reverts to rendering all the posts on the page
 			return (
 				<div style={style.forumWindow}>
 					<AppBar style={style.optionsBar} showMenuIconButton={false}
@@ -302,7 +315,7 @@ handleCommentSubmit(comment,id){
 					/>
 					<div>
 						<Paper zDepth={2}>
-									<List>
+									<List style={style.customList}>
 										{ this.props.posts.map(item =>
 											<ForumItem context={this} handleClick={this.handleForumItemClick} item={item} /> 
 										)}
