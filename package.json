@@ -1,0 +1,73 @@
+{
+  "name": "codepair",
+  "version": "1.0.0",
+  "description": "CodePair",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-webpack-dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start-dev": "./node_modules/.bin/nodemon server/server.js --ignore node_modules/",
+    "build-prod": "NODE_ENV=production webpack --config ./webpack.config.prod.js",
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "6.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tripodly/codepair.git"
+  },
+  "author": "Colin Zarnegar[c.zarnegar@gmail.com], Joey Cursoli[joeycursoli2@gmail.com], Andrew Patipaksiri[apax04@gmail.com]",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tripodly/codepair/issues"
+  },
+  "homepage": "https://github.com/tripodly/codepair#readme",
+  "dependencies": {
+    "axios": "^0.11.1",
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.4.0",
+    "body-parser": "^1.15.1",
+    "bookshelf": "^0.9.5",
+    "cors": "^2.7.1",
+    "es6-promise": "^3.2.1",
+    "express": "^4.13.4",
+    "isomorphic-fetch": "^2.2.1",
+    "jwt-simple": "^0.5.0",
+    "knex": "^0.11.3",
+    "lodash": "^4.13.1",
+    "material-ui": "^0.15.0",
+    "moment": "^2.13.0",
+    "morgan": "^1.7.0",
+    "mysql": "^2.10.2",
+    "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "react": "^15.0.2",
+    "react-ace": "^3.4.1",
+    "react-bootstrap": "^0.29.4",
+    "react-dom": "^15.0.2",
+    "react-draggable": "^2.1.1",
+    "react-player": "^0.7.0",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.1",
+    "react-tap-event-plugin": "^1.0.0",
+    "redux": "^3.5.2",
+    "redux-form": "^5.2.3",
+    "redux-thunk": "^2.1.0",
+    "socket.io": "^1.4.6",
+    "socket.io-client": "^1.4.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
