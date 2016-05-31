@@ -84,7 +84,7 @@ const style = {
 	},
 	mainPost:{
 		border:' 3px solid #585858',
-
+		backgroundColor:'#D8D8D8',
 	},
 }
 
@@ -135,16 +135,10 @@ class Forum extends Component {
 	}
 handleCommentSubmit(comment,id){
 	this.props.postComment({comment, id});
-	this.props.getComments({id: id});
-
-	var promise = new Promise(
-	    function(resolve, reject) {
-	     resolve(this.props.postComment({comment, id}));
-	    }
-	);
-	promise.then(function(val){
-		this.props.getComments({id: id})
-	})
+	var that = this;
+	setTimeout(function(){
+		that.props.getComments({id: id});
+	},100);
 
 }
 	handleForumItemClick(item){
