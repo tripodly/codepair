@@ -22,7 +22,6 @@ class MatchInvite extends Component {
 	}
 
 	componentWillUnmount(){
-		console.log('componentWillUnmount fired!');
 		this.setState({
 			inviter: null,
 			open: false,
@@ -38,11 +37,8 @@ class MatchInvite extends Component {
 	componentDidMount() {
 	  this.socket = io();
 	  this.socket.on('partnerInvite',inviteObject => {
-	    console.log('invite event received');
-	    console.log('invite object is : ',inviteObject);
 	    // do this if the current user is the instigator
 	    if(inviteObject.inviterID === this.props.user.id){
-	    	console.log("I've invited someone to pair...");
 	    	this.props.matches.forEach(match => {
 	    		if(match.id === inviteObject.inviteeID){
 	    			this.setState({
@@ -60,7 +56,6 @@ class MatchInvite extends Component {
 	    }
 	    // do this if the current user is the receiver
 	    if(inviteObject.inviteeID === this.props.user.id){
-	      console.log("I have an invite to pair!");
 	      this.props.matches.forEach(match => {
 	      	if(match.id === inviteObject.inviterID){
 	      		this.setState({
@@ -78,11 +73,8 @@ class MatchInvite extends Component {
 	  });
 
 	  this.socket.on('partnerInviteeAccepted',data => {
-	  	console.log('partnerInviteeAccepted event received, data is : ',data);
 	  	// If the current user is the INVITER:
 	  	if(data.inviterID === this.props.user.id && data.inviteeID === this.state.id){
-	  		console.log('My invite to : ' + data.inviteeID+' was accepted!');
-	  		console.log('My new partner is : ',{ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
 	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
 	  		this.setState({
 	  			open: false
@@ -93,8 +85,6 @@ class MatchInvite extends Component {
 	  	}
 	  	// If the current user is the INVITEE:
 	  	if(data.inviteeID === this.props.user.id && data.inviterID === this.state.id){
-	  		console.log('The invite from : ' + data.inviterID+' was accepted!');
-	  		console.log('My new partner is : ',{ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
 	  		this.props.setPartner({ id: this.state.id, name: this.state.name, language: this.state.language, skillLevel: this.state.skillLevel, profile_url: this.state.profile_url });
 	  		const SESSION_ID = "" + data.inviterID  + ":" + data.inviteeID + "";
 	  		this.props.joinSession({ sessionID: SESSION_ID });

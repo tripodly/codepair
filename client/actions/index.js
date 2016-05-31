@@ -8,9 +8,9 @@ import {
 	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS, GET_COMMENTS } from './actionTypes';
 
 // URL FOR DEVELOPMENT
-const API_URL = 'http://localhost:3090';
+// const API_URL = 'http://localhost:3090';
 // URL FOR PRODUCTION
-// const API_URL = 'https://protected-taiga-40784.herokuapp.com';
+const API_URL = 'https://protected-taiga-40784.herokuapp.com';
 const socket = io();
 
 // signinUser action creator uses redux-thunk to return a function
@@ -28,15 +28,9 @@ export function signinUser({ email, password }) {
 				dispatch({ type: UPDATE_USER, payload: { 
 					email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel
 				}});
-				// if signin is successful push user
-				// to their profile page
 				browserHistory.push('/profile');
 			})
 			.catch(response => {
-				// if there is an error from the post to the server,
-				// log it
-				console.log('error in signinUser action creator: ',response);
-				// -Show an error to the user
 				dispatch(authError('Bad Signin Info'));
 			});
 	}
@@ -64,7 +58,6 @@ export function signupUser({ email, name, language, skillLevel, password, github
 			.catch(response => {
 				// if there is an error from the post to the server,
 				// log it
-				console.log('error in signupUser action creator: ',response);
 				// -Show an error to the user
 				dispatch(authError(response));
 			});
@@ -72,7 +65,6 @@ export function signupUser({ email, name, language, skillLevel, password, github
 }
 
 export function getUserInfo() {
-	console.log('inside getUserInfo action creator');
 	return function(dispatch) {
 		// Dispatch AWAITING_RESPONSE action
 		dispatch({ type: AWAITING_RESPONSE });
@@ -81,7 +73,6 @@ export function getUserInfo() {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log(response);
 				// dispatch action to set current users info
 				dispatch({ type: UPDATE_USER, payload: { 
 					id: response.data.id, email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel, github_handle: response.data.github_handle, profile_url: response.data.profile_url
@@ -89,7 +80,6 @@ export function getUserInfo() {
 				dispatch({ type: USER_INITIATED });
 			})
 			.catch(response => {
-				console.log('error in getUserInfo action creator: ',response);
 				dispatch(authError(response.data));
 				dispatch(signoutUser());
 				browserHistory.push('/');
@@ -103,14 +93,11 @@ export function updateUserInfo({ email, name, language, skillLevel }) {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('edit profile info response received');
-				console.log('edit profile info response is : ',response);
 				dispatch({ type: UPDATE_USER, payload: { 
 					email: response.data.email, name: response.data.name, language: response.data.language, skillLevel: response.data.skillLevel, github_handle: response.data.github_handle, profile_url: response.data.profile_url
 				}});
 			})
 			.catch(response => {
-				console.log('error in signupUser action creator: ',response);
 				// -Show an error to the user
 				dispatch(authError(response));
 			})
@@ -136,14 +123,11 @@ export function signoutUser() {
 // action creator to get new card from database, passes email to identify user and get 
 // a card from their pending list
 export function getCards() {
-	console.log('getCards action creator called');
 	return function(dispatch) {
 		axios.get(`${API_URL}/user/cards`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('getCards response received');
-				console.log('getCards response is : ',response);
 				dispatch({ type: GET_CARDS, payload: response.data })
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
@@ -152,7 +136,6 @@ export function getCards() {
 			.catch(response => {
 				// if there is an error from the post to the server,
 				// log it
-				console.log('error in getCard action creator: ',response);
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
@@ -165,12 +148,8 @@ export function likeCard({ fromID, toID }) {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('likeCard response received');
-				console.log('likeCard response is : ',response);
-
 				// If this swipe triggers a match, dispatch the NEW_MATCH action
 				if(response.data.match) {
-					console.log('match!');
 					dispatch({ type: NEW_MATCH, payload: response.data.model });
 					socket.emit('match',{ fromID, toID });
 				} else {
@@ -178,7 +157,6 @@ export function likeCard({ fromID, toID }) {
 				}
 			})
 			.catch(response => {
-				console.log('error in likeCard action creator: ',response);
 			})
 	}
 }
@@ -189,12 +167,9 @@ export function dislikeCard({ fromID, toID }) {
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('dislikeCard response received');
-				console.log('dislikeCard response is : ',response);
 				dispatch({ type: NEW_PASS, payload: response.data.model })
 			})
 			.catch(response => {
-				console.log('error in dislikeCard action creator: ',response);
 			})
 	}
 }
@@ -234,62 +209,50 @@ export function receiveInvite({ invite }) {
 //-------------post actions----------------------
 
 export function newPost({ subject, message }){
-		console.log('this is the subject', subject, message)
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/postMessage`, { subject, message },
 			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('this was a good post in newPost with a response of: ', response);
 
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
-				console.log('error in newPost action creator: ',response);
 			});
 	}
 }
 export function getPosts(){
-	console.log('getposts action creator called');
 	return function(dispatch) {
 	dispatch({ type: AWAITING_RESPONSE });
 		axios.get(`${API_URL}/user/getPosts`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('getPosts response received',response);
-				console.log('getposts response is : ',response.data);
 				dispatch({ type: GET_POSTS, payload: response.data })
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
 			.catch(response => {
-				// if there is an error from the post to the server,
-				// log it
-				console.log('error in getpost action creator: ',response);
 				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
 	}
 }
 export function postComment({comment, id}){
-		console.log('this is in the postComment action', comment, id);
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/postComment`, { id, comment },
 			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('this was a good post in postComment with a response of: ', response);
+				// Comment was successfully posted to server
 			})
 			.catch(response => {
-				// if there is an error from the post to the server,
-				console.log('error in postComment action creator: ',response);
+				// Comment was NOT successfully posted to server
 			});
 	}
 
 }
 export function getComments({ id }){
-	console.log('getComments action creator called',id);
 	return function(dispatch) {
 	dispatch({ type: AWAITING_RESPONSE });
 		axios.post(`${API_URL}/user/getComments`,{ id },
@@ -301,7 +264,6 @@ export function getComments({ id }){
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,
-				console.log('error in getComments action creator: ',response);
 				// Dispatch action that signals server response has been received
 				dispatch({ type: GET_COMMENTS, payload: [] });
 				dispatch({ type: RESPONSE_RECEIVED });
