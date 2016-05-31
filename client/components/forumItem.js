@@ -10,6 +10,7 @@ class ForumItem extends Component {
 	render() {
 		const item = this.props.item;
 		const context = this.props.context;
+		let date = item.created_at ? item.created_at.toString().substring(0,10) : '';
 		let handleClick = function(){};
 		if(this.props.handleClick){
 			handleClick = this.props.handleClick.bind(context,item);
@@ -19,8 +20,8 @@ class ForumItem extends Component {
 				<ListItem 
 					multiLine={true}
 					key={this.props.item.id}
-					primaryText={this.props.item.subject|| item.comment} 
-					secondaryText={this.props.item.message || item.created_at }
+					primaryText={ this.props.item.subject || item.comment } 
+					secondaryText={ this.props.item.message || date }
 					onTouchTap={() => {handleClick()} }
 				/>
 				<Divider />
