@@ -66,9 +66,9 @@ module.exports = {
 		};
 		if(messageObject.postComment.length >= 2 && messageObject.postID){
 		new Reply({ 'userID': req.user.attributes.id, 'comment': messageObject.postComment, postID: messageObject.postID }).save().then(function(postComment){
-				res.send('post sent!',postModel);
+				res.send({ message: 'post sent!', post: postComment });
 			})
-		} else{
+		} else {
 			res.send('error making a comment!');
 		}
 	}

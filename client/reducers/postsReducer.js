@@ -16,7 +16,10 @@ export default function(state = INITIAL_STATE, action) {
 			return {...state, posts: action.payload, comments: '' };
 		case GET_COMMENTS:
 			console.log('this is the getComments reducer function',action.payload);
-			return{...state, comments: action.payload.comments,post:action.payload.post[0], posts: '' };
+			let comments = action.payload.comments.sort((a,b) => {
+				return Date.parse(b.created_at) - Date.parse(a.created_at);
+			});
+			return{...state, comments: comments, post:action.payload.post[0], posts: '' };
 		default:
 			return state;
 	}
