@@ -48,7 +48,6 @@ ReactDOM.render(
         <Route path="cards" component={Cards} />
         <Route path="codeshare" component={CodeShare} />
         <Route path="forum" component={Forum} />
-        <Route path="chat" component={Chat} />
     	</Route>
     </Router>
 	 </MuiThemeProvider>

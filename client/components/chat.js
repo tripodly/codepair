@@ -14,26 +14,25 @@ import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField'
 import io from 'socket.io-client';
+import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 const style = {
     paper: {
-      height: 400,
-      width: 400,
+      height: 500,
+      width: 350,
       margin: 20,
-      backgroundColor: '#f06292'
+      backgroundColor: '#00bcd4'
     },
     list: {
-    display: 'block',
-    overflow: 'scroll',
-    color: 'white'
+    color: '#fff'
     
     },
     input:{
       position: 'absolute',
-      bottom: 0,
       left: 0,
-      right: 0,
-      color: 'white'
+      bottom: 0,
+      margin: 30,
+      background: '#80deea'
     }
   }
 
@@ -68,8 +67,10 @@ class Chat extends Component {
         <div>
         <Divider inset={true} />
         <ListItem
-          primaryText={ message.from }
-          secondaryText= {message.body}
+          style={{color:'#fff'}}
+          rightIcon={<ChatBubble />}
+         
+          primaryText= {<p><span style={{color:'#eee'}}>{message.from}</span>: {message.body}</p>}
         />
        <Divider inset={true} />
        </div>
@@ -80,7 +81,7 @@ class Chat extends Component {
       <Draggable>
       <Paper style={style.paper}zDepth={3}>
         <List style={style.list}>
-          <Subheader>MY DRAGGABLE CHAT</Subheader>
+          <Subheader style={{color:'#fff'}}>MY DRAGGABLE CHAT</Subheader>
           <Divider inset={true} />
           {messages}
           

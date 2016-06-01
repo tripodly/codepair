@@ -49,7 +49,6 @@ class Header extends Component {
 			return [
 				<div style={style.link}><Link to="/codeshare" key={0}><FlatButton style={style.button} label="CodeShare" /></Link></div>,
 				<div style={style.link}><Link to="/forum" key={1}><FlatButton style={style.button} label="Forum" /></Link></div>,
-				<div style={style.link}><Link to="/chat" key={5}><FlatButton style={style.button} label="Chat" /></Link></div>,
 				<div style={style.link}><Link to="/profile" key={2}><IconButton style={style.button} iconStyle={style.icon}><AccountBox color={'white'} /></IconButton></Link></div>,
 				<div style={style.link}><Link to="/signout" key={3}><FlatButton style={style.button} label="Sign Out" /></Link></div>
 			];
