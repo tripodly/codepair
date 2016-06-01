@@ -148,7 +148,6 @@ class CodeShare extends Component {
 				    editorProps={{$blockScrolling: true}}
 			  />
 				<div style={style.chatBox}>
-					<Chat partnerName={this.props.partner.name}/>
 				</div>
 			</div>
 		);
