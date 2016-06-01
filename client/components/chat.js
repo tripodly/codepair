@@ -24,15 +24,40 @@ const style = {
       backgroundColor: '#00bcd4'
     },
     list: {
-    color: '#fff'
-    
+      color: '#fff',
+      height: 440,
+      overflow: 'scroll',
+    },
+    subheader: {
+      width: 300,
+      marginLeft: 25,
+      marginRight: 25,
+      paddingLeft: 0,
+      textAlign: 'center',
     },
     input:{
       position: 'absolute',
       left: 0,
       bottom: 0,
-      margin: 30,
-      background: '#80deea'
+      width: 300,
+      marginLeft: 25,
+      marginRight: 25,
+      marginBottom: 10,
+      // height: 50,
+      background: '#80deea',
+    },
+    message: {
+      paddingBottom: 10,
+      paddingTop: 10,
+      width: 340,
+      wordWrap: 'break-word',
+      from: {
+        fontWeight: 'bold',
+        float: 'left',
+      },
+      body: {
+        float: 'left',
+      },
     }
   }
 
@@ -45,46 +70,55 @@ class Chat extends Component {
   componentDidMount() {
     this.socket = io();
     this.socket.on('message', message => {
-      this.setState({ messages: [ message, ...this.state.messages ]})
+      console.log('message object received in message event is : ',message);
+      if(message.body.room !== "" && message.body.room === this.props.sessionID){
+        console.log('this message is for my specific sessionID');
+      }
+      this.setState({ messages: [ {body:message.body.body, from:message.from}, ...this.state.messages ]})
     })
   }
   handleSubmit = event => {
     const body = event.target.value
+    console.log('body from handleSubmit is : ',body);
     if (event.keyCode === 13 && body) {
       console.log('yes');
       const message = {
-        body,
+        body: body,
         from: 'Me'
       }
       this.setState({ messages: [message, ...this.state.messages] })
-      this.socket.emit('message', body)
+      this.socket.emit('message', { body: body, room: this.props.sessionID });
       event.target.value = ''
     }
   }
   render() {
+    console.log('messages inside render are : ',this.state.messages);
     const messages = this.state.messages.map( (message,index) => {
       return (
         <div>
-        <Divider inset={true} />
-        <ListItem
-          style={{color:'#fff'}}
-          rightIcon={<ChatBubble />}
-         
-          primaryText= {<p><span style={{color:'#eee'}}>{message.from}</span>: {message.body}</p>}
-        />
-       <Divider inset={true} />
+          <Divider inset={false} />
+          <ListItem
+            style={{color:'#fff'}}
+            rightIcon={<ChatBubble />}
+            primaryText={
+              <div style={style.message}>
+                <p style={style.message.from}><span>{message.from}</span></p>
+                <p style={style.message.body}>: {message.body}</p>
+              </div>
+            }
+          />
+         <Divider inset={false} />
        </div>
-      )
+      );
     })
 
     return (
       <Draggable>
-      <Paper style={style.paper}zDepth={3}>
+      <Paper style={style.paper} zDepth={3}>
         <List style={style.list}>
-          <Subheader style={{color:'#fff'}}>MY DRAGGABLE CHAT</Subheader>
-          <Divider inset={true} />
+          <Subheader style={style.subheader}>CHAT</Subheader>
+          <Divider inset={false} />
           {messages}
-          
         </List>
         <TextField style={style.input} type="text" hintText="Enter message" onKeyUp={this.handleSubmit} />
          
@@ -96,7 +130,7 @@ class Chat extends Component {
 
 function mapStatetoProps(state){
   return {
-    userName: state.profile.name
+    userName: state.profile.name, sessionID: state.profile.sessionID
   }
 }
 export default connect(mapStatetoProps)(Chat)

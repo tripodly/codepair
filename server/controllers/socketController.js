@@ -9,9 +9,11 @@ var pairs = {};
 io.on('connection', function(socket) {
 	console.log('Client has connected to server!');
 	sockets.push(socket);
-	socket.on('message', body => {
+	socket.on('message', function(data){
+		console.log('data received in message socket event is : ',data);
 		socket.broadcast.emit('message', {
-			body,
+			body: data.body,
+			room: data.room,
 			from: socket.id.slice(8)
 		})
 	})
