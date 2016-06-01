@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './header';
 import MatchInvite from './matchInvite';
 import MatchAlert from './matchAlert';
-import Chat from './chat';
 import Paper from 'material-ui/Paper';
 import Footer from './footer';
 

@@ -16,6 +16,7 @@ import Profile from './components/profile';
 import Cards from './components/cards';
 import CodeShare from './components/codeshare';
 import Forum from './components/forum';
+import Chat from './components/chat';
 
 import reducers from './reducers';
 import { AUTHORIZE_USER } from './actions/actionTypes';
@@ -47,6 +48,7 @@ ReactDOM.render(
         <Route path="cards" component={Cards} />
         <Route path="codeshare" component={CodeShare} />
         <Route path="forum" component={Forum} />
+        <Route path="chat" component={Chat} />
     	</Route>
     </Router>
 	 </MuiThemeProvider>

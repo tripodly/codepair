@@ -7,7 +7,6 @@ import brace from 'brace';
 import * as actions from '../actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import Chat from './chat';
 // Imports language libraries to use in Ace Editor
 import 'brace/mode/javascript';
 import 'brace/mode/java';
