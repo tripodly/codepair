@@ -9,7 +9,12 @@ var pairs = {};
 io.on('connection', function(socket) {
 	console.log('Client has connected to server!');
 	sockets.push(socket);
-
+	socket.on('message', body => {
+		socket.broadcast.emit('message', {
+			body,
+			from: socket.id.slice(8)
+		})
+	})
 	socket.on('join', function(user){
 		if(user.id) {
 			var userID = user.id;
