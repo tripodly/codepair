@@ -16,6 +16,7 @@ import Profile from './components/profile';
 import Cards from './components/cards';
 import CodeShare from './components/codeshare';
 import Forum from './components/forum';
+import Chat from './components/chat';
 
 import reducers from './reducers';
 import { AUTHORIZE_USER } from './actions/actionTypes';

@@ -13,7 +13,7 @@ import * as actions from '../actions';
 import { Link } from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import MatchItem from './matchItem';
-
+import Chat from './chat';
 const style = {
 	grid: {
 		height: 800,
@@ -159,6 +159,7 @@ class Profile extends Component {
 			        </SelectField>
 						</fieldset>
 					</form>
+				
 				</div>
 			</div>
 		);

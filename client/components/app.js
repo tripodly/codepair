@@ -29,10 +29,12 @@ export default class App extends Component {
       <div style={style.app} >
 					<Paper style={style.paper} zDepth={2}>
 						<Header />
+
 						<div style={style.body}>
 							{this.props.children}
 							<MatchInvite />
 							<MatchAlert />
+							<div><Chat /></div>
 						</div>
             <Footer />
 					</Paper>
