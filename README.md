@@ -2,6 +2,7 @@
 
 ## Team
 * Product Owner: Joey Cursoli
+* Login Button Creator: Alex
 * Scrum Master: Colin Zarnegar
 * Development Team:
 	* Andrew Patipaksiri
