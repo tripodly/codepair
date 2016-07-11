@@ -13,6 +13,8 @@ import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import ForumModal from './forumModal';
+import ForumNavbar from './forumNavbar';
+
 
 const style = {
 	customList:{
@@ -157,23 +159,8 @@ handleCommentSubmit(comment,id){
 		} else if(flag){
 			//if the user clicked on post we want the modal to pop up before anything else
 					return (
-						<div style={style.forumWindow}>
-							<AppBar style={style.optionsBar} showMenuIconButton={false}
-								children={
-									<div style={style.optionsElements}>
-										<div style={style.optionElement}>
-											<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
-										</div>
-										<div style={style.optionElement}>
-											<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-							          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-							          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-							          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-							        </DropDownMenu>
-										</div>
-									</div>
-								}
-								/>	
+						<div style={style.forumWindow}>	
+								<ForumNavbar />
 								<ForumModal />		
 						</div>
 					);
@@ -296,12 +283,12 @@ handleCommentSubmit(comment,id){
 					/>
 					<div>
 						<Paper zDepth={2}>
-									<List style={style.customList}>
-										{ this.props.posts.map(item =>
-											<ForumItem context={this} handleClick={this.handleForumItemClick} item={item} /> 
-										)}
-									</List>
-								</Paper>
+							<List style={style.customList}>
+								{ this.props.posts.map(item =>
+									<ForumItem context={this} handleClick={this.handleForumItemClick} item={item} /> 
+								)}
+							</List>
+						</Paper>
 					</div>		
 				</div>
 			)
