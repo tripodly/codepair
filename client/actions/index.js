@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import { 
 	AUTHORIZE_USER, DEAUTHORIZE_USER, AUTHORIZE_ERROR, CLEAR_USER, UPDATE_USER, GET_CARDS, AWAITING_RESPONSE, RESPONSE_RECEIVED, USER_INITIATED,
 	LIKE_CARD, DISLIKE_CARD, NEW_MATCH, NEW_PENDING, NEW_PASS, SET_PARTNER, CLEAR_PARTNER, INVITE_RECEIVED, JOIN_SESSION, LEAVE_SESSION,
-	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS, GET_COMMENTS } from './actionTypes';
+	ADD_MESSAGE, RECEIVE_MESSAGE, TYPING, STOP_TYPING, RECEIVE_SOCKET, GET_POSTS, GET_COMMENTS, CURRENT_POST, FORUM_DATA } from './actionTypes';
 
 // URL FOR DEVELOPMENT
 const API_URL = 'http://localhost:3090';
@@ -273,7 +273,6 @@ export function getPosts(){
 	}
 }
 export function postComment({comment, id}){
-		console.log('this is in the postComment action', comment, id);
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/postComment`, { id, comment },
 			{ headers: { authorization: localStorage.getItem('token') }
@@ -288,22 +287,19 @@ export function postComment({comment, id}){
 	}
 
 }
-export function getComments({ id }){
-	console.log('getComments action creator called',id);
+export function getComments({ id, contents }){
 	return function(dispatch) {
 	dispatch({ type: AWAITING_RESPONSE });
 		axios.post(`${API_URL}/user/getComments`,{ id },
 			{ headers: { authorization: localStorage.getItem('token') }})
 			.then(response => {
-				dispatch({ type: GET_COMMENTS, payload: response.data });
-				// Dispatch action that signals server response has been received
 				dispatch({ type: RESPONSE_RECEIVED });
+				dispatch({ type: GET_COMMENTS, payload: response.data });
+				dispatch({ type: CURRENT_POST, payload: {currentPost: contents, comments: response.data}  });
 			})
 			.catch(response => {
-				// if there is an error from the post to the server,
-				console.log('error in getComments action creator: ',response);
-				// Dispatch action that signals server response has been received
 				dispatch({ type: GET_COMMENTS, payload: [] });
+				dispatch({ type: CURRENT_POST, payload: {currentPost: contents, comments:[]}  });
 				dispatch({ type: RESPONSE_RECEIVED });
 			})
 	}

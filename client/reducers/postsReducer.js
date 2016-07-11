@@ -10,16 +10,13 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type){
 		case GET_POSTS:
-			console.log('this is postsreducer action : ',action)
 			var posts = action.payload.slice();
-			console.log('payload =====',posts)
 			return {...state, posts: action.payload, comments: '' };
 		case GET_COMMENTS:
-			console.log('this is the getComments reducer function',action.payload);
 			let comments = action.payload.comments.sort((a,b) => {
 				return Date.parse(b.created_at) - Date.parse(a.created_at);
 			});
-			return{...state, comments: comments, post:action.payload.post[0], posts: '' };
+			return {...state, comments: comments, post:action.payload.post[0], posts: '' };
 		default:
 			return state;
 	}

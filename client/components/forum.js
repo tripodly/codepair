@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
+import {browserHistory} from 'react-router';
 
 import ForumModal from './forumModal';
 import ForumNavbar from './forumNavbar';
@@ -105,6 +106,7 @@ class Forum extends Component {
 			subject:'',
 			commentValue:''
 		}
+		this.handleForumItemClick = this.handleForumItemClick.bind(this);
 	}
 	handleClick(body, subject){
 		this.props.newPost({ subject: this.state.subject, message:this.state.input });
@@ -140,11 +142,26 @@ handleCommentSubmit(comment,id){
 
 }
 	handleForumItemClick(item){
-		this.props.getComments({id: item.id});
+		this.props.getComments({id: item.id, contents: item});
+		browserHistory.push('/post');
+	}
+	renderComments(){
+		return this.props.comments && this.props.comments.map(item => (<ForumItem context={this} item={item} /> ));
 	}
 	renderPosts(){
-		return this.props.posts && this.props.posts.map(item => (<ForumItem context={this} item={item} /> ));
+		return this.props.posts && this.props.posts.map(item =>(
+		<div>
+			<Paper zDepth={2}>
+				<List style={style.customList}>
+					{ this.props.posts.map(item =>
+						<ForumItem handleClick={this.handleForumItemClick} item={item} /> 
+					)}
+				</List>
+			</Paper>
+		</div>
+	));
 	}
+
 	render() {
 		if(this.props.waiting){
 			return(
@@ -153,7 +170,6 @@ handleCommentSubmit(comment,id){
 				</div>
 			);
 		} else {
-			console.log('inside the render of forum');
 			return (
 				<div style={style.forumWindow}>	
 					<ForumNavbar />
