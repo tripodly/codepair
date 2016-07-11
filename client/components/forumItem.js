@@ -10,9 +10,8 @@ class ForumItem extends Component {
 				<ListItem 
 					multiLine={true}
 					key={this.props.item.id}
-					primaryText={ this.props.item.subject} 
-					secondaryText={ this.props.item.message }
-					onTouchTap={() => {this.props.handleClick(this.props.item)} }
+					primaryText={ this.props.item.userID} 
+					secondaryText={ this.props.item.comment }
 				/>
 				<Divider />
 			</div>

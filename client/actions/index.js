@@ -250,18 +250,15 @@ export function newPost({ subject, message }){
 	}
 }
 export function getPosts(){
-	console.log('getposts action creator called');
 	return function(dispatch) {
 	dispatch({ type: AWAITING_RESPONSE });
 		axios.get(`${API_URL}/user/getPosts`, { 
 			headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
-				console.log('getPosts response received',response);
+				dispatch({ type: RESPONSE_RECEIVED });
 				console.log('getposts response is : ',response.data);
 				dispatch({ type: GET_POSTS, payload: response.data })
-				// Dispatch action that signals server response has been received
-				dispatch({ type: RESPONSE_RECEIVED });
 			})
 			.catch(response => {
 				// if there is an error from the post to the server,

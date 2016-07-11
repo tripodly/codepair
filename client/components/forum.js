@@ -15,6 +15,7 @@ import {browserHistory} from 'react-router';
 
 import ForumModal from './forumModal';
 import ForumNavbar from './forumNavbar';
+import ForumPostComponent from './forumPostComponent';
 
 
 const style = {
@@ -43,7 +44,7 @@ const style = {
 	forumWindow: {
 		textAlign: 'left',
 		width: '100%',
-		height: 800,
+		height: 'auto',
 	},
 	optionsBar: {
 		width: '100%',
@@ -145,21 +146,25 @@ handleCommentSubmit(comment,id){
 		this.props.getComments({id: item.id, contents: item});
 		browserHistory.push('/post');
 	}
-	renderComments(){
-		return this.props.comments && this.props.comments.map(item => (<ForumItem context={this} item={item} /> ));
-	}
+	// renderPosts(){
+	// 	return this.props.posts && this.props.posts.map(item =>(
+	// 		<div>
+	// 			<Paper zDepth={2}>
+	// 				<List style={style.customList}>
+	// 						<ForumItem handleClick={this.handleForumItemClick} item={item} /> 
+	// 				</List>
+	// 			</Paper>
+	// 		</div>
+	// 	));
+	// }
 	renderPosts(){
 		return this.props.posts && this.props.posts.map(item =>(
-		<div>
-			<Paper zDepth={2}>
-				<List style={style.customList}>
-					{ this.props.posts.map(item =>
-						<ForumItem handleClick={this.handleForumItemClick} item={item} /> 
-					)}
-				</List>
-			</Paper>
-		</div>
-	));
+			<div>
+				<Paper zDepth={2}>
+					<ForumPostComponent handleClick={this.handleForumItemClick} content={item} /> 
+				</Paper>
+			</div>
+		));
 	}
 
 	render() {

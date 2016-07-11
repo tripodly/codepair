@@ -85,15 +85,21 @@ const style = {
 
 class ForumComment extends Component {
 
+renderComments(){
+	return this.props.comments && this.props.comments.map(item => (
+				<ForumItem item={item} /> 
+			)
+		)
+	}
+
 render(){
+	console.log('inside the render in forumComments', this.props.comments, 'this is the currrentn ppost in forumCOmments: ', this.props.current);
 	return (
 		<div style={style.forumWindow}>
 			<div>
 				<Paper zDepth={2}>
 					<List style={style.customList}>
-						{ this.props.comments.map(item =>
-							<ForumItem item={this.props.item} /> 
-						)}
+						{ this.renderComments() }
 					</List>
 				</Paper>
 			</div>
@@ -120,7 +126,7 @@ render(){
 }
 function mapStateTpProps(state){
 	return{
-		comments:state.currentPost.comments,
+		comments:state.currentPost.comments.comments,
 		currentPost: state.currentPost.current
 	}
 }
