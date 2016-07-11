@@ -94,7 +94,7 @@ const style = {
 
 
 //when user wants to create a new post, make this true
-let flag = false;
+let flag = true;
 
 class Forum extends Component {
 	constructor(props){
@@ -141,13 +141,17 @@ handleCommentSubmit(comment,id){
 	this.props.postComment({comment, id});
 	var that = this;
 	setTimeout(function(){
-		that.props.getComments({id: id});
+		that.props.getComments({id});
 	},100);
 
 }
 	handleForumItemClick(item){
 		//the this reffers to the forumItem not this fourm.js
 		this.props.getComments({id: item.id});
+	}
+	renderPosts(){
+		this.props.comments.map(item =>
+			<ForumItem context={this} item={item} /> 
 	}
 	render() {
 		if(this.props.waiting){
@@ -156,150 +160,25 @@ handleCommentSubmit(comment,id){
 				 <CircularProgress size={2} />
 				</div>
 			);
-		} else if(flag){
-			//if the user clicked on post we want the modal to pop up before anything else
-					return (
-						<div style={style.forumWindow}>	
-								<ForumNavbar />
-								<ForumModal />		
-						</div>
-					);
-		} else if(this.props.comments){
-			//if the post was clicked show the comments belonging to that post
-			let item = this.props.post;
-			//check the length of the comments array, if it is empty dont try to map comments to the page
-			if(this.props.comments.length < 1){
-				return (
-					<div style={style.forumWindow}>
-						<AppBar style={style.optionsBar} showMenuIconButton={false}
-							children={
-								<div style={style.optionsElements}>
-								<div style={style.optionElement}>
-									<FlatButton onClick={()=> this.props.getPosts()} style={style.button} label="Back" />
-								</div>
-									<div style={style.optionElement}>
-										<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
-									</div>
-									<div style={style.optionElement}>
-										<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-						          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-						          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-						          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-						        </DropDownMenu>
-									</div>
-								</div>
-							}
-						/>
-							<div>
-							<Paper zDepth={2}>
-								<List style={style.customList}>
-									<ForumItem style={style.mainPost} item={item} />
-									<div>{'Be the first to comment!'}</div>
-								</List>
-							</Paper>
-						</div>
-						<div style={style.comment}>
-							<br></br>
-							<TextField 
-								style={style.subject}
-								placeholder={'Comment'}
-								multiLine={true}
-								name="POST_COMMENT"
-								onChange={(e)=> this.handlChangeInput(e,'comment')}
-							/>
-							<RaisedButton label="Comment" primary={true} style={style.commentButton} onClick={()=>this.handleCommentSubmit(this.state.commentValue, this.props.post.id)} />
-						</div>
-					</div>
-				);
-				} else {
-					// this else statement is in the comment if statment, and maps the comments to the page
-					let item = this.props.post;
-						return (
-							<div style={style.forumWindow}>
-								<AppBar style={style.optionsBar} showMenuIconButton={false}
-									children={
-										<div style={style.optionsElements}>
-										<div style={style.optionElement}>
-											<FlatButton onClick={()=> this.props.getPosts()} style={style.button} label="Back" />
-										</div>
-											<div style={style.optionElement}>
-												<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Submit a Post" />
-											</div>
-											<div style={style.optionElement}>
-												<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-								          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-								          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-								          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-								        </DropDownMenu>
-											</div>
-										</div>
-									}
-								/>
-								<div>
-									<Paper zDepth={2}>
-												<List style={style.customList}>
-													<ForumItem style={style.mainPost} item={item} />
-													{ this.props.comments.map(item =>
-														<ForumItem context={this} item={item} /> 
-													)}
-												</List>
-											</Paper>
-								</div>
-								<div style={style.comment}>
-									<br></br>
-									<br></br>
-									<TextField 
-										style={style.subject}
-										placeholder={'Comment'}
-										multiLine={true}
-										name="POST_COMMENT"
-										onChange={(e)=> this.handlChangeInput(e,'comment')}
-									/>
-									<RaisedButton label="Comment" primary={true} style={style.commentButton} onClick={()=>this.handleCommentSubmit(this.state.commentValue, this.props.post.id)} />
-								</div>		
-							</div>
-					);
-				}
-		}
-		else {
-			// this last else reverts to rendering all the posts on the page
+		} else {
 			return (
-				<div style={style.forumWindow}>
-					<AppBar style={style.optionsBar} showMenuIconButton={false}
-						children={
-							<div style={style.optionsElements}>
-								<div style={style.optionElement}>
-									<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
-								</div>
-								<div style={style.optionElement}>
-									<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>
-					          <MenuItem value={'Most Recent'} primaryText="Most Recent" />
-					          <MenuItem value={'Up-Votes'} primaryText="Up-Votes" />
-					          <MenuItem value={'Most Comments'} primaryText="Most Comments" />
-					        </DropDownMenu>
-								</div>
-							</div>
-						}
-					/>
-					<div>
-						<Paper zDepth={2}>
-							<List style={style.customList}>
-								{ this.props.posts.map(item =>
-									<ForumItem context={this} handleClick={this.handleForumItemClick} item={item} /> 
-								)}
-							</List>
-						</Paper>
-					</div>		
+				<div style={style.forumWindow}>	
+					<ForumNavbar />
+					<ForumModal />		
 				</div>
-			)
+			);
 		}
 	};
 }
+			//if the user clicked on post we want the modal to pop up before anything else
+			//if the post was clicked show the comments belonging to that post
+			//check the length of the comments array, if it is empty dont try to map comments to the page
+			// this else statement is in the comment if statment, and maps the comments to the pa
 
 function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
-		waiting: state.response.waiting ,
+		waiting: state.response.waiting,
 		comments: state.posts.comments,
 		post: state.posts.post
 	};
