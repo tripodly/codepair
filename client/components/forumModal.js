@@ -111,30 +111,35 @@ constructor(props){
 	}
 
 render(){
-	return(
-		<div style={style.newPost}>
-			<br></br>
-			<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
-			<br></br>
-			<TextField 
-				style={style.subject}
-				placeholder={'Subject'}
-				multiLine={false}
-				name="POST_SUBJECT"
-				onChange = {(e)=> this.handlChangeInput(e,'subject')}
-			/>
-			<TextField 
-				style={style.textField}
-				placeholder={'Body...'}
-				multiLine={true}
-				rows={10}
-			  rowsMax={15}
-				name="POST_COMPONENT"
-				value={this.state.input}
-				onChange={(e)=> this.handlChangeInput(e)}
-			/>
-		</div>		
-		)
+	if(this.props.open){
+		return(
+			<div style={style.newPost}>
+				<br></br>
+				<RaisedButton label="New Post" primary={true} style={style} onClick={()=>this.handleClick(this.state.input, this.state.subject)} />
+				<br></br>
+				<TextField 
+					style={style.subject}
+					placeholder={'Subject'}
+					multiLine={false}
+					name="POST_SUBJECT"
+					onChange = {(e)=> this.handlChangeInput(e,'subject')}
+				/>
+				<TextField 
+					style={style.textField}
+					placeholder={'Body...'}
+					multiLine={true}
+					rows={10}
+				  rowsMax={15}
+					name="POST_COMPONENT"
+					value={this.state.input}
+					onChange={(e)=> this.handlChangeInput(e)}
+				/>
+			</div>		
+			)
+		}
+		else{
+			return <noscript />
+		}
 	}
 }
 export default ForumModal;

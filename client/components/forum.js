@@ -92,10 +92,6 @@ const style = {
 	},
 }
 
-
-//when user wants to create a new post, make this true
-let flag = true;
-
 class Forum extends Component {
 	constructor(props){
 		super(props);
@@ -112,7 +108,6 @@ class Forum extends Component {
 	}
 	handleClick(body, subject){
 		this.props.newPost({ subject: this.state.subject, message:this.state.input });
-		flag = !flag;
 		this.setState({});
 	}
 	handleChange(event, index, value) {
@@ -134,8 +129,7 @@ class Forum extends Component {
 		this.props.getPosts();
 	}
 	handleModal(){
-		flag = !flag;
-		this.setState({});
+		this.setState({modalOpen: !this.state.modalOpen});
 	}
 handleCommentSubmit(comment,id){
 	this.props.postComment({comment, id});
@@ -146,12 +140,10 @@ handleCommentSubmit(comment,id){
 
 }
 	handleForumItemClick(item){
-		//the this reffers to the forumItem not this fourm.js
 		this.props.getComments({id: item.id});
 	}
 	renderPosts(){
-		this.props.comments.map(item =>
-			<ForumItem context={this} item={item} /> 
+		return this.props.posts && this.props.posts.map(item => (<ForumItem context={this} item={item} /> ));
 	}
 	render() {
 		if(this.props.waiting){
@@ -161,10 +153,12 @@ handleCommentSubmit(comment,id){
 				</div>
 			);
 		} else {
+			console.log('inside the render of forum');
 			return (
 				<div style={style.forumWindow}>	
 					<ForumNavbar />
-					<ForumModal />		
+					<ForumModal open={this.props.modalOpen}/>		
+					{this.renderPosts()}
 				</div>
 			);
 		}
