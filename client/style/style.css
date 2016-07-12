@@ -52,3 +52,7 @@ html,body, #app{
 .muidocs-icon-custom-github:before {
 	content: "\e625";
 }
+.forumItem{
+	width: 100%;
+	height: 200px;	
+}

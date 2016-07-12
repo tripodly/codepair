@@ -87,14 +87,13 @@ constructor(props){
 
 	}
 }
-
 	render(){
 		return (
 			<AppBar style={style.optionsBar} showMenuIconButton={false}
 				children={
 					<div style={style.optionsElements}>
 						<div style={style.optionElement}>
-							<FlatButton onClick={()=> this.handleModal()} style={style.button} label="Post" />
+							<FlatButton onClick={this.props.handleModal} style={style.button} label="Post" />
 						</div>
 						<div style={style.optionElement}>
 							<DropDownMenu style={style.button} value={this.state.filter} onChange={(event, index, value) => this.handleChange(event, index, value)}>

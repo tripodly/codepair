@@ -33,7 +33,8 @@ const style = {
 	forumWindow: {
 		textAlign: 'left',
 		width: '100%',
-		height: 800,
+		height: 'auto',
+		overflowX:'hidden',
 	},
 	optionsBar: {
 		width: '100%',
@@ -93,14 +94,14 @@ renderComments(){
 	}
 
 render(){
-	console.log('inside the render in forumComments', this.props.comments, 'this is the currrentn ppost in forumCOmments: ', this.props.current);
 	return (
-		<div style={style.forumWindow}>
+		<div style={style.forumWindow} >
 			<div>
-				<Paper zDepth={2}>
-					<List style={style.customList}>
-						{ this.renderComments() }
-					</List>
+				<Paper style={{width:'100%', height:'auto'}} zDepth={2}>
+					{this.props.currentPost.message}
+				</Paper>
+				<Paper style={{background:'grey'}} zDepth={2}>
+				{ this.renderComments() }
 				</Paper>
 			</div>
 			<div style={style.comment}>

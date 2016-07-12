@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import Paper from 'material-ui/Paper';
+
 
 class ForumItem extends Component {
 	render() {
 		return (
 			<div>
-				<ListItem 
-					multiLine={true}
-					key={this.props.item.id}
-					primaryText={ this.props.item.userID} 
-					secondaryText={ this.props.item.comment }
-				/>
+				<Paper className='forumItem' key={this.props.item.id}>
+				<div>{ this.props.item.userID}</div>
+				<div>{ this.props.item.comment}</div>
+				</Paper>
 				<Divider />
 			</div>
 		);

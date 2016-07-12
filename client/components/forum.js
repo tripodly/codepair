@@ -101,32 +101,14 @@ class Forum extends Component {
 		this.state = {
 			modalOpen:false,
 			filter: 'Most Recent',
-			posts: '',
-			comments: '',
-			input: '',
-			subject:'',
-			commentValue:''
 		}
 		this.handleForumItemClick = this.handleForumItemClick.bind(this);
-	}
-	handleClick(body, subject){
-		this.props.newPost({ subject: this.state.subject, message:this.state.input });
-		this.setState({});
+		this.handleModal = this.handleModal.bind(this);
 	}
 	handleChange(event, index, value) {
 		this.setState({
 			filter: value
 		})
-	}
-	handlChangeInput(event,subject){
-		if(subject === 'comment'){
-			this.setState({commentValue:event.target.value});
-		}
-		else if(subject === 'subject'){
-			this.setState({subject:event.target.value})
-		}else{
-		this.setState({input:event.target.value})
-		}
 	}
 	componentDidMount(){
 		this.props.getPosts();
@@ -146,17 +128,6 @@ handleCommentSubmit(comment,id){
 		this.props.getComments({id: item.id, contents: item});
 		browserHistory.push('/post');
 	}
-	// renderPosts(){
-	// 	return this.props.posts && this.props.posts.map(item =>(
-	// 		<div>
-	// 			<Paper zDepth={2}>
-	// 				<List style={style.customList}>
-	// 						<ForumItem handleClick={this.handleForumItemClick} item={item} /> 
-	// 				</List>
-	// 			</Paper>
-	// 		</div>
-	// 	));
-	// }
 	renderPosts(){
 		return this.props.posts && this.props.posts.map(item =>(
 			<div>
@@ -177,25 +148,20 @@ handleCommentSubmit(comment,id){
 		} else {
 			return (
 				<div style={style.forumWindow}>	
-					<ForumNavbar />
-					<ForumModal open={this.props.modalOpen}/>		
+					<ForumNavbar handleModal={this.handleModal} />
+					<ForumModal newPost={this.props.newPost} open={this.state.modalOpen}/>		
 					{this.renderPosts()}
 				</div>
 			);
 		}
 	};
 }
-			//if the user clicked on post we want the modal to pop up before anything else
-			//if the post was clicked show the comments belonging to that post
-			//check the length of the comments array, if it is empty dont try to map comments to the page
-			// this else statement is in the comment if statment, and maps the comments to the pa
-
+			
 function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
 		waiting: state.response.waiting,
 		comments: state.posts.comments,
-		post: state.posts.post
 	};
 }
 
