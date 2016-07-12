@@ -106,7 +106,7 @@ class Forum extends Component {
 		this.props.getPosts();
 	}
 	handleModal(){
-		this.setState({modalOpen: !this.state.modalOpen});
+		this.setState({modalOpen: true});
 	}
 handleForumItemClick(item){
 		this.props.getComments({id: item.id, contents: item});

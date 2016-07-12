@@ -62,10 +62,33 @@ html,body, #app{
 }
 .forumPost {
 	font-size: 1.143em;
-	height:50px;
+	max-height: 90px;
+	min-height:50px;
 	padding:10px;
+	cursor: pointer;
+	overflow: hidden;
+}
+.postSubject{
+	width:750px;
+}
+.postContent{
+	display: flex;
+  flex-direction: row;
 }
 
-
-
-
+.date{
+	color:#bfbdbd;
+	margin-left: 10px;
+}
+.newPost{
+		display: flex;
+		flex-direction:column;
+		align-items: center;
+		width:auto;
+		height:auto;
+		max-height: 500px;
+		overflow: scroll; 
+	}
+.postBody{
+	width:100%;
+}
