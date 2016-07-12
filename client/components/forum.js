@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
 import * as actions from '../actions';
 import CircularProgress from 'material-ui/CircularProgress';
 import {browserHistory} from 'react-router';
@@ -14,8 +13,7 @@ class Forum extends Component {
 		super(props);
 
 		this.state = {
-			modalOpen:false,
-			filter: 'Most Recent',
+			modalOpen:false
 		}
 		this.handleForumItemClick = this.handleForumItemClick.bind(this);
 		this.handleModal = this.handleModal.bind(this);
@@ -65,7 +63,6 @@ function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
 		waiting: state.response.waiting,
-		comments: state.posts.comments,
 	};
 }
 
