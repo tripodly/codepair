@@ -5,82 +5,6 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const style = {
-	customList:{
-		height:'600',
-		overflow: 'scroll',
-	},
-	comment:{
-		height: 100,
-		marginTop: 25,
-		marginLeft: 150,
-		marginRight: 150,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		display: 'inline-block',
-		width: '100%',
-	},
-	commentButton: {
-		marginTop: -100,
-	},
-	button: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-	forumWindow: {
-		textAlign: 'left',
-		width: '100%',
-		height: 800,
-	},
-	optionsBar: {
-		width: '100%',
-		height: 50,
-		backgroundColor: '#FF0A9C',
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'flex-end',
-	},
-	optionElement: {
-		display: 'inline-block',
-		paddingRight: 10,
-		verticalAlign: 'middle',
-	},
-	optionsElements: {
-		float: 'right',
-		display: 'inline-block',
-		alignItems: 'center',
-	},
-	optionsMenu: {
-		marginTop: -15,
-	},
-	textField:{
-		border:' 3px solid #585858',
-		marginTop: 15,
-		marginBottom:15,
-		width: '50%',
-		height: 200,
-	},
-	subject:{
-		width: '50%',
-		border:' 3px solid #585858',
-	},
-	newPost:{
-		height: 400,
-		marginTop: 25,
-		marginLeft: 150,
-		marginRight: 150,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		backgroundColor:'#D8D8D8',
-	},
-	mainPost:{
-		border:' 3px solid #585858',
-		backgroundColor:'#D8D8D8',
-	},
-}
-
 class ForumModal extends Component {
 
 constructor(props){
@@ -89,15 +13,12 @@ constructor(props){
 		input:'',
 		subject:'',
 		open: this.props.open
+		}
+		this.handleModal = this.handleModal.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
-	this.handleModal = this.handleModal.bind(this);
-	this.handleClick = this.handleClick.bind(this);
-}
-componentWillReceiveProps(newProps){
+	componentWillReceiveProps(newProps){
 	this.setState({open: newProps.open})
-}
-	handleModal(){
-		this.setState({modalOpen: !this.state.modalOpen});
 	}
 	handlChangeInput(event,subject){
 		if(subject === 'comment'){
