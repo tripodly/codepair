@@ -14,7 +14,6 @@ constructor(props){
 		subject:'',
 		open: this.props.open
 		}
-		this.handleModal = this.handleModal.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 	}
 	componentWillReceiveProps(newProps){

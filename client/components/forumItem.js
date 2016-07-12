@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Divider from 'material-ui/Divider';
-import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import Paper from 'material-ui/Paper';
 
 
@@ -8,11 +6,14 @@ class ForumItem extends Component {
 	render() {
 		return (
 			<div>
-				<Paper className='forumItem' key={this.props.item.id}>
-				<div>{ this.props.item.userID}</div>
-				<div>{ this.props.item.comment}</div>
+				<Paper zDepth={0} className='forumItem' key={this.props.item.id}>
+					<div>{ this.props.item.userID}</div>
+					<div>{ this.props.item.comment}</div>
+					<div className='date'>
+						{moment(this.props.item.created_at).fromNow()}
+					</div>
 				</Paper>
-				<Divider />
+				<hr style={{margin:'1px'}}/>
 			</div>
 		);
 	}

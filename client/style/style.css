@@ -53,8 +53,10 @@ html,body, #app{
 	content: "\e625";
 }
 .forumItem{
-	width: 100%;
-	height: 200px;	
+	font-size: 1.143em;
+	min-height:100px;
+	padding:10px;
+	height:auto;
 }
 .forumComment {
 	width: 100%;
@@ -91,4 +93,10 @@ html,body, #app{
 	}
 .postBody{
 	width:100%;
+}
+.forumWindow{
+	text-align:left;
+	width: 100%;
+	height: auto;
+	overflow-x:hidden;
 }

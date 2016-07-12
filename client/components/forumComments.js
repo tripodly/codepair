@@ -102,18 +102,16 @@ render(){
 		)
 	}
 	return (
-		<div style={style.forumWindow} >
+		<div className='forumWindow'>
 			<div>
-				<Paper style={{width:'100%', height:'auto'}} zDepth={2}>
-					{this.props.currentPost.message}
+				<Paper className='forumItem' zDepth={2}>
+					<div>{this.props.currentPost.message}</div>
 				</Paper>
 				<Paper style={{background:'grey'}} zDepth={2}>
 				{ this.renderComments() }
 				</Paper>
 			</div>
 			<div style={style.comment}>
-				<br></br>
-				<br></br>
 				<TextField 
 					style={style.subject}
 					placeholder={'Comment'}
