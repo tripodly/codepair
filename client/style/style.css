@@ -56,3 +56,16 @@ html,body, #app{
 	width: 100%;
 	height: 200px;	
 }
+.forumComment {
+	width: 100%;
+	height: 200px;
+}
+.forumPost {
+	font-size: 1.143em;
+	height:50px;
+	padding:10px;
+}
+
+
+
+

@@ -1,21 +1,18 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 
  let ForumPostComponent = (props) => {
- 	console.log('inside ForumPostComponent',props)
 	return (
-		<div>
-			<Paper 
-			style={{width:'100%', height:'200px', margin:'8px'}}
+		<Paper 
+			zDepth={1}
 			onTouchTap={() => {props.handleClick(props.content)} }
+			className="forumPost"
 			>
-				<div>
-					{props.content.subject}
-					<br />
-					{props.content.message}
-				</div>
-			</Paper>
-		</div>
+			<div>
+				{props.content.subject}
+			</div>
+		</Paper>
 	)
 }
 export default ForumPostComponent;

@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import { List, ListItem } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import * as actions from '../actions';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import TextField from 'material-ui/TextField';
-import MenuItem from 'material-ui/MenuItem';
-import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
 import {browserHistory} from 'react-router';
 
@@ -116,28 +108,17 @@ class Forum extends Component {
 	handleModal(){
 		this.setState({modalOpen: !this.state.modalOpen});
 	}
-handleCommentSubmit(comment,id){
-	this.props.postComment({comment, id});
-	var that = this;
-	setTimeout(function(){
-		that.props.getComments({id});
-	},100);
-
-}
-	handleForumItemClick(item){
+handleForumItemClick(item){
 		this.props.getComments({id: item.id, contents: item});
 		browserHistory.push('/post');
 	}
 	renderPosts(){
 		return this.props.posts && this.props.posts.map(item =>(
 			<div>
-				<Paper zDepth={2}>
-					<ForumPostComponent handleClick={this.handleForumItemClick} content={item} /> 
-				</Paper>
+				<ForumPostComponent handleClick={this.handleForumItemClick} content={item} /> 
 			</div>
 		));
 	}
-
 	render() {
 		if(this.props.waiting){
 			return(

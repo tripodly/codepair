@@ -6,6 +6,7 @@ import { List, ListItem } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import ForumItem from './forumItem';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
 	customList:{
@@ -94,6 +95,12 @@ renderComments(){
 	}
 
 render(){
+	if(this.props.waiting){
+		return(<div>
+			<CircularProgress size={2} />
+		</div>
+		)
+	}
 	return (
 		<div style={style.forumWindow} >
 			<div>
@@ -128,7 +135,8 @@ render(){
 function mapStateTpProps(state){
 	return{
 		comments:state.currentPost.comments.comments,
-		currentPost: state.currentPost.current
+		currentPost: state.currentPost.current,
+		waiting: state.response.waiting,
 	}
 }
 export default connect(mapStateTpProps)(ForumComment);
