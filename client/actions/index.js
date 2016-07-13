@@ -270,6 +270,7 @@ export function getPosts(){
 	}
 }
 export function postComment({comment, id}){
+	console.log(comment,id)
 	return function(dispatch) {
 		axios.post(`${API_URL}/user/postComment`, { id, comment },
 			{ headers: { authorization: localStorage.getItem('token') }

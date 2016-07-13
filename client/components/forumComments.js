@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import { List, ListItem } from 'material-ui/List';
-import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import ForumItem from './forumItem';
 import CircularProgress from 'material-ui/CircularProgress';
+import ForumCommentBar from './forumCommentBar';
+import * as actions from '../actions/index'
 
 
 class ForumComment extends Component {
@@ -34,20 +33,7 @@ render(){
 				<hr/>
 				{this.renderComments()}
 			</div>
-			<div className='postComment'>
-				<TextField 
-					style={{width:'50%'}}
-					placeholder={'Comment'}
-					multiLine={true}
-					name="POST_COMMENT"
-					onChange = {(e)=> this.handlChangeInput(e,'comment')}
-				/>
-				<RaisedButton 
-					label="Comment" 
-					primary={true} 
-					onClick={()=>this.handleCommentSubmit(this.state.commentValue, this.props.post.id)} 
-				/>
-			</div>		
+			<ForumCommentBar id={this.props.currentPost.id} sendComment={this.props.postComment} />
 		</div>
 		)
 	}
@@ -59,5 +45,5 @@ function mapStateToProps(state){
 		waiting: state.response.waiting,
 	}
 }
-export default connect(mapStateToProps)(ForumComment);
+export default connect(mapStateToProps, actions)(ForumComment);
 

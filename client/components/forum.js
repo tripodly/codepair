@@ -38,7 +38,7 @@ handleForumItemClick(item){
 	renderPosts(){
 		return this.props.posts && this.props.posts.map(item =>(
 			<div>
-				<ForumPostComponent handleClick={this.handleForumItemClick} content={item} /> 
+				<ForumPostComponent key={`${item.created_at}${item.userID}`} handleClick={this.handleForumItemClick} content={item} /> 
 			</div>
 		));
 	}
