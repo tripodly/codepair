@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-import { ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import ChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import Paper from 'material-ui/Paper';
+import moment from 'moment';
+import Avatar from 'material-ui/Avatar';
 
 class ForumItem extends Component {
-	constructor(props) {
-		super(props);
-	}
 	render() {
-		const item = this.props.item;
-		const context = this.props.context;
-		let date = item.created_at ? item.created_at.toString().substring(0,10) : '';
-		let handleClick = function(){};
-		if(this.props.handleClick){
-			handleClick = this.props.handleClick.bind(context,item);
-		}
 		return (
 			<div>
-				<ListItem 
-					multiLine={true}
-					key={this.props.item.id}
-					primaryText={ this.props.item.subject || item.comment } 
-					secondaryText={ this.props.item.message || date }
-					onTouchTap={() => {handleClick()} }
-				/>
-				<Divider />
+				<Paper zDepth={0} className='forumItem' key={this.props.item.id}>
+					<Avatar style={{marginRight:'20px'}} src={this.props.item.profile_url} />
+					<div className='UserName'>{ this.props.item.name}</div>
+					<div className='content'>{ this.props.item.comment}</div>
+					<div className='date'>
+						{moment(this.props.item.created_at).fromNow()}
+					</div>
+				</Paper>
+				<hr style={{margin:'1px'}}/>
 			</div>
 		);
 	}

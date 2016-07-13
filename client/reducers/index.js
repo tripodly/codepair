@@ -9,6 +9,9 @@ import responseReducer from './responseReducer';
 import messagesReducer from './chatReducers/messagesReducer';
 import typingReducer from './chatReducers/typingReducer';
 import postsReducer from './postsReducer';
+import currentPost from './currentPostReducer';
+import commentsReducer from './commentsReducer';
+
 
 // This is a map of our Redux State object
 // e.g. application state: State = { form:..., auth:..., profile:..., cards:..., messages:..., typing:..., partner:..., response:... }
@@ -24,7 +27,9 @@ const rootReducer = combineReducers({
   typing: typingReducer,
 	partner: partnerReducer,
 	response: responseReducer,
-	posts: postsReducer 
+	posts: postsReducer,
+	comments: commentsReducer,
+	currentPost: currentPost
 });
 
 export default rootReducer;

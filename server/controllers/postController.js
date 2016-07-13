@@ -20,7 +20,7 @@ module.exports = {
 		//need to make sure message doesnt exceed limit
 		if(messageObject.postMessage) {
 
-			new Post({ 'userID': req.user.attributes.id, 'message': messageObject.postMessage, subject: messageObject.subject }).save().then(function(postModel){
+			new Post({ 'userID': req.user.attributes.id,'name':req.user.attributes.name, 'profile_url':req.user.attributes.profile_url, 'message': messageObject.postMessage, subject: messageObject.subject }).save().then(function(postModel){
 				// postModel is the post being saved
 				res.send('post sent!',postModel);
 			})
@@ -65,7 +65,7 @@ module.exports = {
 			postID: req.body.id
 		};
 		if(messageObject.postComment.length >= 2 && messageObject.postID){
-		new Reply({ 'userID': req.user.attributes.id, 'comment': messageObject.postComment, postID: messageObject.postID }).save().then(function(postComment){
+		new Reply({ 'userID': req.user.attributes.id, 'name':req.user.attributes.name, 'profile_url':req.user.attributes.profile_url,'comment': messageObject.postComment, postID: messageObject.postID }).save().then(function(postComment){
 				res.send({ message: 'post sent!', post: postComment });
 			})
 		} else {

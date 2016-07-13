@@ -99,6 +99,8 @@ knex.schema.hasTable('posts').then(function(exists){
 			post.foreign('userId').references('id').inTable('users');
 			post.integer('vote',11).defaultTo(0);
 			post.text('subject',1000);
+			post.string('name',255);
+			post.string('profile_url',1000);
 			post.text('message',10000);
 			post.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
 		}).then(function (table) {
@@ -112,6 +114,8 @@ knex.schema.hasTable('replys').then(function(exists){
 			reply.increments('id').primary();
 			reply.integer('userID',11).unsigned();
 			reply.foreign('userID').references('id').inTable('users');
+			reply.string('name',255);
+			reply.string('profile_url',1000);
 			reply.integer('postID',11).unsigned();
 			reply.foreign('postID').references('id').inTable('posts');
 			reply.string('comment',2000);
