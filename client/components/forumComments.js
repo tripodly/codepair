@@ -89,7 +89,7 @@ class ForumComment extends Component {
 
 renderComments(){
 	return this.props.comments && this.props.comments.map(item => (
-				<ForumItem item={item} /> 
+				<ForumItem key={item.created_at} item={item} /> 
 			)
 		)
 	}
@@ -102,14 +102,10 @@ render(){
 		)
 	}
 	return (
-		<div className='forumWindow'>
-			<div>
-				<Paper className='forumItem' zDepth={2}>
-					<div>{this.props.currentPost.message}</div>
-				</Paper>
-				<Paper style={{background:'grey'}} zDepth={2}>
-				{ this.renderComments() }
-				</Paper>
+		<div>
+			<div className='forumWindow'>
+				<div>{this.props.currentPost.message}</div>
+				{this.renderComments()}
 			</div>
 			<div style={style.comment}>
 				<TextField 
@@ -130,12 +126,12 @@ render(){
 		)
 	}
 }
-function mapStateTpProps(state){
+function mapStateToProps(state){
 	return{
 		comments:state.currentPost.comments.comments,
 		currentPost: state.currentPost.current,
 		waiting: state.response.waiting,
 	}
 }
-export default connect(mapStateTpProps)(ForumComment);
+export default connect(mapStateToProps)(ForumComment);
 
