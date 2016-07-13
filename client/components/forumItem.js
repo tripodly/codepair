@@ -8,8 +8,8 @@ class ForumItem extends Component {
 		return (
 			<div>
 				<Paper zDepth={0} className='forumItem' key={this.props.item.id}>
-					<Avatar src={this.props.item.profile_url} />
-					<div className='content'>{ this.props.item.name}</div>
+					<Avatar style={{marginRight:'20px'}} src={this.props.item.profile_url} />
+					<div className='UserName'>{ this.props.item.name}</div>
 					<div className='content'>{ this.props.item.comment}</div>
 					<div className='date'>
 						{moment(this.props.item.created_at).fromNow()}

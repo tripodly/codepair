@@ -14,8 +14,8 @@ import Avatar from 'material-ui/Avatar'
 			className='forumPost'
 			>
 			<div className='postContent'>
-			<Avatar style={{marginRight:'10px'}} src={props.content.profile_url} />
-			<div style={{marginRight:'10px'}}>
+			<Avatar style={{marginRight:'20px'}} src={props.content.profile_url} />
+			<div className='UserName'>
 				{props.content.name}
 			</div>
 				<div className='postSubject'>

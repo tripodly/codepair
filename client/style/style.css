@@ -114,3 +114,7 @@ html,body, #app{
 	width: 100%;
 	height: auto;
 }
+.UserName{
+	margin-right:40px;
+	color: cadetblue;
+}
