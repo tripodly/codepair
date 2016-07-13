@@ -30,6 +30,9 @@ class Forum extends Component {
 	handleModal(){
 		this.setState({modalOpen: true});
 	}
+componentWillMount() {
+		this.props.getUserInfo();
+	}
 handleForumItemClick(item){
 		if(item){
 			this.props.getComments({id: item.id, contents: item});
