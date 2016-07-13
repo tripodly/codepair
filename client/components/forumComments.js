@@ -19,9 +19,10 @@ renderComments(){
 
 render(){
 	if(this.props.waiting){
-		return(<div>
-			<CircularProgress size={2} />
-		</div>
+		return(
+			<div>
+				<CircularProgress size={2} />
+			</div>
 		)
 	}
 	return (
@@ -43,6 +44,8 @@ function mapStateToProps(state){
 		comments:state.currentPost.comments.comments,
 		currentPost: state.currentPost.current,
 		waiting: state.response.waiting,
+		profileName: state.profile.name, 
+		profilePicture: state.profile.profile_url
 	}
 }
 export default connect(mapStateToProps, actions)(ForumComment);

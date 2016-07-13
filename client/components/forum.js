@@ -17,7 +17,8 @@ class Forum extends Component {
 		}
 		this.handleForumItemClick = this.handleForumItemClick.bind(this);
 		this.handleModal = this.handleModal.bind(this);
-	}
+		console.log('this is the current user in the profile.', this.props.profileName)
+	} 
 	handleChange(event, index, value) {
 		this.setState({
 			filter: value
@@ -65,6 +66,8 @@ function mapStateToProps(state) {
 	return { 
 		posts: state.posts.posts,
 		waiting: state.response.waiting,
+		profileName: state.profile.name, 
+		profilePicture: state.profile.profile_url, 
 	};
 }
 
