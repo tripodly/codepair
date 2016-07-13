@@ -53,8 +53,10 @@ html,body, #app{
 	content: "\e625";
 }
 .forumItem{
+	display: flex;
+  flex-direction: row;
 	font-size: 1.143em;
-	min-height:100px;
+	min-height:50px;
 	padding:10px;
 	height:auto;
 }
@@ -70,6 +72,11 @@ html,body, #app{
 	cursor: pointer;
 	overflow: hidden;
 }
+.clickedPost {
+	font-size: 1.143em;
+	min-height:50px;
+	padding:10px;
+}
 .postSubject{
 	width:750px;
 }
@@ -77,26 +84,32 @@ html,body, #app{
 	display: flex;
   flex-direction: row;
 }
-
+.postComment{
+	display: flex;
+  flex-direction: row;
+  margin:15px;
+}
 .date{
 	color:#bfbdbd;
 	margin-left: 10px;
 }
 .newPost{
-		display: flex;
-		flex-direction:column;
-		align-items: center;
-		width:auto;
-		height:auto;
-		max-height: 500px;
-		overflow: scroll; 
-	}
-.postBody{
-	width:100%;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	width:auto;
+	height:auto;
+	max-height: 500px;
+	overflow: scroll; 
+}
+.content{
+	margin-left: 10px;
 }
 .forumWindow{
+	display: flex;
+	flex-direction:column;
+	margin-bottom: auto;
 	text-align:left;
 	width: 100%;
 	height: auto;
-	overflow-x:hidden;
 }

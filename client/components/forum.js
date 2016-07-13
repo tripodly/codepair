@@ -30,8 +30,9 @@ class Forum extends Component {
 		this.setState({modalOpen: true});
 	}
 handleForumItemClick(item){
-		if(item){this.props.getComments({id: item.id, contents: item});
-		browserHistory.push('/post');
+		if(item){
+			this.props.getComments({id: item.id, contents: item});
+			browserHistory.push('/post');
 		}
 	}
 	renderPosts(){

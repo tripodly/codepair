@@ -23,7 +23,7 @@ import moment from 'moment';
 			</div>
 		</Paper>
 		<hr style={{margin:'1px'}}/>
-		</div>
+	</div>
 	)
 }
 export default ForumPostComponent;
