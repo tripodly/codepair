@@ -11,8 +11,12 @@ import * as actions from '../actions/index'
 class ForumComment extends Component {
 
 renderComments(){
-	return this.props.comments && this.props.comments.map(item => (
-				<ForumItem name={item.name} key={item.created_at} item={item} /> 
+	var commentsArray = this.props.comments && this.props.comments.reverse();
+	if(!commentsArray){
+		return <noscript />
+	}
+	return commentsArray.map(item => (
+				<ForumItem key={item.created_at} item={item} /> 
 			)
 		)
 	}

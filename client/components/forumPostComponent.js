@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import moment from 'moment';
+import Avatar from 'material-ui/Avatar'
 
  let ForumPostComponent = (props) => {
-
+ 	console.log(props.content)
 	return (
 		<div>
 		<Paper 
@@ -13,7 +14,8 @@ import moment from 'moment';
 			className='forumPost'
 			>
 			<div className='postContent'>
-			<div className='postSubject'>
+			<Avatar style={{marginRight:'10px'}} src={props.content.profile_url} />
+			<div style={{marginRight:'10px'}}>
 				{props.content.name}
 			</div>
 				<div className='postSubject'>

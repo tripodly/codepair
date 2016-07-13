@@ -40,9 +40,13 @@ handleForumItemClick(item){
 		}
 	}
 	renderPosts(){
-		return this.props.posts && this.props.posts.map(item =>(
+		var postsArray = this.props.posts && this.props.posts.reverse();
+			if(!postsArray){
+				return <noscript />
+		}
+		return postsArray.map(item =>(
 			<div>
-				<ForumPostComponent name={item.name} key={`${item.created_at}${item.userID}`} handleClick={this.handleForumItemClick} content={item} /> 
+				<ForumPostComponent profilePicture={item.profilePicture} name={item.name} key={`${item.created_at}${item.userID}`} handleClick={this.handleForumItemClick} content={item} /> 
 			</div>
 		));
 	}
