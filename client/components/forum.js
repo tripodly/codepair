@@ -42,7 +42,7 @@ handleForumItemClick(item){
 	renderPosts(){
 		return this.props.posts && this.props.posts.map(item =>(
 			<div>
-				<ForumPostComponent key={`${item.created_at}${item.userID}`} handleClick={this.handleForumItemClick} content={item} /> 
+				<ForumPostComponent name={item.name} key={`${item.created_at}${item.userID}`} handleClick={this.handleForumItemClick} content={item} /> 
 			</div>
 		));
 	}
@@ -57,7 +57,12 @@ handleForumItemClick(item){
 			return (
 				<div className='forumWindow'>	
 					<ForumNavbar handleModal={this.handleModal} />
-					<ForumModal newPost={this.props.newPost} open={this.state.modalOpen}/>		
+					<ForumModal 
+						newPost={this.props.newPost} 
+						open={this.state.modalOpen}
+						name= {this.props.profileName}
+						profilePicture= {this.props.profilePicture}		
+					/>
 					{this.renderPosts()}
 				</div>
 			);

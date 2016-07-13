@@ -20,10 +20,7 @@ constructor(props){
 	this.setState({open: newProps.open})
 	}
 	handlChangeInput(event,subject){
-		if(subject === 'comment'){
-			this.setState({commentValue:event.target.value});
-		}
-		else if(subject === 'subject'){
+		if(subject === 'subject'){
 			if(this.state.subject.length < 95 && event.target.value.length < 95){
 				this.setState({subject:event.target.value})
 			}
@@ -32,7 +29,7 @@ constructor(props){
 		}
 	}
 	handleClick(body, subject){
-		this.props.newPost({ subject: this.state.subject, message:this.state.input });
+		this.props.newPost({ subject: this.state.subject, message:this.state.input, name:this.props.name, profile_picute:this.props.profilePicute });
 		this.setState({input:'',subject:'', open:false});
 	}
 	handleClose() {

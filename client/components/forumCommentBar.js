@@ -15,7 +15,9 @@ class ForumCommentBar extends Component {
 		this.setState({input:e.target.value})
 	}
 	handleSend(){
-		this.props.sendComment({comment:this.state.input, id:this.props.id})
+		console.log('inside handlesend comment bar', this.props.name)
+		this.props.sendComment({comment:this.state.input, id:this.props.id, name:this.props.name, profile_picute:this.props.profilePicute});
+		this.setState({input:''});
 	}
 	render(){
 		return(

@@ -12,7 +12,7 @@ class ForumComment extends Component {
 
 renderComments(){
 	return this.props.comments && this.props.comments.map(item => (
-				<ForumItem key={item.created_at} item={item} /> 
+				<ForumItem name={item.name} key={item.created_at} item={item} /> 
 			)
 		)
 	}
@@ -34,7 +34,11 @@ render(){
 				<hr/>
 				{this.renderComments()}
 			</div>
-			<ForumCommentBar id={this.props.currentPost.id} sendComment={this.props.postComment} />
+			<ForumCommentBar 
+			name= {this.props.profileName}
+			profilePicture= {this.props.profilePicture}
+			id={this.props.currentPost.id} 
+			sendComment={this.props.postComment} />
 		</div>
 		)
 	}

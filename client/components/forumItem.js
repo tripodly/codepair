@@ -7,6 +7,7 @@ class ForumItem extends Component {
 		return (
 			<div>
 				<Paper zDepth={0} className='forumItem' key={this.props.item.id}>
+					<div className='content'>{ this.props.item.name}</div>
 					<div className='content'>{ this.props.item.userID}</div>
 					<div className='content'>{ this.props.item.comment}</div>
 					<div className='date'>

@@ -13,10 +13,12 @@ import moment from 'moment';
 			className='forumPost'
 			>
 			<div className='postContent'>
+			<div className='postSubject'>
+				{props.content.name}
+			</div>
 				<div className='postSubject'>
 					{props.content.subject}
 				</div>
-				
 				<div className='date'>
 					{moment(props.content.created_at).fromNow()}
 				</div>

@@ -233,10 +233,10 @@ export function receiveInvite({ invite }) {
 }
 //-------------post actions----------------------
 
-export function newPost({ subject, message }){
+export function newPost({ subject, message, name, profile_url }){
 		console.log('this is the subject', subject, message)
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/postMessage`, { subject, message },
+		axios.post(`${API_URL}/user/postMessage`, { subject, message, name, profile_url },
 			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
@@ -269,10 +269,10 @@ export function getPosts(){
 			})
 	}
 }
-export function postComment({comment, id}){
+export function postComment({comment, id, name, profile_url}){
 	console.log(comment,id)
 	return function(dispatch) {
-		axios.post(`${API_URL}/user/postComment`, { id, comment },
+		axios.post(`${API_URL}/user/postComment`, { id, comment, name, profile_url },
 			{ headers: { authorization: localStorage.getItem('token') }
 		})
 			.then(response => {
